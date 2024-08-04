@@ -4,10 +4,7 @@ Data taken from the fandom wiki, including some of the descriptions, which are l
 ### Usage
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice
 - Vendor this repo in your project (I recommend adding to .gitignore).
-- Configure `.luarc.json` (see below)
-
-### Configure .luarc.json
-Include path to root directory of these type definitions.
+- Configure `.luarc.json`, including path to root directory of these type definitions.
 ```
 {
    "runtime.version": "Lua 5.1",
