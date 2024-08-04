@@ -10,8 +10,8 @@ Data taken from the fandom wiki, including some of the descriptions, which are l
 Include path to root directory of these type definitions.
 ```
 {
-	"runtime.version": "Lua 5.1",
-	"type.inferParamType": true,
-	"workspace.library": [YOUR_PATH_HERE]
+   "runtime.version": "Lua 5.1",
+   "type.inferParamType": true,
+   "workspace.library": [YOUR_PATH_HERE]
 }
 ```
