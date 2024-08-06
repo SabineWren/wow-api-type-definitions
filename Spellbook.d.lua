@@ -15,9 +15,9 @@ BOOKTYPE_SPELL = "spell"
 -- GetCraftSpellFocus(index)   - ?.
 -- GetNumShapeshiftForms()
 
----[Open Documentation](https://wowpedia.fandom.com/wiki/API_GetNumSpellTabs)
----TODO: Document whether or not this includes profession tabs.
----@return integer numTabs# Number of tabs in the spellbook.
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetNumSpellTabs)
+--- TODO: Document whether or not this includes profession tabs.
+---@return integer numTabs Number of tabs in the spellbook.
 function GetNumSpellTabs() end
 
 -- GetQuestLogRewardSpell - ?.
@@ -28,31 +28,31 @@ function GetNumSpellTabs() end
 -- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellCooldown)
 ---@param spellIndex integer
 ---@param booktype BookType
----@return number startTime# The time when the cooldown started, as returned by GetTime(), or zero if no cooldown.
----@return number duration# The number of seconds the cooldown will last, or zero if no cooldown.
+---@return number startTime The time when the cooldown started, as returned by GetTime(), or zero if no cooldown.
+---@return number duration The number of seconds the cooldown will last, or zero if no cooldown.
 -- TODO confirm 'enable' isn't implemented (Stealth, Shadowmeld, Presence of Mind, etc.)
----@return number _1# Docs call it 'enable', but it always returns 1.
+---@return number _1 Docs call it 'enable', but it always returns 1.
 function GetSpellCooldown(spellIndex, booktype) end
 
----[Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellName)
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellName)
 ---@param i integer
 ---@param booktype BookType
----@return string name# Name of the spell as it appears in the spellbook, eg. "Lesser Heal"
----@return string rank# The spell rank or type, eg. "Rank 3", "Racial Passive". This can be an empty string. Note: for the Enchanting trade skill at rank Apprentice, the returned string contains a trailing space, ie. "Apprentice ". This might be the case for other trade skills and ranks also.
+---@return string name Name of the spell as it appears in the spellbook, eg. "Lesser Heal".
+---@return string rank The spell rank or type, eg. "Rank 3", "Racial Passive". This can be an empty string. Note: for the Enchanting trade skill at rank Apprentice, the returned string contains a trailing space, ie. "Apprentice ". This might be the case for other trade skills and ranks also.
 function GetSpellName(i, booktype) end
 
----[Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellTabInfo)
----@param spellbookTabIndex number# Index of tab (starting from 1)
----@return string schoolName# ex. General, Shadow, Fury
----@return string schoolTexture# Texture path of tooltip for spell school.
----@return integer tabOffset# Number of spell entries preceding this tab.
----@return integer numSpells# Number of spells in this tab.
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellTabInfo)
+---@param spellbookTabIndex number Index of tab (starting from 1)
+---@return string schoolName ex. General, Shadow, Fury
+---@return string schoolTexture Texture path of tooltip for spell school.
+---@return integer tabOffset Number of spell entries preceding this tab.
+---@return integer numSpells Number of spells in this tab.
 function GetSpellTabInfo(spellbookTabIndex) end
 
----[Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellTexture)
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellTexture)
 ---@param i integer
 ---@param booktype BookType
----@return string path# Texture path of tooltip for spell.
+---@return string path Texture path of tooltip for spell.
 function GetSpellTexture(i, booktype) end
 
 -- GetTrackingTexture()   - Return the texture of the current tracking buff, if one is active.
