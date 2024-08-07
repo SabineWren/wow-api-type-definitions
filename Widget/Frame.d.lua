@@ -10,6 +10,7 @@ Frame = {}
 --- - Unlike Textures, FontStrings do not support sublayers, and will always be drawn above textures sharing the same layer.
 ---@param name nil|string The global variable name that will be assigned, or nil for an anonymous fontstring.
 ---@param layer DrawLayer
+--- --- TODO: can this work with Font references instead of virtual font strings?
 ---@param inheritsFrom nil|string The name of a virtual font string. If nil, the font string does not inherit any properties.
 ---@return FontString
 function Frame:CreateFontString(name, layer, inheritsFrom) end

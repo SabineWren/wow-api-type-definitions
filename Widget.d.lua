@@ -183,6 +183,8 @@
 --@class FontInstance: UIObject
 --@class Region: UIObject
 
+--@class Font: FontInstance
+
 --@class Frame: Region
 --@class LayeredRegion: Region
 
