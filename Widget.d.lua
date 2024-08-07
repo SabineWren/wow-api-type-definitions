@@ -1,23 +1,23 @@
 ---@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
 
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
+--- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
+--- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
+--- - Setting Frame:EnableMouse() causes HIGHLIGHT to show/hide as the cursor hovers the Frame.
+--- - Translucent overlapping textures display different results depending on their relative ordering. For consistent results, use a blend mode of ADD or MOD on both textures.
+--- @alias DrawLayer
+--- | "BACKGROUND"
+--- | "BORDER"
+--- | "ARTWORK"
+--- | "OVERLAY"
+--- | "HIGHLIGHT"
+
 ---@alias MouseButton
 --- | "LeftButton"
 --- | "RightButton"
 --- | "MiddleButton"
 --- | "Button4"
 --- | "Button5"
-
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
---- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
---- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
---- - Setting Frame:EnableMouse() causes HIGHLIGHT to show/hide as the cursor hovers the Frame.
---- - Translucent overlapping textures display different results depending on their relative ordering. For consistent results, use a blend mode of ADD or MOD on both textures.
---- @alias FrameLayer
---- | "BACKGROUND"
---- | "BORDER"
---- | "ARTWORK"
---- | "OVERLAY"
---- | "HIGHLIGHT"
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
 --- Affects how frames overlap. Ordered back to front.

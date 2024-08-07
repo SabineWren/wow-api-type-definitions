@@ -5,6 +5,7 @@ DEFAULT_CHAT_FRAME = {}
 SlashCmdList = {}
 
 ---[Wowhead Description](https://www.wowhead.com/guide/comprehensive-beginners-guide-for-wow-addon-coding-in-lua-5338#10-6-frames)
+--- Root Region for UI.
 ---@type Frame
 UIParent = {}
 

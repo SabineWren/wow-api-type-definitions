@@ -4,9 +4,19 @@
 ---@class Frame: Region
 Frame = {}
 
+--- Create and return a new FontString as a child of this Frame
+--- - A good default is :CreateFrontString(nil, "ARTWORK", "GameFontNormal")
+--- - Or for tooltips... :CreateFrontString(nil, "OVERLAY", "GameTooltipText")
+--- - Unlike Textures, FontStrings do not support sublayers, and will always be drawn above textures sharing the same layer.
+---@param name nil|string The global variable name that will be assigned, or nil for an anonymous fontstring.
+---@param layer DrawLayer
+---@param inheritsFrom nil|string The name of a virtual font string. If nil, the font string does not inherit any properties.
+---@return FontString
+function Frame:CreateFontString(name, layer, inheritsFrom) end
+
 --- Create and return a new Texture as a child of this Frame.
 ---@param name nil|string
----@param layer nil|FrameLayer
+---@param layer nil|DrawLayer
 ---@param inheritsFrom? nil|string
 ---@return Texture
 function Frame:CreateTexture(name, layer, inheritsFrom) end
@@ -17,12 +27,12 @@ function Frame:CreateTitleRegion() end
 
 --- Disable rendering of Regions in the specified draw layer.
 --- - This does not affect the return values for functions like ScriptRegion:IsVisible and ScriptRegion:IsShown.
----@param layer FrameLayer
+---@param layer DrawLayer
 ---@return nil
 function Frame:DisableDrawLayer(layer) end
 
 --- Enable rendering of Regions in the specified draw layer.
----@param layer FrameLayer
+---@param layer DrawLayer
 ---@return nil
 function Frame:EnableDrawLayer(layer) end
 
@@ -36,7 +46,7 @@ function Frame:EnableDrawLayer(layer) end
 function Frame:EnableKeyboard(isEnable) end
 
 --- Set whether this frame will get mouse input.
---- - See FrameLayer for details about cursor hover
+--- - See [DrawLayer](lua://DrawLayer) for details about cursor hover
 ---@param enableFlag boolean
 ---@return nil
 function Frame:EnableMouse(enableFlag) end
