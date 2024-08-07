@@ -13,11 +13,11 @@
 
 ---@alias Event
 --- Fired when the actionbar page changes, typically when you press the pageup or pagedown button.
---- **arg1**: the mouse button used to click the button. Known values: "LeftButton", "RightButton"
+--- **arg1** MouseButton: The mouse button used to click the button.
 --- | "ACTIONBAR_PAGE_CHANGED"
 ---
 --- Fired when the actionbar numbers appear, typically when you drag a spell to the actionbar.
---- **arg1**: the mouse button used to drag the spell. Known values: "LeftButton", "RightButton"
+--- **arg1** MouseButton: The mouse button used to drag the spell.
 --- | "ACTIONBAR_SHOWGRID"
 ---
 --- Fired when any actionbar slot's contents change.
@@ -25,12 +25,12 @@
 --- | "ACTIONBAR_SLOT_CHANGED"
 ---
 --- Fired when the cooldown for an actionbar or inventory slot starts or stops. Also fires when you log into a new area.
---- **arg1**: if the cooldown is starting, the mouse button used to click the button. Known values: "leftButton"
+--- **arg1** nil|MouseButton: If the cooldown is starting, the mouse button used to click the button.
 --- * if the cooldown is stopping or you are logging into a new zone, this is nil
 --- | "ACTIONBAR_UPDATE_COOLDOWN"
 ---
 --- Fired when the state of anything on the actionbar changes. This includes cooldown and disabling.
---- **arg1**: the mouse button used to click the button. Known values: "LeftButton", "RightButton"
+--- **arg1** MouseButton: The mouse button used to click the button.
 --- * can also be nil
 --- | "ACTIONBAR_UPDATE_STATE"
 ---
@@ -940,11 +940,11 @@
 --- 3. Changing or Equiping weapons, which changes the Attack icon in spellbook.
 --- **arg1**: nil when the char learns stuff. Also when changing weapons and shapeshifting. In addition it seems to be called on regular intervals for no apparent reason.
 --- **arg1**: # when the user opens the spellbook.
---- **arg1**: 'LeftButton' when using the mouse to open the spellbook or to browse through the pages and tabs of the open spellbook.
+--- **arg1**: MouseButton when using the mouse to open the spellbook or to browse through the pages and tabs of the open spellbook.
 --- | "SPELLS_CHANGED"
 ---
 --- Fired when spell cooldown starts.
---- **arg1**: if the spell is triggered by keypress, returns the [GetTime()](http://wowwiki.wikia.com/wiki/API_GetTime) output in string format. Otherwise, it will return "LeftButton" or "RightButton"
+--- **arg1**: if the spell is triggered by keypress, returns the [GetTime()](http://wowwiki.wikia.com/wiki/API_GetTime) output in string format. Otherwise, it will return MouseButton used.
 --- | "SPELL_UPDATE_COOLDOWN"
 ---
 --- Fires when you enter combat or die.

@@ -56,7 +56,9 @@ function FontInstance:GetTextColor() end
 function FontInstance:SetFont(path, height, flags) end
 
 ---Sets the 'parent' Font object from which this object inherits properties.
----@param font nil|Font Pass nil to explicitly unset the font.
+--- - Can pass in a font path instead, but Font yields better type safety.
+--- - Pass nil to explicitly unset the font.
+---@param font nil|Font
 ---@return nil
 function FontInstance:SetFontObject(font) end
 

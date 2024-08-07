@@ -19,6 +19,20 @@
 --- | "Button4"
 --- | "Button5"
 
+---@alias MouseClick
+--- | "AnyUp"-- Responds to the up action of any mouse button.
+--- | "AnyDown"-- Responds to the down action of any mouse button.
+--- | "LeftButtonUp"
+--- | "LeftButtonDown"
+--- | "RightButtonUp"
+--- | "RightButtonDown"
+--- | "MiddleButtonUp"
+--- | "MiddleButtonDown"
+--- | "Button4Up"
+--- | "Button4Down"
+--- | "Button5Up"
+--- | "Button5Down"
+
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
 --- Affects how frames overlap. Ordered back to front.
 --- @alias FrameStrata

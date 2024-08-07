@@ -197,6 +197,7 @@ function Frame:RegisterEvent(event) end
 --- - Subsequent calls to :RegisterForDrag() will override rather than augment the current registration.
 --- - To register for both left and right mouse buttons simultaneously, use :RegisterForDrag("LeftButton","RightButton").
 ---@param ... MouseButton
+---@return nil
 function Frame:RegisterForDrag(...) end
 
 ---@param backdropTable nil|Backdrop Passing nil removes the current backdrop.
