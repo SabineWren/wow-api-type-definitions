@@ -1,3 +1,2 @@
 ---@meta
-
----@class ScrollFrame: Frame
+ScrollFrame = {}

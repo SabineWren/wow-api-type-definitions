@@ -1,9 +1,4 @@
 ---@meta
-
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#UIObject)
---- <br>Abstract UI type. Not directly related to Frame:GetRegions() et al.
---- <br>Region has every method from UIObject
----@class Region: UIObject
 Region = {}
 
 --- Clear all attachment points. This will hide the UI object unless you re-attach.

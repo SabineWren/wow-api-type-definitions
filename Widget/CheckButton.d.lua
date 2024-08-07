@@ -1,3 +1,2 @@
 ---@meta
-
----@class CheckButton: Button
+CheckButton = {}

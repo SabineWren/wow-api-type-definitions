@@ -1,6 +1,6 @@
 ---@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
 
----@alias ButtonType
+---@alias MouseButton
 --- | "LeftButton"
 --- | "RightButton"
 --- | "MiddleButton"
@@ -50,7 +50,7 @@
 --- | "TabardModel"
 
 --- TODO Type signatures from a modern API doc, so might be wrong arguments.
----@alias ScriptType
+---@alias ScriptTypeFrame
 --- | "OnEnter"-- (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
 --- | "OnHide"-- (self) - Invoked when the frame's visbility changes to hidden.
 --- | "OnLeave"-- (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
@@ -160,3 +160,79 @@
 --- | "raidpet39"
 --- | "raidpet40"
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
+
+--- Distance from edges the background will be drawn. e.x. use higher values for thicker edges.
+---@alias Insets { right: number, top: number, bottom: number, left: number }
+
+---@class Backdrop
+---@field bgFile string Texture path for background.
+---@field edgeFile string Texture path for edges.
+---@field tile boolean Tile if true else Stretch.
+---@field tileSize number If tiling, size of each tiled copy of bgFile.
+---@field edgeSize number Size of the edgefile. i.e. border thickness and corner size.
+---@field insets Insets
+
+-- ************************************************
+-- ************ Inheritance Hierarchy ************
+-- ************************************************
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#UIObject)
+--- <br>Abstract UI type. Base class of all UI objects.
+---@class UIObject
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#FontInstance)
+--- <br>Abstract UI type. Groups font-related methods used by other widget types.
+---@class FontInstance: UIObject
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Region)
+--- <br>Abstract UI type. Not directly related to Frame:GetRegions() et al.
+--- <br>Region has every method from UIObject
+---@class Region: UIObject
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Frame)
+---@class Frame: Region
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#LayeredRegion)
+---@class LayeredRegion: Region
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Button)
+---@class Button: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ColorSelect)
+---@class ColorSelect: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#EditBox)
+---@class EditBox: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#GameTooltip)
+---@class GameTooltip: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#MessageFrame)
+---@class MessageFrame: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Minimap)
+---@class Minimap: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Model)
+---@class Model: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ScrollingMessageFrame)
+---@class ScrollingMessageFrame: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ScrollFrame)
+---@class ScrollFrame: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#SimpleHTML)
+---@class SimpleHTML: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Slider)
+---@class Slider: Frame
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#StatusBar)
+---@class StatusBar: Frame
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#CheckButton)
+---@class CheckButton: Button
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#LootButton)
+---@class LootButton: Button
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#PlayerModel)
+---@class PlayerModel: Model
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#DressUpModel)
+---@class DressUpModel: PlayerModel
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#TabardModel)
+---@class TabardModel: PlayerModel
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#FontString)
+---@class FontString: LayeredRegion
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Texture)
+---@class Texture: LayeredRegion

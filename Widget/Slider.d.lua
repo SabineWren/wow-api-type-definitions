@@ -1,3 +1,2 @@
 ---@meta
-
----@class Slider: Frame
+Slider = {}

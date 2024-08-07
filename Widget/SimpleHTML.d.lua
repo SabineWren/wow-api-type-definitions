@@ -1,3 +1,2 @@
 ---@meta
-
----@class SimpleHTML: Frame
+SimpleHTML = {}

@@ -1,17 +1,4 @@
 ---@meta
-
---- Distance from edges the background will be drawn. e.x. use higher values for thicker edges.
----@alias Insets { right: number, top: number, bottom: number, left: number }
-
----@class Backdrop
----@field bgFile string Texture path for background.
----@field edgeFile string Texture path for edges.
----@field tile boolean Tile if true else Stretch.
----@field tileSize number If tiling, size of each tiled copy of bgFile.
----@field edgeSize number Size of the edgefile. i.e. border thickness and corner size.
----@field insets Insets
-
----@class Frame: Region
 Frame = {}
 
 --- Create and return a new Texture as a child of this Frame.
@@ -73,7 +60,7 @@ function Frame:GetBackdropBorderColor() end
 ---@return number, number, number, number
 function Frame:GetBackdropColor() end
 
---- Get the list of "children" (frames and things derived from frames) of this frame.
+--- Returns a list of child frames of this frame.
 ---@return nil|(Frame[])
 function Frame:GetChildren() end
 
@@ -123,7 +110,7 @@ function Frame:GetRegions() end
 function Frame:GetScale() end
 
 --- Get the function for one of this frame's handlers.
----@param scriptType ScriptType
+---@param scriptType ScriptTypeFrame
 ---@return nil|function
 function Frame:GetScript(scriptType) end
 
@@ -133,7 +120,7 @@ function Frame:GetTitleRegion() end
 
 --- Predicate to check if frame supports the handler type.
 --- - If you want to determine if the frame has a script, use :GetScript().
----@param scriptType ScriptType
+---@param scriptType ScriptTypeFrame
 ---@return boolean
 function Frame:HasScript(scriptType) end
 
@@ -195,7 +182,7 @@ function Frame:RegisterEvent(event) end
 --- Indicate this frame should be notified of drag events for the specified buttons.
 --- - Subsequent calls to :RegisterForDrag() will override rather than augment the current registration.
 --- - To register for both left and right mouse buttons simultaneously, use :RegisterForDrag("LeftButton","RightButton").
----@param ... ButtonType
+---@param ... MouseButton
 function Frame:RegisterForDrag(...) end
 
 ---@param backdropTable nil|Backdrop Passing nil removes the current backdrop.
@@ -282,7 +269,7 @@ function Frame:SetResizable(isResizable) end
 function Frame:SetScale(scale) end
 
 --- Set the function to use for a handler on this frame.
----@param scriptType ScriptType
+---@param scriptType ScriptTypeFrame
 ---@param handler nil|function Handler, or nil to remove current handler.
 ---@return nil
 function Frame:SetScript(scriptType, handler) end

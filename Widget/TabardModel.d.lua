@@ -1,3 +1,2 @@
 ---@meta
-
----@class TabardModel: PlayerModel
+TabardModel = {}

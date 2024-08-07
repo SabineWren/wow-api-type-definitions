@@ -1,3 +1,2 @@
 ---@meta
-
----@class Model: Frame
+Model = {}

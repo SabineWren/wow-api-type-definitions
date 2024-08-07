@@ -1,7 +1,5 @@
 ---@meta
-
---- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/UIOBJECT_GameTooltip)
----@class GameTooltip: Frame
+GameTooltip = {}
 
 --[[
     GameTooltip:AddDoubleLine(textL, textR, rL, gL, bL, rR, gR, bR)

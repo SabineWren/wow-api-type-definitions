@@ -1,3 +1,2 @@
 ---@meta
-
----@class DressUpModel: PlayerModel
+DressUpModel = {}

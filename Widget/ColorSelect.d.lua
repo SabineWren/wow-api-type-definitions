@@ -1,3 +1,2 @@
 ---@meta
-
----@class ColorSelect: Frame
+ColorSelect = {}

@@ -1,3 +1,2 @@
 ---@meta
-
----@class MessageFrame: Frame
+MessageFrame = {}

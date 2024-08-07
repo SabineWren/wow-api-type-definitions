@@ -1,3 +1,2 @@
 ---@meta
-
----@class StatusBar: Frame
+StatusBar = {}
