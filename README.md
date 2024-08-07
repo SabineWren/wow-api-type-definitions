@@ -14,7 +14,7 @@ Data taken from the fandom wiki, including some of the descriptions, which are l
 ```
 
 ### Lambdas
-In addition to type declarations, this library provides `Lambda.lua`, which wraps methods with function call syntax. It's inspired by [FSharp](https://devblogs.microsoft.com/dotnet/announcing-fsharp-8/#f-language-changes), which copied Elm.
+In addition to type declarations, Shiver provides `Lambda.lua`, which wraps methods with function call syntax. It's inspired by [FSharp](https://devblogs.microsoft.com/dotnet/announcing-fsharp-8/#f-language-changes), which copied Elm.
 ```
 -- Blizzard way (imperative)
 local totalWidth = 0
@@ -28,7 +28,7 @@ local totalWidth =
 
 -- Shorthand
 local L = require "Lib/All.lua"
-local W = require "wow-api-type-definitions/Lambda.lua"
+local W = require "Shiver.lua"
 
 local totalWidth =
    L.Array.MapReduce(frames, W.Region._GetWidth, L.Add, 0)

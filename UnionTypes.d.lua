@@ -1,0 +1,162 @@
+---@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
+
+---@alias ButtonType
+--- | "LeftButton"
+--- | "RightButton"
+--- | "MiddleButton"
+--- | "Button4"
+--- | "Button5"
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
+--- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
+--- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
+--- - Setting Frame:EnableMouse() causes HIGHLIGHT to show/hide as the cursor hovers the Frame.
+--- - Translucent overlapping textures display different results depending on their relative ordering. For consistent results, use a blend mode of ADD or MOD on both textures.
+--- @alias FrameLayer
+--- | "BACKGROUND"
+--- | "BORDER"
+--- | "ARTWORK"
+--- | "OVERLAY"
+--- | "HIGHLIGHT"
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
+--- Affects how frames overlap. Ordered back to front.
+--- @alias FrameStrata
+--- | "WORLD" Reserved for the world frame and cannot be assigned.
+--- | "BACKGROUND"
+--- | "LOW"
+--- | "MEDIUM"
+--- | "HIGH"
+--- | "DIALOG"
+--- | "FULLSCREEN"
+--- | "FULLSCREEN_DIALOG"
+--- | "TOOLTIP"
+
+--- @alias FrameType
+--- | "Button"
+--- | "CheckButton"
+--- | "ColorSelect"
+--- | "DressUpModel"
+--- | "EditBox"
+--- | "Frame"
+--- | "GameTooltip"
+--- | "MessageFrame"
+--- | "Model"
+--- | "PlayerModel"
+--- | "ScrollFrame"
+--- | "SimpleHTML"
+--- | "Slider"
+--- | "StatusBar"
+--- | "TabardModel"
+
+--- TODO Type signatures from a modern API doc, so might be wrong arguments.
+---@alias ScriptType
+--- | "OnEnter"-- (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
+--- | "OnHide"-- (self) - Invoked when the frame's visbility changes to hidden.
+--- | "OnLeave"-- (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
+--- | "OnMouseDown"-- (self, button) - Invoked when a mouse button is pressed while the cursor is over the frame.
+--- | "OnMouseUp"-- (self, button) - Invoked when the mouse button is released following a mouse down action in the frame.
+--- | "OnMouseWheel"-- (self, delta) - Invoked when the frame receives a mouse wheel scrolling action.
+--- | "OnShow"-- (self) - Invoked when the frame becomes visible.
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/UnitId?type=revision&diff=6512501&oldid=364069)
+---@alias UnitId
+--- Base Values
+--- | "mouseover" The unit which the mouse is currently (or was most recently) hovering over.
+-- | "none" TODO: wiki doesn't make it clear if 1.12.1 supports "none"
+--- | "npc" The NPC with which the player is currently interacting.
+--- Nth member of party, excluding current player
+--- | "party1"
+--- | "party2"
+--- | "party3"
+--- | "party4"
+--- Pet of Nth member of party, excluding current player
+--- | "partypet1"
+--- | "partypet2"
+--- | "partypet3"
+--- | "partypet4"
+--- | "pet" Current player's pet.
+--- | "player" Current Player
+--- Raid member (1-40)
+--- | "raid1"
+--- | "raid2"
+--- | "raid3"
+--- | "raid4"
+--- | "raid5"
+--- | "raid6"
+--- | "raid7"
+--- | "raid8"
+--- | "raid9"
+--- | "raid10"
+--- | "raid11"
+--- | "raid12"
+--- | "raid13"
+--- | "raid14"
+--- | "raid15"
+--- | "raid16"
+--- | "raid17"
+--- | "raid18"
+--- | "raid19"
+--- | "raid20"
+--- | "raid21"
+--- | "raid22"
+--- | "raid23"
+--- | "raid24"
+--- | "raid25"
+--- | "raid26"
+--- | "raid27"
+--- | "raid28"
+--- | "raid29"
+--- | "raid30"
+--- | "raid31"
+--- | "raid32"
+--- | "raid33"
+--- | "raid34"
+--- | "raid35"
+--- | "raid36"
+--- | "raid37"
+--- | "raid38"
+--- | "raid39"
+--- | "raid40"
+--- Pet of raid member (1-40)
+--- | "raidpet1"
+--- | "raidpet2"
+--- | "raidpet3"
+--- | "raidpet4"
+--- | "raidpet5"
+--- | "raidpet6"
+--- | "raidpet7"
+--- | "raidpet8"
+--- | "raidpet9"
+--- | "raidpet10"
+--- | "raidpet11"
+--- | "raidpet12"
+--- | "raidpet13"
+--- | "raidpet14"
+--- | "raidpet15"
+--- | "raidpet16"
+--- | "raidpet17"
+--- | "raidpet18"
+--- | "raidpet19"
+--- | "raidpet20"
+--- | "raidpet21"
+--- | "raidpet22"
+--- | "raidpet23"
+--- | "raidpet24"
+--- | "raidpet25"
+--- | "raidpet26"
+--- | "raidpet27"
+--- | "raidpet28"
+--- | "raidpet29"
+--- | "raidpet30"
+--- | "raidpet31"
+--- | "raidpet32"
+--- | "raidpet33"
+--- | "raidpet34"
+--- | "raidpet35"
+--- | "raidpet36"
+--- | "raidpet37"
+--- | "raidpet38"
+--- | "raidpet39"
+--- | "raidpet40"
+--- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.

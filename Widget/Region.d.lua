@@ -1,7 +1,5 @@
 ---@meta
 
----@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Centerr"
-
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#UIObject)
 --- <br>Abstract UI type. Not directly related to Frame:GetRegions() et al.
 --- <br>Region has every method from UIObject
