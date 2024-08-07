@@ -10,6 +10,7 @@
 ---@class Frame: Region
 ---@class LayeredRegion: Region
 
+---@class Button: Frame
 ---@class ColorSelect: Frame
 ---@class EditBox: Frame, FontInstance
 ---@class GameTooltip: Frame
