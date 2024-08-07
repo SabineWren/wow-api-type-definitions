@@ -205,20 +205,20 @@ function Frame:SetBackdrop(backdropTable) end
 --- Scales backdrop border color.
 --- - These values only modify the existing color and alpha of the backdrop files; it's not possible to be lighter or more opaque than the original.
 --- - Subsequent calls to the same function will override previous ones; i.e. they apply to the original texture directly rather than interacting with the previously-tinted one.
----@param r number Red multiplier, from 0 to 1
----@param g number Green multiplier, from 0 to 1
----@param b number Blue multiplier, from 0 to 1
----@param a? number Opacity multiplier, from 0 to 1
+---@param r number Red multiplier [0.0, 1.0]
+---@param g number Green multiplier [0.0, 1.0]
+---@param b number Blue multiplier [0.0, 1.0]
+---@param a? number Opacity multiplier [0.0, 1.0]
 ---@return nil
 function Frame:SetBackdropBorderColor(r,g, b, a) end
 
 --- Scales backdrop color.
 --- - These values only modify the existing color and alpha of the backdrop files; it's not possible to be lighter or more opaque than the original.
 --- - Subsequent calls to the same function will override previous ones; i.e. they apply to the original texture directly rather than interacting with the previously-tinted one.
----@param r number Red multiplier, from 0 to 1
----@param g number Green multiplier, from 0 to 1
----@param b number Blue multiplier, from 0 to 1
----@param a? number Opacity multiplier, from 0 to 1
+---@param r number Red multiplier [0.0, 1.0]
+---@param g number Green multiplier [0.0, 1.0]
+---@param b number Blue multiplier [0.0, 1.0]
+---@param a? number Opacity multiplier [0.0, 1.0]
 ---@return nil
 function Frame:SetBackdropColor(r,g, b, a) end
 

@@ -70,7 +70,7 @@ function Region:IsVisible() end
 ---@param region nil|string|Region
 function Region:SetAllPoints(region) end
 
---- <br>No-op if the width/height is inferred from anchor points.
+--- No-op if height inferred from anchor points.
  ---@param height number
 function Region:SetHeight(height) end
 
@@ -85,7 +85,7 @@ function Region:SetParent(parent) end
 ---@param yOffset number Defaults to 0 if nil.
 function Region:SetPoint(point, relativeRegion, relativePoint, xOffset, yOffset) end
 
---- <br>No-op if the width/height is inferred from anchor points.
+--- No-op if width inferred from anchor points.
  ---@param width number
 function Region:SetWidth(width) end
 

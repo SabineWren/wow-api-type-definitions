@@ -5,18 +5,20 @@
 ---@class UIObject
 UIObject = {}
 
----@return number alpha
+---@return number
 function UIObject:GetAlpha() end
 
+--- Corresponds to a variable in global namespace. Returns nil for anonymous frames.
 --- - WorldFrame:GetName() -- "WorldFrame"
 --- - CreateFrame("Frame", "SomeFrame"):GetName() -- "SomeFrom"
 --- - CreateFrame("Frame"):GetName() -- nil
----@return nil|string name Corresponds to a variable in global namespace. Returns nil for anonymous frames.
+---@return nil|string
 function UIObject:GetName() end
 
+--- Can return any valid Object Type.
 --- - CreateFrame("Frame"):GetObjectType() -- "Frame"
 --- - CreateFrame("Button"):GetObjectType() -- "Button"
----@return string widgetType Can return any valid Object Type.
+---@return string widgetType
 function UIObject:GetObjectType() end
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/API_FrameScriptObject_IsObjectType)

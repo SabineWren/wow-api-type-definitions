@@ -6,9 +6,9 @@ ScrollingMessageFrame = {}
 
 --- Add a message to the frame, with an optional color ID.
 ---@param text string
----@param r? number Red amount from 0 to 1
----@param g? number Green amount from 0 to 1
----@param b? number Blue amount from 0 to 1
+---@param r? number Red amount [0.0, 1.0]
+---@param g? number Green amount [0.0, 1.0]
+---@param b? number Blue amount [0.0, 1.0]
 ---@param id? number A number that classifies the line of text for later changing the color.
 ---@return nil
 function ScrollingMessageFrame:AddMessage(text, r, g, b, id) end
