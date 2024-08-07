@@ -1,5 +1,5 @@
-### TODO Copyright
-Data taken from the fandom wiki, including some of the descriptions, which are likely copyrightable. This repo should stay private until resolving the copyright semantics. Alternatively, replace all the code examples.
+### Attributions
+Shiver's WoW API type definitions use content from [wowpedia.fandom.com](https://wowpedia.fandom.com/wiki/) (December 2006 edit diffs). The descriptions and example text are licensed under [Attribution-Share Alike 3.0 Unported license](https://wowpedia.fandom.com/wiki/Wowpedia:Copyrights).
 
 ### Usage
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice

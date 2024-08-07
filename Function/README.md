@@ -1,0 +1,37 @@
+### Needed for Quiver
+```
+-- CheckInteractDistance
+-- GetActionText
+-- GetActionTexture
+-- GetAddOnMetadata
+-- GetCVar
+-- GetInventoryItemCount
+-- GetInventorySlotInfo
+-- GetNetStats
+-- GetNumRaidMembers
+-- GetNumPartyMembers
+-- GetPlayerBuff
+-- GetPlayerBuffTexture
+-- GetPlayerBuffTimeLeft
+-- GetPlayerMapPosition
+-- GetScreenHeight
+-- GetScreenWidth
+-- GetTime
+-- HasAction
+-- IsActionInRange
+-- IsCurrentActionF
+-- MouseIsOver
+-- SendAddonMessage
+-- SendChatMessage
+-- UnitAffectingCombat
+-- UnitBuff
+-- UnitCanAttack
+-- UnitClass
+-- UnitCreatureType
+-- UnitExists
+-- UnitHealth
+-- UnitHealthMax
+-- UnitIsDead
+-- UnitName
+-- UnitRangedDamage
+```
