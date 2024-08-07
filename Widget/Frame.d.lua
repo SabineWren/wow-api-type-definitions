@@ -1,4 +1,7 @@
 ---@meta
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Frame)
+---@class Frame: Region
 Frame = {}
 
 --- Create and return a new Texture as a child of this Frame.

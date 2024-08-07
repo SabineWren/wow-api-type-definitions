@@ -176,63 +176,35 @@
 -- ************ Inheritance Hierarchy ************
 -- ************************************************
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#UIObject)
---- <br>Abstract UI type. Base class of all UI objects.
----@class UIObject
+-- This doesn't work with LuaLS, but could go in a readme as a graph.
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#FontInstance)
---- <br>Abstract UI type. Groups font-related methods used by other widget types.
----@class FontInstance: UIObject
+--@class UIObject
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Region)
---- <br>Abstract UI type. Not directly related to Frame:GetRegions() et al.
---- <br>Region has every method from UIObject
----@class Region: UIObject
+--@class FontInstance: UIObject
+--@class Region: UIObject
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Frame)
----@class Frame: Region
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#LayeredRegion)
----@class LayeredRegion: Region
+--@class Frame: Region
+--@class LayeredRegion: Region
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Button)
----@class Button: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ColorSelect)
----@class ColorSelect: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#EditBox)
----@class EditBox: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#GameTooltip)
----@class GameTooltip: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#MessageFrame)
----@class MessageFrame: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Minimap)
----@class Minimap: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Model)
----@class Model: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ScrollingMessageFrame)
----@class ScrollingMessageFrame: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#ScrollFrame)
----@class ScrollFrame: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#SimpleHTML)
----@class SimpleHTML: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Slider)
----@class Slider: Frame
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#StatusBar)
----@class StatusBar: Frame
+--@class ColorSelect: Frame
+--@class EditBox: Frame, FontInstance
+--@class GameTooltip: Frame
+--@class MessageFrame: Frame, FontInstance
+--@class Minimap: Frame
+--@class Model: Frame
+--@class ScrollingMessageFrame: Frame, FontInstance
+--@class ScrollFrame: Frame
+--@class SimpleHTML: Frame
+--@class Slider: Frame
+--@class StatusBar: Frame
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#CheckButton)
----@class CheckButton: Button
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#LootButton)
----@class LootButton: Button
+--@class CheckButton: Button
+--@class LootButton: Button
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#PlayerModel)
----@class PlayerModel: Model
+--@class PlayerModel: Model
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#DressUpModel)
----@class DressUpModel: PlayerModel
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#TabardModel)
----@class TabardModel: PlayerModel
+--@class DressUpModel: PlayerModel
+--@class TabardModel: PlayerModel
 
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#FontString)
----@class FontString: LayeredRegion
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#Texture)
----@class Texture: LayeredRegion
+--@class FontString: LayeredRegion, FontInstance
+--@class Texture: LayeredRegion

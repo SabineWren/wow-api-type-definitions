@@ -1,4 +1,8 @@
 ---@meta
+
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403#UIObject)
+--- <br>Abstract UI type. Base class of all UI objects.
+---@class UIObject
 UIObject = {}
 
 ---@return number alpha
