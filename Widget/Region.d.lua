@@ -80,9 +80,9 @@ function Region:SetParent(parent) end
 --- Set an anchor point for this region.
 ---@param point AnchorPoint
 ---@param relativeRegion nil|string|Region nil uses screen edges.
----@param relativePoint AnchorPoint Defaults to "Centerr" if nil.
----@param xOffset number Defaults to 0 if nil.
----@param yOffset number Defaults to 0 if nil.
+---@param relativePoint AnchorPoint Defaults to "Center" if nil.
+---@param xOffset? number Defaults to 0 if nil.
+---@param yOffset? number Defaults to 0 if nil.
 function Region:SetPoint(point, relativeRegion, relativePoint, xOffset, yOffset) end
 
 --- No-op if width inferred from anchor points.
