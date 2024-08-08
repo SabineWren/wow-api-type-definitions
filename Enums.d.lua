@@ -1,4 +1,13 @@
----@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
+---@alias AnchorPoint
+--- | "Center"
+--- | "TopLeft"
+--- | "Top"
+--- | "TopRight"
+--- | "Right"
+--- | "BottomRight"
+--- | "Bottom"
+--- | "BottomLeft"
+--- | "Left"
 
 --- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId)
 --- Might not be safe to use a union type, so integer for now.
@@ -222,14 +231,3 @@
 --- | "raidpet39"
 --- | "raidpet40"
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
-
---- Distance from edges the background will be drawn. e.x. use higher values for thicker edges.
----@alias Insets { right: number, top: number, bottom: number, left: number }
-
----@class Backdrop
----@field bgFile? string Texture path for background.
----@field edgeFile? string Texture path for edges.
----@field tile? boolean Tile if true else Stretch.
----@field tileSize? number If tiling, size of each tiled copy of bgFile.
----@field edgeSize? number Size of the edgefile. i.e. border thickness and corner size.
----@field insets? Insets
