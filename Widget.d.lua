@@ -1,5 +1,13 @@
 ---@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
 
+--- Add is most common, followed by Blend.
+--- @alias BlendMode
+--- | "ADD"-- Additive blend.
+--- | "ALPHAKEY"-- One-bit alpha.
+--- | "BLEND"-- Normal painting on top of the background, obeying alpha channels if present in the image (uses alpha).
+--- | "DISABLE"-- Opaque texture.
+--- | "MOD"-- Modulating blend.
+
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
 --- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
 --- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
