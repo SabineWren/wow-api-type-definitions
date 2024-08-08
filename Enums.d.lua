@@ -120,8 +120,10 @@
 --- | "RAID"
 --- | "WHISPER"
 
---- TODO Type signatures from a modern API doc, so might be wrong arguments.
 ---@alias ScriptTypeFrame
+--- | "OnEvent"--- TODO args
+--- | "OnUpdate"--- TODO args
+--- These are from a modern API doc, so might be wrong arguments.
 --- | "OnEnter"-- (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
 --- | "OnHide"-- (self) - Invoked when the frame's visbility changes to hidden.
 --- | "OnLeave"-- (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
