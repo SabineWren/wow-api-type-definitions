@@ -1,35 +1,26 @@
-### Attributions
-Shiver's WoW API type definitions use content from [wowpedia.fandom.com](https://wowpedia.fandom.com/wiki/) (December 2006 edit diffs). The descriptions and example text are licensed under [Attribution-Share Alike 3.0 Unported license](https://wowpedia.fandom.com/wiki/Wowpedia:Copyrights).
-
 ### Usage
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice
-- Vendor this repo in your project (I recommend adding to .gitignore).
+- Clone this repo into your addon directory and .gitignore it.
 - Configure `.luarc.json`, including path to root directory of these type definitions.
 ```
 {
+   "diagnostics.globals": [
+		"arg1",
+		"arg2",
+		"event"
+	],
    "runtime.version": "Lua 5.1",
    "type.inferParamType": true,
-   "workspace.library": [YOUR_PATH_HERE]
+   "workspace.library": ["wow-api-type-definitions"]
 }
 ```
 
-### Lambdas
-In addition to type declarations, Shiver provides `Lambda.lua`, which wraps methods with function call syntax. It's inspired by [FSharp](https://devblogs.microsoft.com/dotnet/announcing-fsharp-8/#f-language-changes), which copied Elm.
-```
--- Blizzard way (imperative)
-local totalWidth = 0
-for _k,v in frames do
-   totalWidth += f:GetWidth()
-end
+### Attributions
+This repo includes work adapted from documentation on wowpedia.fandom.com, December 2006 snapshots:
+- TODO Events
+- [Global Functions](https://wowpedia.fandom.com/wiki/World_of_Warcraft_API?oldid=293146)
+- TODO Global Variables
+- [Widgets](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403)
 
--- Verbose functional approach
-local totalWidth =
-   Array.MapReduce(frames, function(r) return r:GetWidth() end, function(a, b) return a + b end, 0)
-
--- Shorthand
-local L = require "Lib/All.lua"
-local W = require "Shiver.lua"
-
-local totalWidth =
-   L.Array.MapReduce(frames, W.Region._GetWidth, L.Add, 0)
-```
+### Licensing
+The only software license [compatible](https://creativecommons.org/share-your-work/licensing-considerations/compatible-licenses/) with this project is the GNU GPLv3. That's because Wowpedia licenses its content under [CC BY-SA 3.0](https://wowpedia.fandom.com/wiki/Wowpedia:Copyrights), which allows upgrading to CC BY-SA 4.0, and then one-way to GNU GPLv3 to complete a license [hat trick](https://opensource.stackexchange.com/a/2236).

@@ -63,11 +63,11 @@ function FontInstance:SetFont(path, height, flags) end
 function FontInstance:SetFontObject(font) end
 
 ---Sets horizontal text justification.
----@param justifyH "LEFT"|"RIGHT"|"CENTER"
+---@param justifyH "Left"|"Right"|"Center"
 function FontInstance:SetJustifyH(justifyH) end
 
 ---Sets vertical text justification.
----@param justifyV "TOP"|"BOTTOM"|"MIDDLE"
+---@param justifyV "Top"|"Bottom"|"Middle"
 function FontInstance:SetJustifyV(justifyV) end
 
 ---Sets the text shadow color.
