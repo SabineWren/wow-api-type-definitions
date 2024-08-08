@@ -67,3 +67,5 @@
 --- Fires whenever an item's durability status becomes yellow (low) or red (broken). Signals that the durability frame needs to be updated. May also fire on any durability status change, even if that change doesn't require an update to the durability frame.
 --- - Wiki also includes this as a Player event, but that doesn't seem relevant.
 --- | "UPDATE_INVENTORY_ALERTS"
+---
+--- | "USE_BIND_CONFIRM"

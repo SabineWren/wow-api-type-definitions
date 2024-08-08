@@ -1,0 +1,71 @@
+---@meta
+
+---@alias EventSystem
+--- This event fires whenever an AddOn is loaded (fires once for each AddOn loaded if multiple AddOns are being loaded), whether that is during the inital Loading Phase or when an AddOn is loaded using the LoadAddOn("addonname") or UIParentLoadAddon("addonname") function. This event always fires after that Saved Variables of the AddOn that just finished loading have been loaded from the disk.
+--- arg1 string Name of the AddOn that was just loaded.
+--- | "ADDON_LOADED"
+---
+--- Fired when a CVar is changed
+--- arg1 string cvarname
+--- arg2 string value
+--- | "CVAR_UPDATE"
+---
+--- | "DISPLAY_SIZE_CHANGED"
+---
+--- | "LOGOUT_CANCEL"
+---
+--- Fired when all memory allocated to the UI is exhausted.
+--- arg1 number Current memory limit (in MB).
+--- | "MEMORY_EXHAUSTED"
+---
+--- Fired when WoW recovers from an out of memory error.
+--- | "MEMORY_RECOVERED"
+---
+--- Fired when the player enters the world, enters/leaves an instance, or respawns at a graveyard. Also fires any other time the player sees a loading screen. To check if the player is entering an instance, check [GetPlayerMapPosition](http://wowwiki.wikia.com/wiki/API_GetPlayerMapPosition) to see if both X and Y are zero.
+--- | "PLAYER_ENTERING_WORLD"
+---
+--- Fired when a player logs out and possibly at other situations as well
+--- | "PLAYER_LEAVING_WORLD"
+---
+--- Triggered immediately before PLAYER_ENTERING_WORLD on login and UI Reload, but NOT when entering/leaving instances.
+--- | "PLAYER_LOGIN"
+---
+--- Sent when the player logs out or the UI is reloaded, after PLAYER_LEAVING_WORLD, but before variables are saved.
+--- | "PLAYER_LOGOUT"
+---
+--- Fired when the player hits the quit button.
+--- | "PLAYER_QUITING"
+---
+--- Fired when a screenshot fails.
+--- | "SCREENSHOT_FAILED"
+---
+--- Fired when a screenshot is successfully taken.
+--- | "SCREENSHOT_SUCCEEDED"
+---
+--- Fired when a system message occurs.
+--- arg1 string message
+--- arg2 number red
+--- arg3 number green
+--- arg4 number blue
+--- | "SYSMSG"
+---
+--- Fired when the client recieved a time played message.
+--- arg1 Total time
+--- arg2 Current time at this level
+--- | "TIME_PLAYED_MSG"
+---
+--- Fired when the interface creates an error message. These are the red messages that show in the top middle of the screen. "Your inventory is full." is one example.
+--- arg1 message
+--- | "UI_ERROR_MESSAGE"
+---
+--- Fired when the interface generates a message. These are the yellow messages in the top middle of the window. "No fish are hooked." is one example.
+--- arg1 message
+--- | "UI_INFO_MESSAGE"
+---
+--- Fired when the keybindings are changed. Fired after completion of [SaveBindings()](http://wowwiki.wikia.com/wiki/API_SaveBindings" title="API SaveBindings).
+--- | "UPDATE_BINDINGS"
+---
+--- | "UPDATE_MACROS"
+---
+--- Fired during the loading phase of the UI to indicate that the Saved Variables of all AddOns that will be loaded during the initial load (or reload) of the UI have have been read into memory from their files.
+--- | "VARIABLES_LOADED"

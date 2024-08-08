@@ -1,6 +1,8 @@
 ---@meta
 
 ---@alias EventParty
+--- | "MEETINGSTONE_CHANGED"
+---
 --- Fired when you decline a party invite.
 --- | "PARTY_INVITE_CANCEL"
 ---

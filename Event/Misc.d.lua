@@ -7,3 +7,109 @@
 
 ---@alias EventMisc
 --- | EventMiscUnit
+---
+--- Fired when you begin automatically following an ally.
+--- arg1 UnitId The unit you are following. Not necessarily your target (in case of right-clicking a group member's portrait or using the "/follow" command).
+--- | "AUTOFOLLOW_BEGIN"
+---
+--- Fired when the player ceases following an ally
+--- | "AUTOFOLLOW_END"
+---
+--- | "BILLING_NAG_DIALOG"
+---
+--- TODO this doesn't appear in any documentation except Shagu's.
+--- | "CHARACTER_LIST_UPDATE"
+---
+--- | "CINEMATIC_START"
+---
+--- | "CINEMATIC_STOP"
+---
+--- Fired when the guild dress frame is closed
+--- | "CLOSE_TABARD_FRAME"
+---
+--- This isn't documented anywhere, so maybe it's keyboard related? Could also related to loot binding.
+--- | "CONFIRM_BINDER"
+---
+--- | "CONFIRM_SUMMON"
+---
+--- | "CONFIRM_TALENT_WIPE"
+---
+--- Fired when the player single-clicks terrain. This excludes doodads, NPCs and other PCs.
+--- | "CURSOR_UPDATE"
+---
+--- Fired when the chat line needs to be processed.
+--- arg1 string Macro to execute.
+--- | "EXECUTE_CHAT_LINE"
+---
+--- Fired when you close the talk window for an npc (Seems to be called twice)
+--- arg1 nil|MouseButton The mouse button used to close the window (nil if closed when you go out of range)
+--- | "GOSSIP_CLOSED"
+---
+--- | "GOSSIP_ENTER_CODE"
+---
+--- Fired when you talk to an npc (Quest dialogue boxes and Vending boxes do not call this event)
+--- | "GOSSIP_SHOW"
+---
+--- Fired when a player is added or removed from the ignore list. Event is called twice. Not certain why it is called twice.
+--- | "IGNORELIST_UPDATE"
+---
+--- | "IGR_BILLING_NAG_DIALOG"
+---
+--- Fired when the countdown to boot a player from an instance starts.
+--- | "INSTANCE_BOOT_START"
+---
+--- Fired when the countdown to boot a player from an instance stops.
+--- | "INSTANCE_BOOT_STOP"
+---
+--- Fired when a merchant frame closes.
+--- | "MERCHANT_CLOSED"
+---
+--- Fired when the merchant frame is shown.
+--- | "MERCHANT_SHOW"
+---
+--- Fired when a merchant updates
+--- | "MERCHANT_UPDATE"
+---
+--- Fired when the mirror timer is paused.
+--- arg1 pause duration
+--- | "MIRROR_TIMER_PAUSE"
+---
+--- Fired when some sort of timer starts.
+--- arg1 timer
+--- arg2 value
+--- arg3 maxvalue
+--- arg4 scale
+--- arg5 paused
+--- arg6 label
+--- | "MIRROR_TIMER_START"
+---
+--- Fired when a mirror timer is stopped.
+--- | "MIRROR_TIMER_STOP"
+---
+--- Fired when the guild dress frame is opened.
+--- | "OPEN_TABARD_FRAME"
+---
+--- | "PLAYER_DAMAGE_DONE_MODS"
+---
+--- | "SELECT_FIRST_CHARACTER"
+---
+--- | "SELECT_LAST_CHARACTER"
+---
+--- | "SUGGEST_REALM"
+---
+--- Fired when it is possible to save a tabard.
+--- | "TABARD_CANSAVE_CHANGED"
+---
+--- | "TABARD_SAVE_PENDING"
+---
+--- Fired when the taxi frame is closed.
+--- | "TAXIMAP_CLOSED"
+---
+--- Fired when the taxi viewer is opened
+--- | "TAXIMAP_OPENED"
+---
+--- | "TUTORIAL_TRIGGER"
+---
+--- | "UPDATE_SELECTED_CHARACTER"
+---
+--- | "UPDATE_TICKET"

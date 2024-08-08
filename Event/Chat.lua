@@ -312,3 +312,32 @@
 --- arg2 string Name of the player who sent the message.
 --- arg3 unknown Language the message was spoken in. (See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
 --- | "CHAT_MSG_YELL"
+---
+--- Fired when...
+--- 1. You log in
+--- 2. Open the friends window (twice)
+--- 3. Switch from the ignore list to the friend's list
+--- 4. Switch from the guild, raid, or who tab back to the friends tab (twice)
+--- 5. Add a friend
+--- 6. Remove a friend
+--- 7. Friend comes online
+--- 8. Friend goes offline
+--- | "FRIENDLIST_UPDATE"
+---
+--- | "LANGUAGE_LIST_CHANGED"
+---
+--- Fired when the chat colour needs to be updated.
+--- arg1 string Chat type
+--- arg2 number red
+--- arg3 number green
+--- arg4 number blue
+--- | "UPDATE_CHAT_COLOR"
+---
+--- Fired when there's a reason to update the chat windows.
+--- | "UPDATE_CHAT_WINDOWS"
+---
+--- Fired when the client receives the result of a SendWho() request from the server. use [API SetWhoToUI](http://wowwiki.wikia.com/wiki/API_SetWhoToUI) to manipulate this functionality.
+--- | "WHO_LIST_UPDATE"
+---
+--- This doesn't seem to be sent for WorldDefense - it comes in on CHAT_MSG_CHANNEL and totally skips the ZONE_UNDER_ATTACK code in the client. Is the same true for LocalDefense?
+--- | "ZONE_UNDER_ATTACK"

@@ -1,5 +1,8 @@
 ---@meta
 
+---@alias EventSpellPlayer
+--- | "PLAYER_FARSIGHT_FOCUS_CHANGED"
+
 ---@alias EventSpellUnit
 --- Fired when a spell misses
 --- arg1 UnitId
@@ -7,6 +10,7 @@
 --- | "UNIT_SPELLMISS"
 
 ---@alias EventSpell
+--- | EventSpellPlayer
 --- | EventSpellUnit
 ---
 --- Fired when the spell being cast is changed.
@@ -15,6 +19,17 @@
 --- Fired when a new spell/ability is added to the spellbook. e.g. When training a new or a higher level spell/ability.
 --- arg1 number Number of the tab which the spell/ability is added to
 --- | "LEARNED_SPELL_IN_TAB"
+---
+--- TODO documentation from modern wiki and might be wrong.
+--- Fired when:
+--- 1. Spellbook initially loads on client initialization. (Attempting to use GetSpellName before this is complete will result in a UI error. Note: This event happens after ADDON_LOADED and VARIABLES_LOADED.)
+--- 2. Learning new stuff that goes in the spellbook.
+--- 3. Opening the spellbook.
+--- 4. Equipping/Removing/Swapping primary weapon. (Changes the Attack icon)
+--- 5. UpdateSpells() function is called, which is used throughout the spellbook.
+--- 6. On regular intervals for no apparent reason.
+--- arg1 nil|MouseButton
+--- | "SKILL_LINES_CHANGED"
 ---
 --- Fired when a spellcaster begins channelling
 --- - On version 1.2.1, this event doesnt seem to work.

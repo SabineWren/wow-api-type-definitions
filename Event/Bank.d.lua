@@ -1,0 +1,17 @@
+---@meta
+
+---@alias EventBank
+--- Fired when the bank window is closed
+--- | "BANKFRAME_CLOSED"
+---
+--- Fired when the bank frame is opened
+--- | "BANKFRAME_OPENED"
+---
+--- Fired when the One of the six bag slots bank changes.
+--- Does **not** fire when an item is added to or removed from a bank bag, only when
+--- a bag is added or removed from the bag slots.
+--- | "PLAYERBANKBAGSLOTS_CHANGED"
+---
+--- Fired when the One of the slots in the pleyer's 24 bank slots has changed.
+--- Does **not** fire when an item is added to or removed from a bank bag.
+--- | "PLAYERBANKSLOTS_CHANGED"

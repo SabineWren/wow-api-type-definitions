@@ -1,0 +1,19 @@
+---@meta
+
+---@alias EventCombat
+--- | EventDuel
+--- | EventPlayerCombat
+---
+--- Fired when a player engages auto-attack. Note that firing a gun or a spell, or getting aggro, does NOT trigger this event.
+--- From a post by Dhrago on the WoW forums:
+--- `PLAYER_ENTER_COMBAT` and `PLAYER_LEAVE_COMBAT` are for *MELEE* combat only. They fire when you initiate autoattack and when you turn it off. However, any spell or ability that does not turn on autoattack does not trigger it. Nor does it trigger when you get aggro.
+--- You probably want [PLAYER_REGEN_ENABLED](http://wowwiki.wikia.com/wiki/Events_A-Z_(full_list)?direction=prev&amp;oldid=161492#PLAYER_REGEN_ENABLED) (happens when you lose aggro).
+--- - Unrelated to PLAYER_LEAVE_COMBAT
+--- | "PLAYER_ENTER_COMBAT"
+---
+--- This event is fired whenever the player's target is changed, including when the target is lost.
+--- TODO Sources give 3 different arg1 descriptions:
+--- - (wowpedia diff history) no-args
+--- - (wowwiki-archive) arg1 string Up if you click the target directly, down if you press Escape to clear the target selection, LeftButton if you select the target using static frames in the UI, nil if the target moves out of range and is lost.
+--- - (Shagu) arg1 number Holds the same value as GetTime() yields.
+--- | "PLAYER_TARGET_CHANGED"

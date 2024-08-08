@@ -1,0 +1,16 @@
+---@meta
+
+---@alias EventTooltip
+--- Fired when the tooltip needs to be wiped
+--- | "CLEAR_TOOLTIP"
+---
+--- | "SHOW_COMPARE_TOOLTIP"
+---
+--- *Event was removed in version 1700. See [OnTooltipAddMoney](http://wowwiki.wikia.com/wiki/API_GameTooltip_OnTooltipAddMoney)*
+--- Fired when a tooltip has money added to it.
+--- arg1 string Tooltip name
+--- arg2 number Money amount
+--- | "TOOLTIP_ADD_MONEY"
+---
+--- Fired when the tooltip anchor should be reset
+--- | "TOOLTIP_ANCHOR_DEFAULT"

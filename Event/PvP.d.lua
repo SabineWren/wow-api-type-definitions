@@ -17,6 +17,20 @@
 --- Fired within Battlefields when certain things occur such as a flag being captured.
 --- | "UPDATE_WORLD_STATES"
 
+---@alias EventDuel
+--- Fired when a duel is finished.
+--- | "DUEL_FINISHED"
+---
+--- Fired when the player is still in the bounds of the duel.
+--- | "DUEL_INBOUNDS"
+---
+--- Fired when the player leaves the bounds of the duel
+--- | "DUEL_OUTOFBOUNDS"
+---
+--- Fired when the player is challenged to a duel
+--- arg1 opponent name
+--- | "DUEL_REQUESTED"
+
 ---@alias EventHonor
 --- Fired when you slay another player
 --- | "PLAYER_PVP_KILLS_CHANGED"

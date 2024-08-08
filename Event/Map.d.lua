@@ -1,10 +1,13 @@
 ---@meta
 
 ---@alias EventMap
+--- Fired when the world map is hidden.
+--- | "CLOSE_WORLD_MAP"
+---
 --- Fired when the minimap is pinged.
---- arg1 UnitId of the one that created the ping (ie "player" or any of the group members)
---- arg2 x
---- arg3 y
+--- arg1 UnitId That pinged.
+--- arg2 number x
+--- arg3 number y
 --- | "MINIMAP_PING"
 ---
 --- Fired when the minimap scaling factor is changed. This happens, generally, whenever the player moves indoors from outside, or vice versa. There are no arguments to this event. To test the player's location, compare the `minimapZoom` and `minimapInsideZoom` CVars with the current minimap zoom level (see [GetZoom](http://wowwiki.wikia.com/wiki/API_Minimap_GetZoom)).
@@ -17,3 +20,12 @@
 ---
 --- Fired when the world map should be updated.
 --- | "WORLD_MAP_UPDATE"
+---
+--- Fired when the player enters a new zone. Zones are the smallest named subdivions of the game world and are contained within areas (also called regions). Whenever the text over the minimap changes, this event is fired.
+--- | "ZONE_CHANGED"
+---
+--- Fired when a player enters a new zone within a city.
+--- | "ZONE_CHANGED_INDOORS"
+---
+--- Fired when the user enters a new zone and a new area. e.g. moving from Duskwood to Stranglethorn Vale. In interface terms, this is anytime you get a new set of channels. The ZONE_CHANGED events are mutually exclusive!
+--- | "ZONE_CHANGED_NEW_AREA"

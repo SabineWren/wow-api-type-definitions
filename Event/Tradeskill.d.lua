@@ -1,0 +1,15 @@
+---@meta
+
+---@alias EventTradeskill
+--- Fired when a crafting skill window closes. Crafting skills are Enchanting, <craftSkill2>,...
+--- arg1 MouseButton The mouse button used to close the window.
+--- | "CRAFT_CLOSE"
+---
+--- Fired when a crafting skill window opens. Crafting skills are Enchanting, <craftSkill2>,...
+--- arg1 MouseButton The mouse button used to open the window.
+--- | "CRAFT_SHOW"
+---
+--- Fired when a crafting event is updating.
+--- | "CRAFT_UPDATE"
+---
+--- | "UPDATE_TRADESKILL_RECAST"

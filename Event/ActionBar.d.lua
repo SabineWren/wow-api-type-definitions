@@ -24,3 +24,5 @@
 ---
 --- Fired when something in the actionbar or your inventory becomes usable again (after eating or drinking a potion, for example).
 --- | "ACTIONBAR_UPDATE_USABLE"
+---
+--- | "UPDATE_BONUS_ACTIONBAR"

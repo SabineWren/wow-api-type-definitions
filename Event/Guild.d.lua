@@ -21,3 +21,7 @@
 --- | "GUILD_ROSTER_UPDATE"
 ---
 --- | "PLAYER_GUILD_UPDATE"
+---
+--- | "PETITION_CLOSED"
+---
+--- | "PETITION_SHOW"
