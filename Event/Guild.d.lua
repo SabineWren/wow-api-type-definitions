@@ -1,0 +1,23 @@
+---@meta
+
+---@alias EventGuild
+--- Fired when the guild invitation is declined.
+--- | "GUILD_INVITE_CANCEL"
+---
+--- Fired when you are invited to join a guild.
+--- arg1 string Guild inviter
+--- arg2 string Guild name
+--- | "GUILD_INVITE_REQUEST"
+---
+--- | "GUILD_MOTD"
+---
+--- | "GUILD_REGISTRAR_CLOSED"
+---
+--- | "GUILD_REGISTRAR_SHOW"
+---
+--- | "GUILD_ROSTER_SHOW"
+---
+--- Fired when the client's guild info cache has been updated after a call to [GuildRoster()](http://wowwiki.wikia.com/wiki/API_GuildRoster).
+--- | "GUILD_ROSTER_UPDATE"
+---
+--- | "PLAYER_GUILD_UPDATE"

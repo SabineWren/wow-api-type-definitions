@@ -1,0 +1,30 @@
+---@meta
+
+---@alias EventLoot
+--- | EventItemLoot
+---
+--- | "CANCEL_LOOT_ROLL"
+---
+--- | "CONFIRM_LOOT_ROLL"
+---
+--- Fired when the player attempts to take 'bind-on-pickup' loot
+--- | "LOOT_BIND_CONFIRM"
+---
+--- Fired when a player ceases looting a corpse.
+--- | "LOOT_CLOSED"
+---
+--- Fired when a corpse is looted
+--- | "LOOT_OPENED"
+---
+--- Fired when loot is removed from a corpse.
+--- arg1 number Slot number
+--- | "LOOT_SLOT_CLEARED"
+---
+--- | "OPEN_MASTER_LOOT_LIST"
+---
+--- Fired when a group loot item is being rolled on.
+--- arg1 unknown The rollID of the item being rolled on.
+--- arg2 unknown The roll time.
+--- | "START_LOOT_ROLL"
+---
+--- | "UPDATE_MASTER_LOOT_LIST"

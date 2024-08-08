@@ -1,0 +1,64 @@
+---@meta
+
+---@alias EventPetUnit
+--- Fired when a unit's maximum focus changes.
+--- | "UNIT_MAXFOCUS"
+---
+--- | "UNIT_MAXHAPPINESS"
+--- Fired whenever maximum pet happiness changes.
+---
+--- Same as UNIT_MANA, except for certain classes. Hunter used to use focus, but now they use mana. But it is still used when a pets energy changes.
+--- | "UNIT_FOCUS"
+---
+--- Fires whenever pet happiness changes.
+--- | "UNIT_HAPPINESS"
+---
+--- | "UNIT_LOYALTY"
+---
+--- Fired when a unit's pet changes.
+--- arg1 UnitId The [UnitID](lua://UnitId) of the entity whose pet changed
+--- | "UNIT_PET"
+---
+--- | "UNIT_PET_EXPERIENCE"
+---
+--- | "UNIT_PET_TRAINING_POINTS"
+
+---@alias EventPet
+--- | EventPetUnit
+---
+--- | "CONFIRM_PET_UNLEARN"
+---
+--- | "LOCALPLAYER_PET_RENAMED"
+---
+--- Fired when the player's pet begins attacking.
+--- | "PET_ATTACK_START"
+---
+--- Fired when the player's pet ceases attack
+--- | "PET_ATTACK_STOP"
+---
+--- Fired when the pet bar should be hidden. (dismiss/die)
+--- | "PET_BAR_HIDEGRID"
+---
+--- Fired when the Pet bar is supposed to be displayed
+--- | "PET_BAR_SHOWGRID"
+---
+--- Fired when the pet bar is updates.
+--- | "PET_BAR_UPDATE"
+---
+--- Fired when a pet spell cooldown starts. It is not called when cooldown ends.
+--- | "PET_BAR_UPDATE_COOLDOWN"
+---
+--- | "PET_STABLE_CLOSED"
+---
+--- | "PET_STABLE_SHOW"
+---
+--- | "PET_STABLE_UPDATE"
+---
+--- | "PET_STABLE_UPDATE_PAPERDOLL"
+---
+--- | "PET_UI_CLOSE"
+---
+--- | "PET_UI_UPDATE"
+---
+--- Fired when a player's pet changes.
+--- | "PLAYER_PET_CHANGED"

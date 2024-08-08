@@ -1,0 +1,30 @@
+---@meta
+
+---@alias EventParty
+--- Fired when you decline a party invite.
+--- | "PARTY_INVITE_CANCEL"
+---
+--- Fired when a player invite you to party.
+--- arg1 string Party leader name
+--- | "PARTY_INVITE_REQUEST"
+---
+--- Fired when the player's leadership changed.
+--- Referred to as *buggy*.
+--- | "PARTY_LEADER_CHANGED"
+---
+--- Fired when the party's loot method changes
+--- | "PARTY_LOOT_METHOD_CHANGED"
+---
+--- Fired when the player's party changes. As of 1.8.3 this event also fires when players are moved around in a Raid and when a player leaves the raid. This holds true even if the changes do not affect your party within the raid. This event is called twice when the event `PARTY_LOOT_METHOD_CHANGED` is called. This event is generated whenever someone rejects an invite and your in a group, also generated obviously when someone joins or leaves the group. Also, if for instance you have 3 people in your group and you invite a 4th, it will generate 4 events. If you call `GetNumPartyMembers()` it will return 0, 1, 2, and 3. First event returing zero, 2nd event returning 1, etc etc.
+--- | "PARTY_MEMBERS_CHANGED"
+---
+--- Fired when a specific party member is offline or dead
+--- arg1 string Player Name
+--- | "PARTY_MEMBER_DISABLE"
+---
+--- Fired when a specific party member is still connected
+--- arg1 string Player Name
+--- | "PARTY_MEMBER_ENABLE"
+---
+--- Fired whenever a raid is formed or disbanded, players are leaving or joining a raid (unsure if rejected join requests also fire the event), or when looting rules are changed (regardless of being in raid or party!)
+--- | "RAID_ROSTER_UPDATE"

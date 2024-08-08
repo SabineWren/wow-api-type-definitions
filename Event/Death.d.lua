@@ -1,0 +1,41 @@
+---@meta
+
+---@alias EventDeath
+--- | "AREA_SPIRIT_HEALER_IN_RANGE"
+---
+--- | "AREA_SPIRIT_HEALER_OUT_OF_RANGE"
+---
+--- loss in exchange for his body back.
+--- | "CONFIRM_XP_LOSS"
+---
+--- | "CORPSE_IN_INSTANCE"
+---
+--- Fired when the player is in range of his body.
+--- | "CORPSE_IN_RANGE"
+---
+--- Fired when the player is out of range of his body.
+--- | "CORPSE_OUT_OF_RANGE"
+---
+--- Fired when the player:
+--- 1. Releases from death to a graveyard.
+--- 2. Feigns Death with the hunter skill.
+--- 3. Lands from a jump or fall.
+--- 4. Accepts a resurrect before releasing their spirit.
+--- This is *not* called when the player is alive after being a ghost. `PLAYER_UNGHOST` is triggered in that case.
+--- | "PLAYER_ALIVE"
+---
+--- Fired when the player has died.
+--- | "PLAYER_DEAD"
+---
+--- Fired when the player is alive after being a ghost.
+--- Called after one of:
+--- - Performing a successful corpse run and the player accepts the 'Resurrect Now' box.
+--- - Accepting a resurrect from another player after releasing from a death.
+--- - Zoning into an instance where the player is dead.
+--- - When the player accept a resurrect from a Spirit Healer.
+--- The player is alive when this event happens. This is *not* called when the player is resurrected before releasing. PLAYER_ALIVE is triggered in that case.
+--- | "PLAYER_UNGHOST"
+---
+--- Fired when another player resurrects you
+--- arg1 string player name
+--- | "RESURRECT_REQUEST"

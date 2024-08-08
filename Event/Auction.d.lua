@@ -1,0 +1,14 @@
+---@meta
+
+---@alias EventAuction
+--- | "AUCTION_BIDDER_LIST_UPDATE"
+---
+--- | "AUCTION_HOUSE_CLOSED"
+---
+--- | "AUCTION_HOUSE_SHOW"
+---
+--- | "AUCTION_ITEM_LIST_UPDATE"
+---
+--- | "AUCTION_OWNED_LIST_UPDATE"
+---
+--- | "NEW_AUCTION_UPDATE"

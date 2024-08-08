@@ -1,0 +1,117 @@
+---@meta
+
+---@alias EventUnit
+--- | EventItemUnit
+--- | EventMiscUnit
+--- | EventPetUnit
+--- | EventPvPUnit
+--- | EventQuestUnit
+--- | EventSpellUnit
+---
+--- Fired when a units attack is affected.
+--- | "UNIT_ATTACK"
+---
+--- Fired when a unit's attack power changes.
+--- | "UNIT_ATTACK_POWER"
+---
+--- Fired when your attack speed is being listed or affected
+--- | "UNIT_ATTACK_SPEED"
+---
+--- Fired when an buff, debuff, status, or item bonus was gained by or faded from a player, NPC, or mob.
+--- arg1 UnitId The [UnitID](lua://UnitId) affected, ex. "player".
+--- NOTE: This event is fired not only when a unit's buffs change, but when you change targets as well! -Myrrion
+--- | "UNIT_AURA"
+---
+--- Seems like the same as UNIT_AURA above (including arguments) but only for short buffs. As a Paladin, it was triggered each time I gained a 30 second buff (Paladin Seals), lost/canceled it, or switched targets from another player to myself. Needs more testing with other classes etc.
+--- | "UNIT_AURASTATE"
+---
+--- | "UNIT_CLASSIFICATION_CHANGED"
+---
+--- Fired when an npc or player participates in combat
+--- - TODO can arg3 be nil?
+--- - TODO Can arg5 be a union or enum?
+--- arg1 UnitId The [UnitID](lua://UnitId) affected, ex. "player".
+--- arg2 CombatMessage
+--- arg3 string Critical indicator (e.g. CRITICAL)
+--- arg4 number The numeric damage
+--- arg5 number Damage type in numeric value (0 - physical; 1 - holy; 2 - fire; 5 - shadow; 6 - arcane)
+--- | "UNIT_COMBAT"
+---
+--- | "UNIT_COMBO_POINTS"
+---
+--- Fired when the units melee damage changes.
+--- Be warned that this often gets fired multiple times, for example when you change weapons.
+--- | "UNIT_DAMAGE"
+---
+--- Fired when a units defense is affected
+--- | "UNIT_DEFENSE"
+---
+--- Fired when the unit's mana stype is changed.
+--- arg1 string Unit name
+--- | "UNIT_DISPLAYPOWER"
+---
+--- Fired when the unit's flags are changed.
+--- | "UNIT_DYNAMIC_FLAGS"
+---
+--- Fired whenever a units energy is affected.
+--- arg1 UnitId Name of the unit whose energy is affected. Seen unit names: player
+--- | "UNIT_ENERGY"
+---
+--- Fired when a target's faction is announced.
+--- | "UNIT_FACTION"
+---
+--- | "UNIT_FLAGS"
+---
+--- Fired whenever a units health is affected.
+--- It is so important that it gets called twice when it's about the player (might do the same for other things too)
+--- arg1 UnitId Name of the unit whose health is affected. Seen : player, pet, target, mouseover, party1..4, partypet1..4
+--- | "UNIT_HEALTH"
+---
+--- Fired whenever the level of a unit is submitted (e.g. when clicking a unit or someone joins the party)
+--- arg1 UnitId The [UnitID](lua://UnitId) entity whose level is submitted.
+--- | "UNIT_LEVEL"
+---
+--- Fired whenever a unit's mana change either by usage or by regeneration.
+--- The event is also called when a unit is click on.
+--- Only gets called once, unlike its more important brother, UNIT_HEALTH.
+--- arg1 UnitId The [UnitID](lua://UnitId) affected, ex. "player".
+--- | "UNIT_MANA"
+---
+--- Fired when a unit's maximum energy changes.
+--- | "UNIT_MAXENERGY"
+---
+--- Fired when a unit's maximum health changes.
+--- | "UNIT_MAXHEALTH"
+---
+--- Fired when a unit's maximum mana changes.
+--- | "UNIT_MAXMANA"
+---
+--- Fired when a unit's maximum rage changes.
+--- | "UNIT_MAXRAGE"
+---
+--- Fired when the unit's 3d model changes.
+--- | "UNIT_MODEL_CHANGED"
+---
+--- Fired when a unit's name changes.
+--- arg1 UnitId The [UnitID](lua://UnitId) of the entity whose name changed.
+--- | "UNIT_NAME_UPDATE"
+---
+--- Fired when a units portrait changes.
+--- arg1 UnitId
+--- | "UNIT_PORTRAIT_UPDATE"
+---
+--- Fired whenever a units rage is affected.
+--- arg1 UnitId Unit whose rage is affected. Seen: player
+--- | "UNIT_RAGE"
+---
+--- Fired when a unit's ranged damage changes.
+--- | "UNIT_RANGEDDAMAGE"
+---
+--- Fired when a unit's ranged attack power changes.
+--- | "UNIT_RANGED_ATTACK_POWER"
+---
+--- Fired when the units resistance changes
+--- | "UNIT_RESISTANCES"
+---
+--- Fired when a units stats are being passed to the player/thing
+--- | "UNIT_STATS"

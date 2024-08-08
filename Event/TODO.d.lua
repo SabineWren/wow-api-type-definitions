@@ -1,0 +1,367 @@
+---@meta
+
+--- Chat events listed exclusively in Chat, even if related to party/guild/etc.
+---@alias TODO_Event
+--- This event fires whenever an AddOn is loaded (fires once for each AddOn loaded if multiple AddOns are being loaded), whether that is during the inital Loading Phase or when an AddOn is loaded using the LoadAddOn("addonname") or UIParentLoadAddon("addonname") function. This event always fires after that Saved Variables of the AddOn that just finished loading have been loaded from the disk.
+--- arg1 string Name of the AddOn that was just loaded.
+--- | "ADDON_LOADED"
+---
+--- Fired when you begin automatically following an ally.
+--- arg1 The unit you are following. Not necessarily your target (in case of right-clicking a group member's portrait or using the "/follow" command).
+--- | "AUTOFOLLOW_BEGIN"
+---
+--- Fired when the player ceases following an ally
+--- | "AUTOFOLLOW_END"
+---
+--- Fired when the bank window is closed
+--- | "BANKFRAME_CLOSED"
+---
+--- Fired when the bank frame is opened
+--- | "BANKFRAME_OPENED"
+---
+--- | "BILLING_NAG_DIALOG"
+---
+--- | "CHARACTER_LIST_UPDATE"
+---
+--- Fired when the player's character points are changed.
+--- | "CHARACTER_POINTS_CHANGED"
+---
+--- | "CINEMATIC_START"
+---
+--- | "CINEMATIC_STOP"
+---
+--- Fired when the tooltip needs to be wiped
+--- | "CLEAR_TOOLTIP"
+---
+--- Fired when the guild dress frame is closed
+--- | "CLOSE_TABARD_FRAME"
+---
+--- Fired when the world map is hidden.
+--- | "CLOSE_WORLD_MAP"
+---
+--- This isn't documented anywhere, so maybe it's keyboard related? Could also related to loot binding.
+--- | "CONFIRM_BINDER"
+---
+--- | "CONFIRM_SUMMON"
+---
+--- | "CONFIRM_TALENT_WIPE"
+---
+--- Fired when a crafting skill window closes. Crafting skills are Enchanting, <craftSkill2>,...
+--- arg1 The mouse button used to close the window.
+--- | "CRAFT_CLOSE"
+---
+--- Fired when a crafting skill window opens. Crafting skills are Enchanting, <craftSkill2>,...
+--- arg1 The mouse button used to open the window.
+--- | "CRAFT_SHOW"
+---
+--- Fired when a crafting event is updating.
+--- | "CRAFT_UPDATE"
+---
+--- Fired when the player single-clicks terrain. This excludes doodads, NPCs and other PCs.
+--- | "CURSOR_UPDATE"
+---
+--- Fired when a CVar is changed
+--- arg1 cvarname
+--- arg2 value
+--- | "CVAR_UPDATE"
+---
+--- | "DISPLAY_SIZE_CHANGED"
+---
+--- Fired when a duel is finished.
+--- | "DUEL_FINISHED"
+---
+--- Fired when the player is still in the bounds of the duel.
+--- | "DUEL_INBOUNDS"
+---
+--- Fired when the player leaves the bounds of the duel
+--- | "DUEL_OUTOFBOUNDS"
+---
+--- Fired when the player is challenged to a duel
+--- arg1 opponent name
+--- | "DUEL_REQUESTED"
+---
+--- Fired when the chat line needs to be processed.
+--- arg1 Chat line
+--- | "EXECUTE_CHAT_LINE"
+---
+--- Fired when...
+--- 1. You log in
+--- 2. Open the friends window (twice)
+--- 3. Switch from the ignore list to the friend's list
+--- 4. Switch from the guild, raid, or who tab back to the friends tab (twice)
+--- 5. Add a friend
+--- 6. Remove a friend
+--- 7. Friend comes online
+--- 8. Friend goes offline
+--- | "FRIENDLIST_UPDATE"
+---
+--- Fired when you close the talk window for an npc (Seems to be called twice)
+--- arg1 The mouse button used to close the window (nil if closed when you go out of range)
+--- | "GOSSIP_CLOSED"
+---
+--- | "GOSSIP_ENTER_CODE"
+---
+--- Fired when you talk to an npc (Quest dialogue boxes and Vending boxes do not call this event)
+--- | "GOSSIP_SHOW"
+---
+--- Fired when a player is added or removed from the ignore list. Event is called twice. Not certain why it is called twice.
+--- | "IGNORELIST_UPDATE"
+---
+--- | "IGR_BILLING_NAG_DIALOG"
+---
+--- Fired when the countdown to boot a player from an instance starts.
+--- | "INSTANCE_BOOT_START"
+---
+--- Fired when the countdown to boot a player from an instance stops.
+--- | "INSTANCE_BOOT_STOP"
+---
+--- | "LANGUAGE_LIST_CHANGED"
+---
+--- | "LOGOUT_CANCEL"
+---
+--- | "MEETINGSTONE_CHANGED"
+---
+--- Fired when all memory allocated to the UI is exhausted.
+--- arg1 Current memory limit (in MB).
+--- | "MEMORY_EXHAUSTED"
+---
+--- Fired when WoW recovers from an out of memory error.
+--- | "MEMORY_RECOVERED"
+---
+--- Fired when a merchant frame closes.
+--- | "MERCHANT_CLOSED"
+---
+--- Fired when the merchant frame is shown.
+--- | "MERCHANT_SHOW"
+---
+--- Fired when a merchant updates
+--- | "MERCHANT_UPDATE"
+---
+--- Fired when the mirror timer is paused.
+--- arg1 pause duration
+--- | "MIRROR_TIMER_PAUSE"
+---
+--- Fired when some sort of timer starts.
+--- arg1 timer
+--- arg2 value
+--- arg3 maxvalue
+--- arg4 scale
+--- arg5 paused
+--- arg6 label
+--- | "MIRROR_TIMER_START"
+---
+--- Fired when a mirror timer is stopped.
+--- | "MIRROR_TIMER_STOP"
+---
+--- Fired when the guild dress frame is opened.
+--- | "OPEN_TABARD_FRAME"
+---
+--- | "PETITION_CLOSED"
+---
+--- | "PETITION_SHOW"
+---
+--- Fired when the One of the six bag slots bank changes.
+--- Does **not** fire when an item is added to or removed from a bank bag, only when
+--- a bag is added or removed from the bag slots.
+--- | "PLAYERBANKBAGSLOTS_CHANGED"
+---
+--- Fired when the One of the slots in the pleyer's 24 bank slots has changed.
+--- Does **not** fire when an item is added to or removed from a bank bag.
+--- | "PLAYERBANKSLOTS_CHANGED"
+---
+--- Called when a buff or debuff is either applied to a unit or is removed from the player. (Further details to follow, study needed).
+--- **Druid**: This event is also called when a Druid changes Form (or changes Prowl state when in Cat Form). **arg1** - **arg9** are all nil in these cases. These args are probably nil for other classes as well. Also, this event can be called multiple times per Form change.
+--- | "PLAYER_AURAS_CHANGED"
+---
+--- Fired when the player is camping
+--- | "PLAYER_CAMPING"
+---
+--- arg1 is always 'player' not the number of combo points you have.
+--- Use the function GetComboPoints(); to get the exact number of combo points you have.
+--- | "PLAYER_COMBO_POINTS"
+---
+--- Fires after the PLAYER_CONTROL_LOST event, when control has been restored to the player.
+--- | "PLAYER_CONTROL_GAINED"
+---
+--- Fires whenever the player is unable to control the character. Examples are when afflicted by fear or when using a taxi.
+--- | "PLAYER_CONTROL_LOST"
+---
+--- | "PLAYER_DAMAGE_DONE_MODS"
+---
+--- Fired when the player enters the world, enters/leaves an instance, or respawns at a graveyard. Also fires any other time the player sees a loading screen. To check if the player is entering an instance, check [GetPlayerMapPosition](http://wowwiki.wikia.com/wiki/API_GetPlayerMapPosition) to see if both X and Y are zero.
+--- | "PLAYER_ENTERING_WORLD"
+---
+--- | "PLAYER_FARSIGHT_FOCUS_CHANGED"
+---
+--- Fired when a player engages auto-attack. Note that firing a gun or a spell, or getting aggro, does NOT trigger this event.
+--- From a post by Dhrago on the WoW forums:
+--- `PLAYER_ENTER_COMBAT` and `PLAYER_LEAVE_COMBAT` are for *MELEE* combat only. They fire when you initiate autoattack and when you turn it off. However, any spell or ability that does not turn on autoattack does not trigger it. Nor does it trigger when you get aggro.
+--- You probably want [PLAYER_REGEN_ENABLED](http://wowwiki.wikia.com/wiki/Events_A-Z_(full_list)?direction=prev&amp;oldid=161492#PLAYER_REGEN_ENABLED) (happens when you lose aggro).
+--- | "PLAYER_ENTER_COMBAT"
+---
+--- This event fires when a Unit's flags change (eg: due to /afk, /dnd, etc.)
+--- arg1 UnitId The [UnitID](lua://UnitId) affected, ex. "player".
+--- **NOTE**: WoW appears to condense simultaneous flag changes into a single event. If you are currently AFK and not(DND) but you type /dnd you'll see two Chat Log messages ("You are no longer AFK" and "You are now DND: Do Not Disturb") but you'll only see a single PLAYER_FLAGS_CHANGED event.
+--- | "PLAYER_FLAGS_CHANGED"
+---
+--- Fired when the players opponents die or he dies
+--- | "PLAYER_LEAVE_COMBAT"
+---
+--- Fired when a player logs out and possibly at other situations as well
+--- | "PLAYER_LEAVING_WORLD"
+---
+--- Fired when a player levels up.
+--- arg1 New player level. *Note that [UnitLevel("player")](http://wowwiki.wikia.com/wiki/API_UnitLevel) will most likely return an incorrect value when called in this event handler or shortly after, so use this value.*
+--- arg2 Hit points gained from leveling.
+--- arg3 Mana points gained from leveling.
+--- arg4 Talent points gained from leveling. Should always be 1 unless the player is between levels 1 to 9.
+--- **arg5 - arg9**: Attribute score increases from leveling. Strength (5) / Agility (6) / Stamina (7) / Intellect (8) / Spirit (9).
+--- | "PLAYER_LEVEL_UP"
+---
+--- Triggered immediately before PLAYER_ENTERING_WORLD on login and UI Reload, but NOT when entering/leaving instances.
+--- | "PLAYER_LOGIN"
+---
+--- Sent when the player logs out or the UI is reloaded, after PLAYER_LEAVING_WORLD, but before variables are saved.
+--- | "PLAYER_LOGOUT"
+---
+--- Fired whenever the player gains or looses money.
+--- | "PLAYER_MONEY"
+---
+--- Fired when the player hits the quit button.
+--- | "PLAYER_QUITING"
+---
+--- Fired whenever you get aggro, as normal regen rates are disabled during combat.
+--- | "PLAYER_REGEN_DISABLED"
+---
+--- Fired a few seconds after ending combat, as regen rates return to normal.
+--- | "PLAYER_REGEN_ENABLED"
+---
+--- arg1 holds the same value as GetTime() yields.
+--- | "PLAYER_TARGET_CHANGED"
+---
+--- Fired when the player starts or stops resting, ei when entering/leaving inns/major towns.
+--- | "PLAYER_UPDATE_RESTING"
+---
+--- Fired when the player's XP is updated (due quest completion or killing)
+--- | "PLAYER_XP_UPDATE"
+---
+--- Fired when the playtime state changes.
+--- | "PLAYTIME_CHANGED"
+---
+--- Fired when a screenshot fails.
+--- | "SCREENSHOT_FAILED"
+---
+--- Fired when a screenshot is successfully taken.
+--- | "SCREENSHOT_SUCCEEDED"
+---
+--- | "SELECT_FIRST_CHARACTER"
+---
+--- | "SELECT_LAST_CHARACTER"
+---
+--- | "SHOW_COMPARE_TOOLTIP"
+---
+--- | "SKILL_LINES_CHANGED"
+---
+--- | "SUGGEST_REALM"
+---
+--- Fired when a system message occurs.
+--- arg1 message
+--- arg2 red
+--- arg3 green
+--- arg4 blue
+--- | "SYSMSG"
+---
+--- Fired when it is possible to save a tabard.
+--- | "TABARD_CANSAVE_CHANGED"
+---
+--- | "TABARD_SAVE_PENDING"
+---
+--- Fired when the taxi frame is closed.
+--- | "TAXIMAP_CLOSED"
+---
+--- Fired when the taxi viewer is opened
+--- | "TAXIMAP_OPENED"
+---
+--- Fired when the client recieved a time played message.
+--- arg1 Total time
+--- arg2 Current time at this level
+--- | "TIME_PLAYED_MSG"
+---
+--- *Event was removed in version 1700. See [OnTooltipAddMoney](http://wowwiki.wikia.com/wiki/API_GameTooltip_OnTooltipAddMoney)*
+--- Fired when a tooltip has money added to it.
+--- arg1 tooltip name
+--- arg2 money amount
+--- | "TOOLTIP_ADD_MONEY"
+---
+--- Fired when the tooltip anchor should be reset
+--- | "TOOLTIP_ANCHOR_DEFAULT"
+---
+--- Fired when the trainer is closed.
+--- | "TRAINER_CLOSED"
+---
+--- | "TRAINER_SHOW"
+---
+--- Fired when the trainer window needs to update.
+--- | "TRAINER_UPDATE"
+---
+--- | "TUTORIAL_TRIGGER"
+---
+--- Fired when the interface creates an error message. These are the red messages that show in the top middle of the screen. "Your inventory is full." is one example.
+--- arg1 message
+--- | "UI_ERROR_MESSAGE"
+---
+--- Fired when the interface generates a message. These are the yellow messages in the top middle of the window. "No fish are hooked." is one example.
+--- arg1 message
+--- | "UI_INFO_MESSAGE"
+---
+--- Fired when the keybindings are changed. Fired after completion of [SaveBindings()](http://wowwiki.wikia.com/wiki/API_SaveBindings" title="API SaveBindings).
+--- | "UPDATE_BINDINGS"
+---
+--- | "UPDATE_BONUS_ACTIONBAR"
+---
+--- Fired when the chat colour needs to be updated.
+--- arg1 Chat type
+--- arg2 red
+--- arg3 green
+--- arg4 blue
+--- | "UPDATE_CHAT_COLOR"
+---
+--- Fired when there's a reason to update the chat windows.
+--- | "UPDATE_CHAT_WINDOWS"
+---
+--- | "UPDATE_EXHAUSTION"
+---
+--- | "UPDATE_FACTION"
+---
+--- | "UPDATE_GM_STATUS"
+---
+--- | "UPDATE_MACROS"
+---
+--- | "UPDATE_SELECTED_CHARACTER"
+---
+--- Fired when the player changes his shape
+--- | "UPDATE_SHAPESHIFT_FORMS"
+---
+--- | "UPDATE_TICKET"
+---
+--- | "UPDATE_TRADESKILL_RECAST"
+---
+--- | "USE_BIND_CONFIRM"
+---
+--- Fired during the loading phase of the UI to indicate that the Saved Variables of all AddOns that will be loaded during the initial load (or reload) of the UI have have been read into memory from their files.
+--- | "VARIABLES_LOADED"
+---
+--- Fired when the client receives the result of a SendWho() request from the server. use [API SetWhoToUI](http://wowwiki.wikia.com/wiki/API_SetWhoToUI) to manipulate this functionality.
+--- | "WHO_LIST_UPDATE"
+---
+--- Fired when the player enters a new zone. Zones are the smallest named subdivions of the game world and are contained within areas (also called regions). Whenever the text over the minimap changes, this event is fired.
+--- | "ZONE_CHANGED"
+---
+--- Fired when a player enters a new zone within a city.
+--- | "ZONE_CHANGED_INDOORS"
+---
+--- Fired when the user enters a new zone and a new area. e.g. moving from Duskwood to Stranglethorn Vale. In interface terms, this is anytime you get a new set of channels. The ZONE_CHANGED events are mutually exclusive!
+--- | "ZONE_CHANGED_NEW_AREA"
+---
+--- This doesn't seem to be sent for WorldDefense - it comes in on CHAT_MSG_CHANNEL and totally skips the ZONE_UNDER_ATTACK code in the client. Is the same true for LocalDefense?
+--- | "ZONE_UNDER_ATTACK"

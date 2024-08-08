@@ -1,0 +1,30 @@
+---@meta
+
+---@alias EventMail
+--- | "CLOSE_INBOX_ITEM"
+---
+--- | "MAIL_CLOSED"
+---
+--- | "MAIL_FAILED"
+---
+--- Fired when the opened inbox changes in any way. For example when the inbox list is loaded after the frame has been opened, or when a mail item changes from new to read.
+--- | "MAIL_INBOX_UPDATE"
+---
+--- Fired when an item is dragged to or from the Send Item box in an outgoing mail message.
+--- | "MAIL_SEND_INFO_UPDATE"
+---
+--- Fired when a mail has been successfully sent to the mailbox of the recipient, it is also called when the mailbox is opened for some reason ... bug?
+--- | "MAIL_SEND_SUCCESS"
+---
+--- Fired when the mailbox is opened.
+--- | "MAIL_SHOW"
+---
+--- | "SEND_MAIL_COD_CHANGED"
+---
+--- | "SEND_MAIL_MONEY_CHANGED"
+---
+--- Fired when the player enters the world and enters/leaves an instance, if there is mail in the player's mailbox.
+--- Fired when new mail is received.
+--- Fired when mailbox window is closed if the number of mail items in the inbox changed (I.E. you deleted mail)
+--- Does not appear to trigger when auction outbid mail is received... may not in other cases as well
+--- | "UPDATE_PENDING_MAIL"

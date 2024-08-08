@@ -1,0 +1,19 @@
+---@meta
+
+---@alias EventMap
+--- Fired when the minimap is pinged.
+--- arg1 UnitId of the one that created the ping (ie "player" or any of the group members)
+--- arg2 x
+--- arg3 y
+--- | "MINIMAP_PING"
+---
+--- Fired when the minimap scaling factor is changed. This happens, generally, whenever the player moves indoors from outside, or vice versa. There are no arguments to this event. To test the player's location, compare the `minimapZoom` and `minimapInsideZoom` CVars with the current minimap zoom level (see [GetZoom](http://wowwiki.wikia.com/wiki/API_Minimap_GetZoom)).
+--- This event does not relate to the **+** and **-** minimap zoom buttons.
+--- | "MINIMAP_UPDATE_ZOOM"
+---
+--- | "MINIMAP_ZONE_CHANGED"
+---
+--- | "WORLD_MAP_NAME_UPDATE"
+---
+--- Fired when the world map should be updated.
+--- | "WORLD_MAP_UPDATE"

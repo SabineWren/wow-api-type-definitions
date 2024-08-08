@@ -1,0 +1,314 @@
+---@meta
+
+---@alias EventChat
+--- Fired when the client receives a message from SendAddonMessage
+--- arg1 string Prefix string(16), useful for decoding, filtering, etc.
+--- arg2 string Message received.
+--- arg3 MessageType
+--- arg4 unknown TODO documentation conflicts on a possible 4th argument.
+--- | "CHAT_MSG_ADDON"
+---
+--- Fired when the client receives an AFK auto-response
+--- arg1 string AFK response message
+--- arg2 string Author
+--- | "CHAT_MSG_AFK"
+---
+--- Fired for alliance specific events in the battleground, such as assaulting a graveyard.
+--- arg1 string Battleground Message (ex. "The Alliance has taken the Blacksmith!")
+--- | "CHAT_MSG_BG_SYSTEM_ALLIANCE"
+---
+--- Fired for horde specific events in the battleground, such as assaulting a graveyard.
+--- arg1 string Battleground Message (eg. "The Horde has taken the Blacksmith!")
+--- | "CHAT_MSG_BG_SYSTEM_HORDE"
+---
+--- Fired for non faction specific events in the battlegrounds such as the battle start announcement.
+--- | "CHAT_MSG_BG_SYSTEM_NEUTRAL"
+---
+--- Fired when the client recieves a channel message.
+--- arg1 string Chat message
+--- arg2 string Author
+--- arg3 string Language
+--- arg4 string Channel name with number ex: "5. General - Stormwind City"; zone is always current zone even if not the same as the channel name
+--- arg5 string Target, a second player name when two users are passed for a CHANNEL_NOTICE_USER (E.G. x kicked y)
+--- arg6 string AFK/DND/GM "CHAT_FLAG_"..arg6 flags
+--- arg7 integer Zone ID used for generic system channels (General, Trade, LookingForGroup and LocalDefense). Not used for custom channels or if you joined an Out-Of-Zone channel ex: "General - Stormwind City"
+--- arg8 integer Channel number
+--- arg9 string Channel name without number. Zone is always current zone even if not the same as the channel name. TODO is this sometimes lowercased?
+--- | "CHAT_MSG_CHANNEL"
+---
+--- Fired when someone joins a chat channel you are in.
+--- arg1 nil
+--- arg2 string Name of the player that joined.
+--- arg3 nil
+--- arg4 string Number and name of the channel (e.g. "5. MyOwnChannel").
+--- arg5 nil
+--- arg6 nil
+--- arg7 nil
+--- arg8 number Channel number.
+--- arg9 string Channel name without number. TODO is this sometimes lowercase?
+--- | "CHAT_MSG_CHANNEL_JOIN"
+---
+--- | "CHAT_MSG_CHANNEL_LEAVE"
+---
+--- | "CHAT_MSG_CHANNEL_LIST"
+---
+--- | "CHAT_MSG_CHANNEL_NOTICE"
+---
+--- | "CHAT_MSG_CHANNEL_NOTICE_USER"
+---
+--- Fired when a creature hits another creature
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS"
+---
+--- Fired when a creature misses another creature
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_MISSES"
+---
+--- Fired when a creature hits a party member
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS"
+---
+--- Fired when a creature misses a party memeber
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES"
+---
+--- Fired when a creature hits you
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS"
+---
+--- Fired when a creature misses you
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES"
+---
+--- | "CHAT_MSG_COMBAT_ERROR"
+---
+--- | "CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS"
+---
+--- | "CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES"
+---
+--- | "CHAT_MSG_COMBAT_FRIENDLY_DEATH"
+---
+--- Fired when you successfully kill a worthy pvp opponent
+--- arg1 string Chat message, format: "%s dies, honorable kill Rank: %s (Estimated Honor Points: %d)"
+--- | "CHAT_MSG_COMBAT_HONOR_GAIN"
+---
+--- | "CHAT_MSG_COMBAT_HOSTILEPLAYER_HITS"
+---
+--- | "CHAT_MSG_COMBAT_HOSTILEPLAYER_MISSES"
+---
+--- Fired when any hostile (NPC or player) dies near you.
+--- arg1 string Complete text from combat-log (e.g. "Snowshoe Rabbit dies.")
+--- | "CHAT_MSG_COMBAT_HOSTILE_DEATH"
+---
+--- Fired when you gain reputation from killing a creature or finishing a quest.
+--- | "CHAT_MSG_COMBAT_MISC_INFO"
+---
+--- | "CHAT_MSG_COMBAT_PARTY_HITS"
+---
+--- | "CHAT_MSG_COMBAT_PARTY_MISSES"
+---
+--- | "CHAT_MSG_COMBAT_PET_HITS"
+---
+--- | "CHAT_MSG_COMBAT_PET_MISSES"
+---
+--- Fired when a you hit a creature. Also called when you hurt yourself by falling, drowning or burning on a campfire.
+--- arg1 string Localized chat message
+--- | "CHAT_MSG_COMBAT_SELF_HITS"
+---
+--- Fired when a you miss a creature
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_SELF_MISSES"
+---
+--- Fired when you gain xp from killing a creature or finishing a quest. Does not fire if you gain no xp from killing a creature.
+--- arg1 string Chat message
+--- | "CHAT_MSG_COMBAT_XP_GAIN"
+---
+--- Fired when the client receives a Do-Not-Disturb auto-response
+--- arg1 string DND response message
+--- arg2 string Author
+--- | "CHAT_MSG_DND"
+---
+--- Fired on sending or revicing a custom emote (one used by /e, /emote or a send chat message command with the emote flag)
+--- arg1 string Message that was sent/received.
+--- arg2 string Name of the player who sent the message.
+--- | "CHAT_MSG_EMOTE"
+---
+--- Fired when a message is sent or received in the Guild channel.
+--- arg1 string Message that was sent/received.
+--- arg2 string Name of the player who sent the message.
+--- arg3 unknown Language the message was spoken in. (TODO dead link: See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
+--- | "CHAT_MSG_GUILD"
+---
+--- | "CHAT_MSG_IGNORED"
+---
+--- Fired when a unit loots an item.
+--- arg1 string Message that was sent/received.
+--- | "CHAT_MSG_LOOT"
+---
+--- | "CHAT_MSG_MONSTER_EMOTE"
+---
+--- | "CHAT_MSG_MONSTER_SAY"
+---
+--- | "CHAT_MSG_MONSTER_WHISPER"
+---
+--- arg1 string Text of message.
+--- | "CHAT_MSG_MONSTER_YELL"
+---
+--- Fired when a message is sent or received in the Guild Officer channel.
+--- arg1 string Message that was sent/received.
+--- arg2 string Name of the player who sent the message.
+--- arg3 unknown Language the message was spoken in.(See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
+--- | "CHAT_MSG_OFFICER"
+---
+--- Fired when a message is sent or received in the Party channel.
+--- arg1 string Message that was sent/received.
+--- arg2 string Name of the player who sent the message.
+--- arg3 unknown Language the message was spoken in.(See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
+--- | "CHAT_MSG_PARTY"
+---
+--- | "CHAT_MSG_RAID"
+---
+--- Fired when a message is sent or received in the Say channel.
+--- arg1 string Chat message
+--- arg2 string Author
+--- arg3 unknown Language
+--- arg4 string channel name with number
+--- arg5 "" unknown (empty string)
+--- arg6 "" unknown (empty string)
+--- arg7 number unknown (appears to be channel number)
+--- arg8 number Channel number ("0")
+--- arg9 string channel name without number
+--- Example: Place `this:RegisterEvent("CHAT_MSG_SAY");` in the `<OnLoad>`/`<OnLoad>` section of your MyMod.xml file.
+--- Then, have an `if (event == "CHAT_MSG_SAY") then MyMod_Say(event, arg1, arg2, arg3); end` line, or something like it, in the `<OnEvent>`/`</OnEvent>` section of your MyMod.xml file.
+--- Then, have a function like the following in your MyMod.lua file:
+--- ```
+--- function MyMod_Say(event, arg1, arg2, arg3)
+---  PrevMsg = arg1;
+---  PrevPlyr = arg2;
+---  PrevLang = arg3;
+---end
+--- ```
+--- This would store the previous message, player who said it, and language it was said in into some variables.
+--- | "CHAT_MSG_SAY"
+---
+--- Fired when some chat messages about skills are displayed.
+--- arg1 string The content of the chat message. **arg1** formats are found in Blizzard's `GlobalStrings.lua`. Some possibilities:
+--- * `ERR_SKILL_GAINED_S` (eg. "You have gained the Blacksmithing skill.")
+--- * `ERR_SKILL_UP_SI` (eg. "Your skill in Cooking has increased to 221.")
+--- | "CHAT_MSG_SKILL"
+---
+--- Fired whenever a buff or debuff wears off of a mob, npc, or another player.
+--- Examples: Thorns, Trueshot Aura, Recently Bandaged. arg1 is the full chat text, i.e. "Thorns fades from Someguy."
+--- | "CHAT_MSG_SPELL_AURA_GONE_OTHER"
+---
+--- Fired whenever a buff or debuff wears off - examples, Prowl, Mark of the Wild, Cat Form, or Disarm. arg1 is the full chat text, i.e. "Prowl fades from you."
+--- | "CHAT_MSG_SPELL_AURA_GONE_SELF"
+---
+--- | "CHAT_MSG_SPELL_BREAK_AURA"
+---
+--- Fired when a mob begins casting a beneficial spell and again when the casting is completed. arg1 is the full combat chat text.
+--- Examples: Mob begins to cast Heal. Mob's Heal heals Mob for 20.
+--- | "CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF"
+---
+--- Fired when a creature casts a damage spell on a raid member who is not in your group. Also triggered when a pet is damaged by a creature's spell. Ex: Ragnaros' Wrath of Ragnaros hits PlayerName for 1000.
+--- | "CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF"
+---
+--- | "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF"
+---
+---
+--- Fired when a mob completes casting a harmful spell on you. (The message for the mob beginning to cast is given by CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE.) arg1 is the full combat chat text and includes results of the cast or skill use (e.g. hit, resist, dodge). Examples: Mob's Poison hits you for 10. Mob's Melee Special was dodged. Mob's Nuke was resisted.
+--- | "CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"
+---
+---
+--- Fired when a buff (or possibly item) damages an opponent in response to an action... IE Thorns.
+--- | "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"
+---
+--- Fired when you fail to successfully cast a spell, for one of several reasons. arg1 is the full combat chat text and includes the reason. Examples: You fail to cast Heal: Interrupted. You fail to perform Bear Form: Not enough mana.
+--- | "CHAT_MSG_SPELL_FAILED_LOCALPLAYER"
+---
+--- Fired when a non-hostile player begins casting a spell or using a skill. arg1 is the full combat chat text. Some examples: Someguy casts Reinforced Armor +40 on Someguys's Pants. Someguy begins to cast Elixir of Whatever. Someguy begins to cast Conjure Food. Someguy begins to cast Summon Felsteed.
+--- | "CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF"
+---
+--- | "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF"
+---
+--- | "CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_ITEM_ENCHANTMENTS"
+---
+--- | "CHAT_MSG_SPELL_PARTY_BUFF"
+---
+--- | "CHAT_MSG_SPELL_PARTY_DAMAGE"
+---
+--- Fired when a mob gains an "insta-cast" beneficial effect. arg1 is the full combat chat text. Examples: Mob gains Defensive Stance. Mob gains Rushing Charge. Mob gains Demon Skin.
+--- | "CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS"
+---
+--- example: "Highland Strider suffers 8 Fire damage from your Fireball."
+--- | "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE"
+---
+--- Fired when a non-hostile player gains a "buff" effect. arg1 is the full combat chat text. Some examples: Someguy gains Arcane Intellect. Someguy gains Aspect of the Pack. Someguy gains Felsteed.
+--- | "CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS"
+---
+--- | "CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE"
+---
+--- For some weird reason, this event is fired when someone heals yourself or another player, eg *"Priest's Flash Heal critically heals you for 2342"*
+--- Haven't tested any other conditions as of yet.
+--- | "CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS"
+---
+--- | "CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS"
+---
+--- | "CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE"
+---
+--- Fired when a buff is cast on self. (Unknown if external buff triggers this).
+--- Arg 1 is "You gain $foo" Where $foo is the name of the buff.
+--- *Also called for each "tick" of recurring effects, such as "heal-over-time" spells. Example: You gain 10 health from Rejuvenation. --Syllani*
+--- | "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS"
+---
+--- Fired (possibly among other times) when you are debuffed - so Disarm, Silenced, etc. I know the name doesn't match, but if you want to verify, enable printing this in your chat log. Get into combat and get debuffed. After combat, scroll back up, and while the debuff message is onscreen, change the chat color of this message, and you will see it change... Very strange. I assume this is named after poisons or diseases, but I haven't actually tested if those trigger this. See CHAT_MSG_SPELL_AURA_GONE_SELF if you want to know when it wears off (both buffs and debuffs). This is accurate as of US Release 1.2.4 (4222), tested by hacking Scrolling Combat Text. arg1 is the full text of the debuff message, e.g. "You are Disarmed."
+--- This is also fired during the Gnomish Death Ray's channel.
+--- *This is indeed triggered by poison / disease. arg1 messages in the form of: "You suffer 3 damage from Scorpid's Poison" or "You are afflicted by Something" come from this event. --Syllani*
+--- | "CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_PET_BUFF"
+---
+--- | "CHAT_MSG_SPELL_PET_DAMAGE"
+---
+--- Fired when you cast a beneficial spell. arg1 is the full combat chat text. Examples: Your Heal heals you for 50. Your Regrowth critically heals Someguy for 100.
+--- | "CHAT_MSG_SPELL_SELF_BUFF"
+---
+--- Fired whenever you cast a damage-dealing spell. arg1 holds the exact same string that is posted to the Battle Log (Something like "SpellXY hits EnemyPQ with 42 damage")
+--- | "CHAT_MSG_SPELL_SELF_DAMAGE"
+---
+--- | "CHAT_MSG_SPELL_TRADESKILLS"
+---
+--- Fired when a system chat message (they are displayed in yellow) is received.
+--- arg1 string The content of the chat message. **arg1** formats are found in Blizzard's `GlobalStrings.lua`. Some possibilities:
+--- * `ERR_LEARN_RECIPE_S` (eg. "You have learned how to create a new item: Bristle Whisker Catfish.")
+--- * `MARKED_AFK_MESSAGE` (eg. "You are now AFK: Away from Keyboard")
+--- | "CHAT_MSG_SYSTEM"
+---
+--- Fired for emotes with an emote token. /dance, /healme, etc
+--- arg1 string Emote Message
+--- arg2 string Name of person who emoted
+--- | "CHAT_MSG_TEXT_EMOTE"
+---
+--- Fired when a whisper is received from another player.arg1 = text sent.arg2 = player who sent whisper.arg6 = status of player (AFK or DND)Note: the rest of the arguments seem to be nil, although arg7 and arg8 are 0. I have yet to discover their meaning.
+--- | "CHAT_MSG_WHISPER"
+---
+--- Fired when a whisper is sent to another player.Arg1 = text sent.Arg2 = player whisper sent to.Arg3 = Language message was sent in (even though the other player, if of the same faction, can read the message regardless, and doesn't even see what language you sent it in).
+--- | "CHAT_MSG_WHISPER_INFORM"
+---
+--- Fired when a message is sent or received in the Yell channel.
+--- arg1 string Message that was sent/received.
+--- arg2 string Name of the player who sent the message.
+--- arg3 unknown Language the message was spoken in. (See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
+--- | "CHAT_MSG_YELL"

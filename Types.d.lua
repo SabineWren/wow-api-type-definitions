@@ -1,5 +1,9 @@
 ---@alias AnchorPoint "TopLeft"|"Top"|"TopRight"|"Right"|"BottomRight"|"Bottom"|"BottomLeft"|"Left"|"Center"
 
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId)
+--- Might not be safe to use a union type, so integer for now.
+---@alias BagId integer
+
 --- Add is most common, followed by Blend.
 --- @alias BlendMode
 --- | "ADD"-- Additive blend.
@@ -7,6 +11,35 @@
 --- | "BLEND"-- Normal painting on top of the background, obeying alpha channels if present in the image (uses alpha).
 --- | "DISABLE"-- Opaque texture.
 --- | "MOD"-- Modulating blend.
+
+--- Taken from modern documentation, so might be incomplete or superfluous.
+---@alias CombatMessage
+--- | "ABSORB"
+--- | "AURA_END"
+--- | "AURA_END_HARMFUL"
+--- | "AURA_START"
+--- | "AURA_START_HARMFUL"
+--- | "BLOCK"
+--- | "COMBO_POINTS"
+--- | "DAMAGE"
+--- | "DAMAGE_CRIT"
+--- | "DODGE"
+--- | "ENERGY"
+--- | "FACTION"
+--- | "FOCUS"
+--- | "HEAL"
+--- | "HEAL_CRIT"
+--- | "HONOR_GAINED"
+--- | "MANA"
+--- | "MISS"
+--- | "PARRY"
+--- | "PERIODIC_HEAL"
+--- | "RAGE"
+--- | "RESIST"
+--- | "SPELL_ABSORBED"
+--- | "SPELL_ACTIVE"
+--- | "SPELL_DAMAGE"
+--- | "SPELL_RESISTED"
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
 --- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
@@ -70,6 +103,13 @@
 --- | "Slider"
 --- | "StatusBar"
 --- | "TabardModel"
+
+--- @alias MessageType
+--- | "BATTLEGROUND"
+--- | "GUILD"
+--- | "PARTY"
+--- | "RAID"
+--- | "WHISPER"
 
 --- TODO Type signatures from a modern API doc, so might be wrong arguments.
 ---@alias ScriptTypeFrame
