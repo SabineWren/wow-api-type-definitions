@@ -1,3 +1,5 @@
+[Completion Status](https://github.com/SabineWren/wow-api-type-definitions/issues/1)
+
 ### Usage
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice
 - Clone this repo into your addon directory and .gitignore it.
