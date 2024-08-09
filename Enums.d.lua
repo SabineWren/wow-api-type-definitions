@@ -9,6 +9,27 @@
 --- | "BottomLeft"
 --- | "Left"
 
+---@alias AuraFilter
+--- | "HARMFUL"
+--- | "HELPFUL"
+--- | "PASSIVE"
+---
+--- | "HARMFUL|HELPFUL"
+--- | "HARMFUL|PASSIVE"
+---
+--- | "HELPFUL|HARMFUL"
+--- | "HELPFUL|PASSIVE"
+---
+--- | "PASSIVE|HARMFUL"
+--- | "PASSIVE|HELPFUL"
+---
+--- | "HARMFUL|HELPFUL|PASSIVE"
+--- | "HARMFUL|PASSIVE|HELPFUL"
+--- | "HELPFUL|HARMFUL|PASSIVE"
+--- | "HELPFUL|PASSIVE|HARMFUL"
+--- | "PASSIVE|HELPFUL|HARMFUL"
+--- | "PASSIVE|HARMFUL|HELPFUL"
+
 --- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId)
 --- Might not be safe to use a union type, so integer for now.
 ---@alias BagId integer

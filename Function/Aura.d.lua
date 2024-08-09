@@ -1,5 +1,44 @@
 ---@meta
 
+--- Removes a specific buff from the player.
+--- - This function uses a zero-based index, while UnitBuff() does not. -Mind
+--- - Not limited to hardware event restriction. This function can be called freely from an Addon to auto-remove a given buff.
+---@param index integer
+---@return nil
+function CancelPlayerBuff(index) end
+
+--- Cancels your current tracking buff (Find Minerals etc.)
+---@return nil
+function CancelTrackingBuff() end
+
+--- Retrieves info about an aura.
+--- - untilCancelled does not imply the current player can cancel it, only that it won't time out.
+---@param buffIndex integer Starting from 0
+---@param auraFilter AuraFilter
+---@return integer buffIndex The index of the buff. Mainly to use for other GetPlayerBuffXYZ functions. If below zero, indicates there is no such buff.
+---@return nil|1 untilCancelled If 1, this buff will last until it is cancelled (Aura, Aspect, Stealth).
+function GetPlayerBuff(buffIndex, auraFilter) end
+
+--- Retrieves the number of applications of a debuff or buff.
+---@param buffIndex integer Starting from 0
+---@return integer
+function GetPlayerBuffApplications(buffIndex) end
+
+--- Get the debuff type for a player debuff ("Magic", "Curse", "Disease", or "Poison")
+---@param buffIndex integer Starting from 0
+---@return string
+function GetPlayerBuffDispelType(buffIndex) end
+
+--- Retrieves the texture identifier for a certain buff.
+---@param buffIndex integer Starting from 0
+---@return nil|string path nil if buff doesn't exist.
+function GetPlayerBuffTexture(buffIndex) end
+
+--- Retrieves how long a buff will last before expiring.
+---@param buffIndex integer Can be obtained with GetPlayerBuff.
+---@return number buffTimeLeft Time (in seconds) left until the buff expires.
+function GetPlayerBuffTimeLeft(buffIndex) end
+
 --- Retrieves info about a buff of a certain unit.
 --- - TODO return values taken from 2008 wiki. Might be inaccurate.
 ---@param unit UnitId
