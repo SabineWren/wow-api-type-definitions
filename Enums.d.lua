@@ -21,6 +21,14 @@
 --- | "DISABLE"-- Opaque texture.
 --- | "MOD"-- Modulating blend.
 
+-- ENUMS ARE BUGGED UPSTREAM
+-- https://github.com/LuaLS/lua-language-server/issues/2732
+---@alias BookType
+--- | `pet`-- See above comment; should be only `BOOKTYPE_PET`
+--- | `spell`-- See above comment; should be only `BOOKTYPE_SPELL`
+--- | `BOOKTYPE_PET`
+--- | `BOOKTYPE_SPELL`
+
 --- Taken from modern documentation, so might be incomplete or superfluous.
 ---@alias CombatMessage
 --- | "ABSORB"
