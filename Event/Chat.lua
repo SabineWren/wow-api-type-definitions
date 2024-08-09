@@ -3,9 +3,8 @@
 ---@alias EventChat
 --- Fired when the client receives a message from SendAddonMessage
 --- arg1 string Prefix string(16), useful for decoding, filtering, etc.
---- arg2 string Message received.
+--- arg2 string Message string(255) received.
 --- arg3 MessageType
---- arg4 unknown TODO documentation conflicts on a possible 4th argument.
 --- | "CHAT_MSG_ADDON"
 ---
 --- Fired when the client receives an AFK auto-response
