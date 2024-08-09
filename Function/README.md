@@ -11,7 +11,6 @@
 -- Buff/Debuff - GetPlayerBuffTimeLeft
 -- Communication - SendAddonMessage
 -- Communication - SendChatMessage
--- Frame Management - MouseIsOver
 -- Group - GetNumPartyMembers
 -- Inventory - GetInventoryItemCount
 -- Inventory - GetInventorySlotInfo
