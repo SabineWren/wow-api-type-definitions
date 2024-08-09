@@ -1,0 +1,8 @@
+-- (DO NOT IMPLEMENT - SEE Unit.d.lua CheckInteractDistance) CheckInteractDistance("unit",distIndex)
+-- ClearInspectPlayer()   - Reset inspect data once finished with it (Called on inspect window hide)
+-- GetInspectHonorData()   - Return honor info for the inspected unit (if available).
+-- GetInspectPVPRankProgress()   - Return rank progress for the inspected unit (if available). Ranges from 0 to 1.
+-- HasInspectHonorData()   - Determine if the inspected unit's honor data is available.
+-- UI InspectUnit("unit")   - Inspects the specified / selected "unit".
+-- NotifyInspect("unit")
+-- RequestInspectHonorData()   - Request honor data for inspected unit.

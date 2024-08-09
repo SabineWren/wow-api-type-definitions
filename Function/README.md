@@ -5,19 +5,7 @@
 -- Action - HasAction
 -- Action - IsActionInRange
 -- Action - IsCurrentAction
--- Buff/Debuff - GetPlayerBuff
--- Buff/Debuff - GetPlayerBuffTexture
--- Buff/Debuff - GetPlayerBuffTimeLeft
--- Unit - CheckInteractDistance
--- Unit - UnitAffectingCombat
--- Unit - UnitBuff
--- Unit - UnitCanAttack
--- Unit - UnitClass
--- Unit - UnitCreatureType
--- Unit - UnitExists
--- Unit - UnitHealth
--- Unit - UnitHealthMax
--- Unit - UnitIsDead
--- Unit - UnitName
--- Unit - UnitRangedDamage
+-- Buff/Debuff (Aura) - GetPlayerBuff
+-- Buff/Debuff (Aura) - GetPlayerBuffTexture
+-- Buff/Debuff (Aura) - GetPlayerBuffTimeLeft
 ```

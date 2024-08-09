@@ -1,3 +1,11 @@
+---@meta
+
+--- Determine if the specified unit is on the given quest.
+---@param questIndex integer
+---@param unit UnitId
+---@return boolean
+function IsUnitOnQuest(questIndex, unit) end
+
 -- AbandonQuest - Abandon the specified quest.
 
 -- AcceptQuest - Accept the specified quest.

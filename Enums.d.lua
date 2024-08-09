@@ -58,6 +58,14 @@
 --- | "SPELL_DAMAGE"
 --- | "SPELL_RESISTED"
 
+--- TODO Find list of 1.12.1 creature families
+--- ex. Bat, Bear, Cat
+--- @alias CreatureFamily string
+
+--- TODO Find list of 1.12.1 creature types
+--- ex. Beast, Dragonkin, Humanoid
+--- @alias CreatureType string
+
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
 --- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
 --- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
@@ -69,6 +77,11 @@
 --- | "ARTWORK"
 --- | "OVERLAY"
 --- | "HIGHLIGHT"
+
+--- @alias Gender
+--- | 1-- unknown
+--- | 2-- male
+--- | 3-- female
 
 ---@alias MouseButton
 --- | "LeftButton"
@@ -128,6 +141,32 @@
 --- | "RAID"
 --- | "WHISPER"
 
+---@alias PowerType
+--- | 0-- Mana
+--- | 1-- Rage
+--- | 2-- Focus (hunter pets)
+--- | 3-- Energy
+--- | 4-- Happiness
+
+---@alias Reputation
+--- | 1-- Hated
+--- | 2-- Hostile
+--- | 3-- Unfriendly
+--- | 4-- Neutral
+--- | 5-- Friendly
+--- | 6-- Honored
+--- | 7-- Revered
+--- | 8-- Exalted
+
+---@alias Resistance
+--- | 0-- Physical (Armor rating)
+--- | 1-- Holy
+--- | 2-- Fire
+--- | 3-- Nature
+--- | 4-- Frost
+--- | 5-- Shadow
+--- | 6-- Arcane
+
 ---@alias ScriptTypeFrame
 --- | "OnEvent"--- TODO args
 --- | "OnUpdate"--- TODO args
@@ -139,6 +178,13 @@
 --- | "OnMouseUp"-- (self, button) - Invoked when the mouse button is released following a mouse down action in the frame.
 --- | "OnMouseWheel"-- (self, delta) - Invoked when the frame receives a mouse wheel scrolling action.
 --- | "OnShow"-- (self) - Invoked when the frame becomes visible.
+
+---@alias StatIndex
+--- | 1-- Strength
+--- | 2-- Agility
+--- | 3-- Stamina
+--- | 4-- Intellect
+--- | 5-- Spirit
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/UnitId?type=revision&diff=6512501&oldid=364069)
 ---@alias UnitId
