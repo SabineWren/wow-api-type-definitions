@@ -1,37 +1,37 @@
-### Needed for Quiver
+### Prioritizing for Quiver
 ```
--- CheckInteractDistance
--- GetActionText
--- GetActionTexture
--- GetAddOnMetadata
--- GetCVar
--- GetInventoryItemCount
--- GetInventorySlotInfo
--- GetNetStats
--- GetNumRaidMembers
--- GetNumPartyMembers
--- GetPlayerBuff
--- GetPlayerBuffTexture
--- GetPlayerBuffTimeLeft
--- GetPlayerMapPosition
--- GetScreenHeight
--- GetScreenWidth
--- GetTime
--- HasAction
--- IsActionInRange
--- IsCurrentActionF
--- MouseIsOver
--- SendAddonMessage
--- SendChatMessage
--- UnitAffectingCombat
--- UnitBuff
--- UnitCanAttack
--- UnitClass
--- UnitCreatureType
--- UnitExists
--- UnitHealth
--- UnitHealthMax
--- UnitIsDead
--- UnitName
--- UnitRangedDamage
+-- Action - GetActionText
+-- Action - GetActionTexture
+-- Action - HasAction
+-- Action - IsActionInRange
+-- Action - IsCurrentAction
+-- Addon - GetAddOnMetadata
+-- Buff/Debuff - GetPlayerBuff
+-- Buff/Debuff - GetPlayerBuffTexture
+-- Buff/Debuff - GetPlayerBuffTimeLeft
+-- Communication - SendAddonMessage
+-- Communication - SendChatMessage
+-- Frame Management - MouseIsOver
+-- Group - GetNumPartyMembers
+-- Inventory - GetInventoryItemCount
+-- Inventory - GetInventorySlotInfo
+-- Mapping - GetPlayerMapPosition
+-- Settings - GetCVar (TODO look at better ways to handle UI scaling and frame placement)
+-- System - GetNetStats
+-- Raid - GetNumRaidMembers
+-- System - GetScreenHeight
+-- System - GetScreenWidth
+-- System - GetTime
+-- Unit - CheckInteractDistance
+-- Unit - UnitAffectingCombat
+-- Unit - UnitBuff
+-- Unit - UnitCanAttack
+-- Unit - UnitClass
+-- Unit - UnitCreatureType
+-- Unit - UnitExists
+-- Unit - UnitHealth
+-- Unit - UnitHealthMax
+-- Unit - UnitIsDead
+-- Unit - UnitName
+-- Unit - UnitRangedDamage
 ```
