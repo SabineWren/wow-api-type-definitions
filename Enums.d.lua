@@ -1,3 +1,6 @@
+--- Using alias in case we want to refine it later.
+---@alias ActionBarSlot integer
+
 ---@alias AnchorPoint
 --- | "Center"
 --- | "TopLeft"
