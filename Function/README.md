@@ -15,12 +15,8 @@
 -- Inventory - GetInventoryItemCount
 -- Inventory - GetInventorySlotInfo
 -- Mapping - GetPlayerMapPosition
--- Settings - GetCVar (TODO look at better ways to handle UI scaling and frame placement)
--- System - GetNetStats
 -- Raid - GetNumRaidMembers
--- System - GetScreenHeight
--- System - GetScreenWidth
--- System - GetTime
+-- Settings - GetCVar (TODO look at better ways to handle UI scaling and frame placement)
 -- Unit - CheckInteractDistance
 -- Unit - UnitAffectingCombat
 -- Unit - UnitBuff
