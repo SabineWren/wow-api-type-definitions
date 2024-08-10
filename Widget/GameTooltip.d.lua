@@ -5,83 +5,203 @@
 ---@class GameTooltip: Frame
 GameTooltip = {}
 
---[[
-function GameTooltip:AddDoubleLine(textL, textR, rL, gL, bL, rR, gR, bR) end
+--- Add both textLeft and textRight to a tooltip.
+---@param textL string
+---@param textR string
+---@param lr number Left Red [0, 1]
+---@param lg number Left Green [0, 1]
+---@param lb number Left Blue [0, 1]
+---@param rr number Right Red [0, 1]
+---@param rg number Right Green [0, 1]
+---@param rb number Right Blue [0, 1]
+---@return nil
+function GameTooltip:AddDoubleLine(textL, textR, lr, lg, lb, rr, rg, rb) end
 
-function GameTooltip:AddFontStrings(leftstring, rightstring) end--- Dynamically expands the size of a tooltip
+--- Dynamically expands the size of a tooltip
+--- - TODO this isn't well-documented on wikis.
+function GameTooltip:AddFontStrings(leftstring, rightstring) end
 
-function GameTooltip:AddLine
+--- - If the tooltip already has its maximum number of lines, this function silently fails.
+--- - The tooltip resizes in its OnShow handler, so calling this function on an already-visible tooltip will cause the new line to appear outside of the tooltip's backdrop.
+--- - If the r, g, b values are not specified, the line appears in the game's normal font color (gold).
+--- - By default, the first line is a larger font (GameTooltipHeaderText) than subsequent lines (GameTooltipText).
+---@param text string Text to add as a new line.
+---@param r? number Red [0, 1]
+---@param g? number Green [0, 1]
+---@param b? number Blue [0, 1]
+---@param isWrap? nil|1 Set to 1 to wrap text.
+---@return nil
+function GameTooltip:AddLine(text, r, g, b, isWrap) end
 
-function GameTooltip:AppendText("text") end--- Append text to the end of the first line of the tooltip.
+--- Append text to the end of the first line of the tooltip.
+---@param text string
+---@return nil
+function GameTooltip:AppendText(text) end
 
-function GameTooltip:ClearLines
+--- Hides text, but doesn't remove it; can still retrieve using FontString:GetText() on the GameTooltip's FontString children.
+---@return nil
+function GameTooltip:ClearLines() end
 
-function GameTooltip:FadeOut
+--- - After calling, GameTooltip will remain at full opacity for one second, then fade out over another second.
+--- - Calling GameTooltip:Show() while the tooltip is fading out will abort the fade, and the tooltip will return to full opacity.
+---@return nil
+function GameTooltip:FadeOut() end
 
-function GameTooltip:GetAnchorType() end--- Returns the current anchoring type.
+--- Returns the current anchoring type.
+--- - TODO does this mean UIObject:ObjectType of the anchor frame?
+function GameTooltip:GetAnchorType() end
 
-function GameTooltip:IsOwned(frame) end--- Returns true if the tooltip is currently owned by the specified frame - Since 1.8.
+--- Owner means temporary anchor for tooltip.
+---@param frame Frame
+---@return boolean
+---@nodiscard
+function GameTooltip:IsOwned(frame) end
 
-function GameTooltip:NumLines() end--- Get the number of lines in the tooltip.
+--- Get the number of lines in the tooltip.
+---@return integer
+---@nodiscard
+function GameTooltip:NumLines() end
 
-function GameTooltip:SetAction(slot) end--- Shows the tooltip for the specified action button.
+--- Set the tooltip for the specified action button.
+--- - For accessing the pet bar or aura bar you need to use SetPetAction or SetShapeshift.
+---@param slot integer
+---@return nil
+function GameTooltip:SetAction(slot) end
 
-function GameTooltip:SetAuctionCompareItem("type", index[, offset]) end
+--- TODO Behaviour not documented.
+---@param type any
+---@param index integer
+---@param offset? any
+---@return nil
+function GameTooltip:SetAuctionCompareItem(type, index, offset) end
 
-function GameTooltip:SetAuctionItem("type", index) end--- Shows the tooltip for the specified auction item.
+--- Set the tooltip for the specified auction item.
+---@param type any
+---@param index integer
+---@return nil
+function GameTooltip:SetAuctionItem(type, index) end
 
-function GameTooltip:SetAuctionSellItem
+--- Sets the GameTooltip to the item that is in the sell frame of the auction window.
+---@return nil
+function GameTooltip:SetAuctionSellItem() end
 
+---@param bag BagId
+---@param slot integer
+---@return nil
 function GameTooltip:SetBagItem(bag, slot) end
 
-function GameTooltip:SetBuybackItem
+---@return nil
+function GameTooltip:SetBuybackItem() end
 
-function GameTooltip:SetCraftItem
+---@return nil
+function GameTooltip:SetCraftItem() end
 
-function GameTooltip:SetCraftSpell
+---@return nil
+function GameTooltip:SetCraftSpell() end
 
-function GameTooltip:SetHyperlink(link) end--- Shows the tooltip for the specified hyperlink (usually item link).
+--- Set the tooltip for the specified hyperlink (usually item link).
+---@return nil
+function GameTooltip:SetHyperlink(link) end
 
-function GameTooltip:SetInboxItem(index) end--- Shows the tooltip for the specified mail inbox item.
+--- Set the tooltip for the specified mail inbox item.
+---@param index integer
+---@return nil
+function GameTooltip:SetInboxItem(index) end
 
-function GameTooltip:SetInventoryItem(unit, slot[, nameOnly]) end
+---@param unit UnitId
+---@param slot InventorySlot
+---@param isTerse? boolean Only show following: name, item level, equipment slot, item type, onUse/Proc, durability, race/class limitations.
+---@return boolean hasItem Is there an item at the given slot?
+---@return boolean hasCooldown unknown
+---@return number repairCost
+---@nodiscard
+function GameTooltip:SetInventoryItem(unit, slot, isTerse) end
 
-function GameTooltip:SetLootItem
+---@param lootIndex integer From 1 to GetNumLootItems().
+---@return nil
+function GameTooltip:SetLootItem(lootIndex) end
 
-function GameTooltip:SetLootRollItem(id) end--- Shows the tooltip for the specified loot roll item.
+--- Set the tooltip for the specified loot roll item.
+---@param id integer
+---@return nil
+function GameTooltip:SetLootRollItem(id) end
 
-function GameTooltip:SetMerchantCompareItem("slot"[, offset]) end
+--- TODO not documented
+---@param slot integer
+---@param offset? integer
+---@return nil
+function GameTooltip:SetMerchantCompareItem(slot, offset) end
 
-function GameTooltip:SetMerchantItem
+--- TODO not documented
+---@return nil
+function GameTooltip:SetMerchantItem() end
 
-function GameTooltip:SetMinimumWidth(width) end--- (Formerly SetMoneyWidth)
+---@param width number
+---@return nil
+function GameTooltip:SetMinimumWidth(width) end
 
-function GameTooltip:SetOwner
+--- Anchors the tooltip to a temporary owner.
+--- - Relative anchor point is the opposite point on the owning frame.
+--- - ex. SetOwner(frame, "TopRight") anchors relative to "BottomLeft"
+--- - ex. SetOwner(frame, "BottomLeft") anchors relative to "TopRight"
+---@param frame Frame
+---@param anchor AnchorPoint
+---@param x? number
+---@param y? number
+---@return nil
+function GameTooltip:SetOwner(frame, anchor, x, y) end
 
-function GameTooltip:SetPadding
+---@param right number Sets right padding. Intended to make room for a 'close' button.
+---@return nil
+function GameTooltip:SetPadding(right) end
 
-function GameTooltip:SetPetAction(slot) end--- Shows the tooltip for the specified pet action.
+--- Set the tooltip for the specified pet action.
+---@param slot integer TODO we can probably use a union type.
+---@return nil
+function GameTooltip:SetPetAction(slot) end
 
-function GameTooltip:SetPlayerBuff(buffIndex) end--- Direct the tooltip to show information about a player's buff.
+--- Direct the tooltip to show information about a player's buff.
+---@param buffIndex integer
+---@return nil
+function GameTooltip:SetPlayerBuff(buffIndex) end
 
-function GameTooltip:SetQuestItem
+---@return nil
+function GameTooltip:SetQuestItem() end
 
-function GameTooltip:SetQuestLogItem
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetQuestLogItem() end
 
-function GameTooltip:SetQuestLogRewardSpell
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetQuestLogRewardSpell() end
 
-function GameTooltip:SetQuestRewardSpell
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetQuestRewardSpell() end
 
-function GameTooltip:SetSendMailItem
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetSendMailItem() end
 
-function GameTooltip:SetShapeshift(slot) end--- Shows the tooltip for the specified shapeshift form.
+--- Set the tooltip for the specified shapeshift form.
+---@param slot integer TODO can probably use a union. Is this 0-5 like GetBonusBarOffset?
+---@return nil
+function GameTooltip:SetShapeshift(slot) end
 
-function GameTooltip:SetSpell(spellId, spellbookTabNum) end--- Shows the tooltip for the specified spell.
+--- Set the tooltip for the specified spell.
+---@param spellIndex integer
+---@param spellbookTabNum integer
+---@return nil
+function GameTooltip:SetSpell(spellIndex, spellbookTabNum) end
 
-function GameTooltip:SetTalent(tabIndex, talentIndex) end--- Shows the tooltip for the specified talent.
+--- Set the tooltip for the specified talent.
+---@param tabIndex integer
+---@param talentIndex integer
+---@return nil
+function GameTooltip:SetTalent(tabIndex, talentIndex) end
 
---- Set the text of the tooltip.
----@param text string The text for the tooltip.
+---@param text string The text to show.
 ---@param r? number Optional red color value for text [0, 1]
 ---@param g? number Optional green color value for text [0, 1]
 ---@param b? number Optional blue color value for text [0, 1]
@@ -89,19 +209,43 @@ function GameTooltip:SetTalent(tabIndex, talentIndex) end--- Shows the tooltip f
 ---@param textWrap? boolean True if text should wrap; false if the tooltip must widen to fit it.
 function GameTooltip:SetText(text, r, g, b, a, textWrap) end
 
-function GameTooltip:SetTrackingSpell
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetTrackingSpell() end
 
-function GameTooltip:SetTradePlayerItem
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetTradePlayerItem() end
 
-function GameTooltip:SetTradeSkillItem
+--- This method opens the tooltip window when you hover over objects in the tradeskill window.
+---@param tradeItemIndex integer Index of the selected item in the recipe list.
+---@param reagentIndex? integer Index of the selected reagent.
+---@return nil
+function GameTooltip:SetTradeSkillItem(tradeItemIndex, reagentIndex) end
 
-function GameTooltip:SetTradeTargetItem
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetTradeTargetItem() end
 
-function GameTooltip:SetTrainerService
+--- TODO not documented on wiki
+---@return nil
+function GameTooltip:SetTrainerService() end
 
-function GameTooltip:SetUnit
+--- Set the tooltip for the given unit.
+---@param unit UnitId
+---@return nil
+function GameTooltip:SetUnit(unit) end
 
-function GameTooltip:SetUnitBuff("unitId", buffIndex[, raidFilter]) end--- Shows the tooltip for a unit's buff.
+--- Set the tooltip for a unit's buff.
+---@param unit UnitId
+---@param auraIndex integer
+---@param auraFilter? AuraFilter
+---@return nil
+function GameTooltip:SetUnitBuff(unit, auraIndex, auraFilter) end
 
-function GameTooltip:SetUnitDebuff("unitId", buffIndex[, raidFilter]) end--- Shows the tooltip for a unit's debuff.
-]]
+--- Set the tooltip for a unit's debuff.
+---@param unit UnitId
+---@param auraIndex integer
+---@param auraFilter? AuraFilter
+---@return nil
+function GameTooltip:SetUnitDebuff(unit, auraIndex, auraFilter) end

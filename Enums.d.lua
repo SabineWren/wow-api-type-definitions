@@ -38,7 +38,7 @@
 ---@alias BagId integer
 
 --- Add is most common, followed by Blend.
---- @alias BlendMode
+---@alias BlendMode
 --- | "ADD"-- Additive blend.
 --- | "ALPHAKEY"-- One-bit alpha.
 --- | "BLEND"-- Normal painting on top of the background, obeying alpha channels if present in the image (uses alpha).
@@ -52,6 +52,14 @@
 --- | `spell`-- See above comment; should be only `BOOKTYPE_SPELL`
 --- | `BOOKTYPE_PET`
 --- | `BOOKTYPE_SPELL`
+
+--- Couldn't find a source for this except a sketchy forum post.
+--- In practice, I think 1.12 requires extra locale/OS files for non-Roman.
+---@alias CharacterEncoding
+--- | "CHINESE"
+--- | "KOREAN"
+--- | "JAPANESE"
+--- | "ROMAN"
 
 --- Taken from modern documentation, so might be incomplete or superfluous.
 ---@alias CombatMessage
@@ -84,28 +92,119 @@
 
 --- TODO Find list of 1.12.1 creature families
 --- ex. Bat, Bear, Cat
---- @alias CreatureFamily string
+---@alias CreatureFamily string
 
 --- TODO Find list of 1.12.1 creature types
 --- ex. Beast, Dragonkin, Humanoid
---- @alias CreatureType string
+---@alias CreatureType string
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Layer)
 --- Orders each LayeredRegion within a Frame, affecting how they overlap. Ordered back to front.
 --- - When one frame is in front of another (according to its Frame Strata), all of its LayeredRegions will also be in front -- in otherwords, layers are part of each frame.
 --- - Setting Frame:EnableMouse() causes HIGHLIGHT to show/hide as the cursor hovers the Frame.
 --- - Translucent overlapping textures display different results depending on their relative ordering. For consistent results, use a blend mode of ADD or MOD on both textures.
---- @alias DrawLayer
+---@alias DrawLayer
 --- | "BACKGROUND"
 --- | "BORDER"
 --- | "ARTWORK"
 --- | "OVERLAY"
 --- | "HIGHLIGHT"
 
---- @alias Gender
+---@alias Gender
 --- | 1-- unknown
 --- | 2-- male
 --- | 3-- female
+
+--- Regular inventory items 0-23
+--- 40-67 are the 28 bank slots
+--- Then come 7 bank slots
+---@alias InventorySlot
+--- | 0 = ammo
+--- | 1 = head
+--- | 2 = neck
+--- | 3 = shoulder
+--- | 4 = shirt
+--- | 5 = chest
+--- | 6 = belt
+--- | 7 = legs
+--- | 8 = feet
+--- | 9 = wrist
+--- | 10 = gloves
+--- | 11 = finger 1
+--- | 12 = finger 2
+--- | 13 = trinket 1
+--- | 14 = trinket 2
+--- | 15 = back
+--- | 16 = main hand
+--- | 17 = off hand
+--- | 18 = ranged
+--- | 19 = tabard
+--- | 20 = first bag (the rightmost one)
+--- | 21 = second bag
+--- | 22 = third bag
+--- | 23 = fourth bag (the leftmost one)
+--- | 40
+--- | 41
+--- | 42
+--- | 43
+--- | 44
+--- | 45
+--- | 46
+--- | 47
+--- | 48
+--- | 49
+--- | 50
+--- | 51
+--- | 52
+--- | 53
+--- | 54
+--- | 55
+--- | 56
+--- | 57
+--- | 58
+--- | 59
+--- | 60
+--- | 61
+--- | 62
+--- | 63
+--- | 64
+--- | 65
+--- | 66
+--- | 67
+--- | 68 = 1st bank bag
+--- | 69 = 2nd bank bag
+--- | 70 = 3rd bank bag
+--- | 71 = 4th bank bag
+--- | 72 = 5th bank bag
+--- | 73 = 6th bank bag
+--- | 74 = 7th bank bag
+
+---[Open Documentation](https://wowpedia.fandom.com/wiki/InventorySlotId)
+---@alias InvSlotName string -- TODO
+
+--[[
+-- GlobalString names for item slots
+AMMOSLOT
+HEADSLOT
+NECKSLOT
+SHOULDERSLOT
+SHIRTSLOT
+CHESTSLOT
+WAISTSLOT
+LEGSSLOT
+FEETSLOT
+WRISTSLOT
+HANDSSLOT
+FINGER0SLOT
+FINGER1SLOT
+TRINKET0SLOT
+TRINKET1SLOT
+BACKSLOT
+MAINHANDSLOT
+SECONDARYHANDSLOT
+RANGEDSLOT
+TABARDSLOT
+]]
 
 ---@alias MouseButton
 --- | "LeftButton"
@@ -130,7 +229,7 @@
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
 --- Affects how frames overlap. Ordered back to front.
---- @alias FrameStrata
+---@alias FrameStrata
 --- | "WORLD" Reserved for the world frame and cannot be assigned.
 --- | "BACKGROUND"
 --- | "LOW"
@@ -141,7 +240,7 @@
 --- | "FULLSCREEN_DIALOG"
 --- | "TOOLTIP"
 
---- @alias FrameType
+---@alias FrameType
 --- | "Button"
 --- | "CheckButton"
 --- | "ColorSelect"
@@ -158,7 +257,7 @@
 --- | "StatusBar"
 --- | "TabardModel"
 
---- @alias MessageType
+---@alias MessageType
 --- | "BATTLEGROUND"
 --- | "GUILD"
 --- | "PARTY"
