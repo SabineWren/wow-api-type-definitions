@@ -347,13 +347,13 @@ function UnitOnTaxi(unit) end
 ---@nodiscard
 function UnitPlayerControlled(unit) end
 
---- Returns 1 if the specified unit/pet is a member of the player's party, nil otherwise (returns 1 for "player" and "pet")   - Added in 1.12
+--- Returns 1 if the specified unit/pet is a member of the player's party, nil otherwise (returns 1 for "player" and "pet").
 ---@param unit UnitId
 ---@return nil|1
 ---@nodiscard
 function UnitPlayerOrPetInParty(unit) end
 
---- Returns 1 if the specified unit/pet is a member of the player's raid, nil otherwise (returns 1 for "player" and "pet")   - Added in 1.12
+--- Returns 1 if the specified unit/pet is a member of the player's raid, nil otherwise (returns 1 for "player" and "pet").
 ---@param unit UnitId
 ---@return nil|1
 ---@nodiscard

@@ -20,16 +20,6 @@ function CastSpell(spellID, bookType) end
 ---@return nil
 function CastSpellByName(name, isSelf) end
 
---- TODO documentation mentions index is " - 1 to GetNumCrafts()". Unclear what that means.
---- TODO returns types from TBC. Might be different in 1.12.1
---- - When called while the enchanting screen is open, this function returns which rod is required, if any. I don't know whether this function also applies to other types of crafts or spells.
---- - Returns two values when a rod is required: a string that contains the name of the rod, and the number "1". I don't know what the "1" means.
----@param index number
----@return nil|string catalyst
----@return nil|1 one
----@nodiscard
-function GetCraftSpellFocus(index) end
-
 --- Returns the number of shapeshift buttons (stances for Warriors, auras for Paladins, forms for Druids, etc) the player currently has.
 --- - Might return 0 if called before the event UNIT_AURA has fired.
 ---@return number

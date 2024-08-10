@@ -271,6 +271,9 @@ TABARDSLOT
 --- | 3-- Energy
 --- | 4-- Happiness
 
+--- 1-20 on Vanilla 1.12.1. Turtle plans to increase it to at least 25.
+---@alias QuestIndex 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25
+
 ---@alias Reputation
 --- | 1-- Hated
 --- | 2-- Hostile

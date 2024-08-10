@@ -18,6 +18,7 @@ function DeclineGroup() end
 --- Initiate a ready check.
 function DoReadyCheck() end
 
+--- No description
 function GetLookingForGroup() end
 
 --- Return the currently active lootMethod
@@ -50,8 +51,6 @@ function InviteByName(name) end
 ---@return nil
 function InviteToParty(unit) end
 
---[[
-
 --- Returns true if the player is the party leader.
 function IsPartyLeader() end
 
@@ -59,29 +58,48 @@ function IsPartyLeader() end
 function LeaveParty() end
 
 --- Promotes by name the target.
-function PromoteByName("name") end
+---@param name string
+function PromoteByName(name) end
 
 --- Promote a unit to party leader.
-function PromoteToPartyLeader("unit") end
+---@param unit UnitId
+function PromoteToPartyLeader(unit) end
 
+--- No description
 function SetLookingForGroup(flag) end
 
 --- Set the current loot method
-function SetLootMethod("lootMethod", ?"masterPlayer" or ?threshold) end
+---@param lootMethod any
+---@param masterPlayerOrThreshold? any
+function SetLootMethod(lootMethod, masterPlayerOrThreshold) end
 
 --- Set the threshold for group/master loot
 function SetLootThreshold(itemQuality) end
 
 --- Uninvites (kicks) the named player from the current group if player is group leader.
-function UninviteByName("name") end
+---@param name string
+function UninviteByName(name) end
 
 --- Kick a unit from the party if player is group leader.
-function UninviteFromParty("unit") end
+---@param unit UnitId
+function UninviteFromParty(unit) end
 
 --- Returns true if the unit is a member of your party.
-function UnitInParty("unit") end
+---@param unit UnitId
+function UnitInParty(unit) end
 
 --- Returns true if the unit is the leader of its party.
-function UnitIsPartyLeader("unit") end
+---@param unit UnitId
+function UnitIsPartyLeader(unit) end
 
-]]
+--- ************ MEETING STONE ************
+
+--- Remove character from an instance's Meeting Stone queue
+function CancelMeetingStoneRequest() end
+
+--- No description
+function GetMeetingStoneStatusText() end
+
+--- No description
+function IsInMeetingStoneQueue() end
+
