@@ -92,7 +92,7 @@ function UnitInParty(unit) end
 ---@param unit UnitId
 function UnitIsPartyLeader(unit) end
 
---- ************ MEETING STONE ************
+-- ************ MEETING STONE ************
 
 --- Remove character from an instance's Meeting Stone queue
 function CancelMeetingStoneRequest() end

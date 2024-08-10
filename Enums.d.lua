@@ -413,3 +413,10 @@ TABARDSLOT
 --- | "raidpet39"
 --- | "raidpet40"
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
+
+---@alias ZonePvpType
+--- | nil -- equivalent to "contested"
+--- | "friendly" -- Zone controlled by faction the player belongs to.
+--- | "contested"
+--- | "hostile" -- Zone controlled by opposing faction.
+--- | "sanctuary" -- (TBC onward?) Zone does not allow pvp combat.
