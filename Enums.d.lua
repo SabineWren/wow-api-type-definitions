@@ -305,18 +305,6 @@ TABARDSLOT
 --- | 5 Shadow
 --- | 6 Arcane
 
----@alias ScriptTypeFrame
---- | "OnEvent" TODO args
---- | "OnUpdate" TODO args
---- These are from a modern API doc, so might be wrong arguments.
---- | "OnEnter" (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
---- | "OnHide" (self) - Invoked when the frame's visbility changes to hidden.
---- | "OnLeave" (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
---- | "OnMouseDown" (self, button) - Invoked when a mouse button is pressed while the cursor is over the frame.
---- | "OnMouseUp" (self, button) - Invoked when the mouse button is released following a mouse down action in the frame.
---- | "OnMouseWheel" (self, delta) - Invoked when the frame receives a mouse wheel scrolling action.
---- | "OnShow" (self) - Invoked when the frame becomes visible.
-
 ---@alias StatIndex
 --- | 1 Strength
 --- | 2 Agility

@@ -142,7 +142,7 @@ function Frame:GetRegions() end
 function Frame:GetScale() end
 
 --- Get the function for one of this frame's handlers.
----@param scriptType ScriptTypeFrame
+---@param scriptType OnScriptMegaUnion
 ---@return nil|function
 ---@nodiscard
 function Frame:GetScript(scriptType) end
@@ -154,7 +154,7 @@ function Frame:GetTitleRegion() end
 
 --- Predicate to check if frame supports the handler type.
 --- - If you want to determine if the frame has a script, use :GetScript().
----@param scriptType ScriptTypeFrame
+---@param scriptType OnScriptMegaUnion
 ---@return boolean
 ---@nodiscard
 function Frame:HasScript(scriptType) end
@@ -312,12 +312,6 @@ function Frame:SetResizable(isResizable) end
 ---@param scale number greater than 0
 ---@return nil
 function Frame:SetScale(scale) end
-
---- Set the function to use for a handler on this frame.
----@param scriptType ScriptTypeFrame
----@param handler nil|function Handler, or nil to remove current handler.
----@return nil
-function Frame:SetScript(scriptType, handler) end
 
 --- Set whether the frame should raise itself when clicked.
 --- - Typically, this function should be applied to any window-like frames that are displayed in the UI.
