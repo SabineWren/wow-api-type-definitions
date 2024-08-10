@@ -39,17 +39,17 @@
 
 --- Add is most common, followed by Blend.
 ---@alias BlendMode
---- | "ADD"-- Additive blend.
---- | "ALPHAKEY"-- One-bit alpha.
---- | "BLEND"-- Normal painting on top of the background, obeying alpha channels if present in the image (uses alpha).
---- | "DISABLE"-- Opaque texture.
---- | "MOD"-- Modulating blend.
+--- | "ADD" Additive blend.
+--- | "ALPHAKEY" One-bit alpha.
+--- | "BLEND" Normal painting on top of the background, obeying alpha channels if present in the image (uses alpha).
+--- | "DISABLE" Opaque texture.
+--- | "MOD" Modulating blend.
 
 -- ENUMS ARE BUGGED UPSTREAM
 -- https://github.com/LuaLS/lua-language-server/issues/2732
 ---@alias BookType
---- | `pet`-- See above comment; should be only `BOOKTYPE_PET`
---- | `spell`-- See above comment; should be only `BOOKTYPE_SPELL`
+--- | `pet` See above comment; should be only `BOOKTYPE_PET`
+--- | `spell` See above comment; should be only `BOOKTYPE_SPELL`
 --- | `BOOKTYPE_PET`
 --- | `BOOKTYPE_SPELL`
 
@@ -111,9 +111,9 @@
 --- | "HIGHLIGHT"
 
 ---@alias Gender
---- | 1-- unknown
---- | 2-- male
---- | 3-- female
+--- | 1 unknown
+--- | 2 male
+--- | 3 female
 
 --- Regular inventory items 0-23
 --- 40-67 are the 28 bank slots
@@ -214,8 +214,8 @@ TABARDSLOT
 --- | "Button5"
 
 ---@alias MouseClick
---- | "AnyUp"-- Responds to the up action of any mouse button.
---- | "AnyDown"-- Responds to the down action of any mouse button.
+--- | "AnyUp" Responds to the up action of any mouse button.
+--- | "AnyDown" Responds to the down action of any mouse button.
 --- | "LeftButtonUp"
 --- | "LeftButtonDown"
 --- | "RightButtonUp"
@@ -265,52 +265,64 @@ TABARDSLOT
 --- | "WHISPER"
 
 ---@alias PowerType
---- | 0-- Mana
---- | 1-- Rage
---- | 2-- Focus (hunter pets)
---- | 3-- Energy
---- | 4-- Happiness
+--- | 0 Mana
+--- | 1 Rage
+--- | 2 Focus (hunter pets)
+--- | 3 Energy
+--- | 4 Happiness
 
 --- 1-20 on Vanilla 1.12.1. Turtle plans to increase it to at least 25.
 ---@alias QuestIndex 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25
 
+---@alias RaidIndex 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40
+
+---@alias RaidMark
+--- | 1 Star
+--- | 2 Circle
+--- | 3 Diamond
+--- | 4 Triangle
+--- | 5 Moon
+--- | 6 Square
+--- | 7 Cross
+--- | 8 Skull
+
 ---@alias Reputation
---- | 1-- Hated
---- | 2-- Hostile
---- | 3-- Unfriendly
---- | 4-- Neutral
---- | 5-- Friendly
---- | 6-- Honored
---- | 7-- Revered
---- | 8-- Exalted
+--- | 1 Hated
+--- | 2 Hostile
+--- | 3 Unfriendly
+--- | 4 Neutral
+--- | 5 Friendly
+--- | 6 Honored
+--- | 7 Revered
+--- | 8 Exalted
 
 ---@alias Resistance
---- | 0-- Physical (Armor rating)
---- | 1-- Holy
---- | 2-- Fire
---- | 3-- Nature
---- | 4-- Frost
---- | 5-- Shadow
---- | 6-- Arcane
+--- | 0 Physical (Armor rating)
+--- | 1 Holy
+--- | 2 Fire
+--- | 3 Nature
+--- | 4 Frost
+--- | 5 Shadow
+--- | 6 Arcane
 
 ---@alias ScriptTypeFrame
---- | "OnEvent"--- TODO args
---- | "OnUpdate"--- TODO args
+--- | "OnEvent" TODO args
+--- | "OnUpdate" TODO args
 --- These are from a modern API doc, so might be wrong arguments.
---- | "OnEnter"-- (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
---- | "OnHide"-- (self) - Invoked when the frame's visbility changes to hidden.
---- | "OnLeave"-- (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
---- | "OnMouseDown"-- (self, button) - Invoked when a mouse button is pressed while the cursor is over the frame.
---- | "OnMouseUp"-- (self, button) - Invoked when the mouse button is released following a mouse down action in the frame.
---- | "OnMouseWheel"-- (self, delta) - Invoked when the frame receives a mouse wheel scrolling action.
---- | "OnShow"-- (self) - Invoked when the frame becomes visible.
+--- | "OnEnter" (self, motion) - Invoked when the mouse cursor enters the frame's interactive area.
+--- | "OnHide" (self) - Invoked when the frame's visbility changes to hidden.
+--- | "OnLeave" (self, motion) - Invoked when the mouse cursor leaves the frame's interactive area.
+--- | "OnMouseDown" (self, button) - Invoked when a mouse button is pressed while the cursor is over the frame.
+--- | "OnMouseUp" (self, button) - Invoked when the mouse button is released following a mouse down action in the frame.
+--- | "OnMouseWheel" (self, delta) - Invoked when the frame receives a mouse wheel scrolling action.
+--- | "OnShow" (self) - Invoked when the frame becomes visible.
 
 ---@alias StatIndex
---- | 1-- Strength
---- | 2-- Agility
---- | 3-- Stamina
---- | 4-- Intellect
---- | 5-- Spirit
+--- | 1 Strength
+--- | 2 Agility
+--- | 3 Stamina
+--- | 4 Intellect
+--- | 5 Spirit
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/UnitId?type=revision&diff=6512501&oldid=364069)
 ---@alias UnitId
@@ -415,8 +427,8 @@ TABARDSLOT
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
 
 ---@alias ZonePvpType
---- | nil -- equivalent to "contested"
---- | "friendly" -- Zone controlled by faction the player belongs to.
+--- | nil equivalent to "contested"
+--- | "friendly" Zone controlled by faction the player belongs to.
 --- | "contested"
---- | "hostile" -- Zone controlled by opposing faction.
---- | "sanctuary" -- (TBC onward?) Zone does not allow pvp combat.
+--- | "hostile" Zone controlled by opposing faction.
+--- | "sanctuary" (TBC onward?) Zone does not allow pvp combat.
