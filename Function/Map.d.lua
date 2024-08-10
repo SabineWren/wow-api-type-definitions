@@ -7,4 +7,5 @@
 ---@param unit UnitId
 ---@return number posX
 ---@return number posY
+---@nodiscard
 function GetPlayerMapPosition(unit) end

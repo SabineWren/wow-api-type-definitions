@@ -3,6 +3,7 @@
 --- Determine if specified action has a numeric range requirement.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function ActionHasRange(slot) end
 
 --- Changes the current action button set to CURRENT_ACTIONBAR_PAGE.
@@ -18,6 +19,7 @@ function ChangeActionBarPage(actionBarPage) end
 ---@return nil|1 bottomRightState 1 if the right-hand bottom action bar is shown
 ---@return nil|1 sideRightState 1 if the first (outer) right side action bar is shown.
 ---@return nil|1 sideRight2State 1 if the second (inner) right side action bar is shown.
+---@nodiscard
 function GetActionBarToggles() end
 
 --- This returns the cooldown values of the specified action.
@@ -25,6 +27,7 @@ function GetActionBarToggles() end
 ---@return number start The time at which the current cooldown period began (relative to the result of GetTime), or 0 if the cooldown is not active or not applicable.
 ---@return number duration The duration of the current cooldown period in seconds, or 0 if the cooldown is not active or not applicable.
 ---@return number enable Indicate if cooldown is enabled. Returns greater than 0 if a cooldown is active, and 0 if a cooldown cannot be active. This lets you know when a shapeshifting form has ended and the actual countdown has started.
+---@nodiscard
 function GetActionCooldown(slot) end
 
 --- Get the count (bandage/potion/etc) for an action.
@@ -32,6 +35,7 @@ function GetActionCooldown(slot) end
 --- - The action's count as displayed on the action's icon; ex. for a potion action, returns the number of potions left.
 ---@param slot ActionBarSlot
 ---@return number
+---@nodiscard
 function GetActionCount(slot) end
 
 --- Get the text label (macros, etc) for an action, returns nil if none.
@@ -40,12 +44,14 @@ function GetActionCount(slot) end
 --- - Most standard WoW action icons don't have action text.
 ---@param slot ActionBarSlot
 ---@return nil|string
+---@nodiscard
 function GetActionText(slot) end
 
 --- Get filepath for an action's texture, i.e. icon image.
 --- - Returns nil if the slot is empty.
 ---@param slot ActionBarSlot
 ---@return nil|string filepath
+---@nodiscard
 function GetActionTexture(slot) end
 
 --- Determine which page of bonus actions to show.
@@ -66,50 +72,60 @@ function GetActionTexture(slot) end
 --- - Normal: 0
 --- - Shadowform: 1
 ---@return integer offset The current bonus action bar index.
+---@nodiscard
 function GetBonusBarOffset() end
 
 --- Check if the player has an action in the specified slot.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function HasAction(slot) end
 
 --- Test if an action is in range (1=yes, 0=no, nil=not applicable).
 ---@param slot ActionBarSlot
 ---@return nil|0|1
+---@nodiscard
 function IsActionInRange(slot) end
 
 --- Return 1 if an action is an 'attack' action (flashes during combat), nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsAttackAction(slot) end
 
 --- Return 1 if an action is auto-repeating, nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsAutoRepeatAction(slot) end
 
 --- Return 1 if an action is the one currently underway, nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsCurrentAction(slot) end
 
 --- Return 1 if an action can be used at present, nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsUsableAction(slot) end
 
 --- Return 1 if an action is consumable (i.e. has a count), nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsConsumableAction(slot) end
 
 --- Return 1 if an action is equipped (i.e. connected to an item that must be equipped), nil otherwise.
 ---@param slot ActionBarSlot
 ---@return nil|1
+---@nodiscard
 function IsEquippedAction(slot) end
 
 --- Determine if player has a pet with an action bar.
 ---@return nil|1
+---@nodiscard
 function PetHasActionBar() end
 
 --- Drags an action out of the specified quickbar slot and holds it on the cursor.

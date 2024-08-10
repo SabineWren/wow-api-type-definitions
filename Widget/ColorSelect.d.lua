@@ -8,12 +8,14 @@ ColorSelect = {}
 ---@return number h [0, 360]
 ---@return number s [0, 1]
 ---@return number v [0, 1]
+---@nodiscard
 function ColorSelect:GetColorHSV() end
 
 --- Get the RGB values of the selected color.
 ---@return number r [0, 1]
 ---@return number g [0, 1]
 ---@return number b [0, 1]
+---@nodiscard
 function ColorSelect:GetColorRGB() end
 
 --- Get the texture used to show color value.
@@ -21,14 +23,17 @@ function ColorSelect:GetColorValueTexture() end
 
 --- Get the texture for the color picker's value slider selection indicator.
 ---@return Texture
+---@nodiscard
 function ColorSelect:GetColorValueThumbTexture() end
 
 --- Get the texture used to display the color picker's hue/saturation wheel.
 ---@return Texture
+---@nodiscard
 function ColorSelect:GetColorWheelTexture() end
 
 --- Get the texture for the selection indicator on the color picker's hue/saturation wheel.
 ---@return Texture
+---@nodiscard
 function ColorSelect:GetColorWheelThumbTexture() end
 
 --- Set to a specific HSV color.

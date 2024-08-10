@@ -78,9 +78,11 @@ TABARDSLOT
 ---@param unit UnitId
 ---@param invSlot number
 ---@return number
+---@nodiscard
 function GetInventoryItemCount(unit, invSlot) end
 
 ---@param slotName InvSlotName
 ---@return number invSlot
 ---@return string textureName
+---@nodiscard
 function GetInventorySlotInfo(slotName) end

@@ -17,26 +17,31 @@ function CancelTrackingBuff() end
 ---@param auraFilter AuraFilter
 ---@return integer buffIndex The index of the buff. Mainly to use for other GetPlayerBuffXYZ functions. If below zero, indicates there is no such buff.
 ---@return nil|1 untilCancelled If 1, this buff will last until it is cancelled (Aura, Aspect, Stealth).
+---@nodiscard
 function GetPlayerBuff(buffIndex, auraFilter) end
 
 --- Retrieves the number of applications of a debuff or buff.
 ---@param buffIndex integer Starting from 0
 ---@return integer
+---@nodiscard
 function GetPlayerBuffApplications(buffIndex) end
 
 --- Get the debuff type for a player debuff ("Magic", "Curse", "Disease", or "Poison")
 ---@param buffIndex integer Starting from 0
 ---@return string
+---@nodiscard
 function GetPlayerBuffDispelType(buffIndex) end
 
 --- Retrieves the texture identifier for a certain buff.
 ---@param buffIndex integer Starting from 0
 ---@return nil|string path nil if buff doesn't exist.
+---@nodiscard
 function GetPlayerBuffTexture(buffIndex) end
 
 --- Retrieves how long a buff will last before expiring.
 ---@param buffIndex integer Can be obtained with GetPlayerBuff.
 ---@return number buffTimeLeft Time (in seconds) left until the buff expires.
+---@nodiscard
 function GetPlayerBuffTimeLeft(buffIndex) end
 
 --- Retrieves info about a buff of a certain unit.
@@ -50,6 +55,7 @@ function GetPlayerBuffTimeLeft(buffIndex) end
 ---@return integer count The number of times the debuff has been applied to the target. Returns 0 for any debuff which doesn't stack.
 ---@return nil|string debuffType The type of the debuff: Magic, Disease, Poison, Curse, or nothing for those with out a type.
 ---@return nil|number duration The full duration of the debuff in seconds; nil if the debuff was not cast by the player.
+---@nodiscard
 function UnitBuff(unit, index, showCastable) end
 
 --- Retrieves info about a debuff of a certain unit.
@@ -63,4 +69,5 @@ function UnitBuff(unit, index, showCastable) end
 ---@return integer count The number of times the debuff has been applied to the target. Returns 0 for any debuff which doesn't stack.
 ---@return nil|string debuffType The type of the debuff: Magic, Disease, Poison, Curse, or nothing for those with out a type.
 ---@return nil|number duration The full duration of the debuff in seconds; nil if the debuff was not cast by the player.
+---@nodiscard
 function UnitDebuff(unit, index, showDispellable) end

@@ -31,6 +31,7 @@ function GetMasterLootCandidate(index) end
 
 --- Returns number of party members.
 ---@return number
+---@nodiscard
 function GetNumPartyMembers() end
 
 --- Returns the index of the party leader (1-4) if not yourself.

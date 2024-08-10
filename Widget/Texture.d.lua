@@ -6,6 +6,7 @@ Texture = {}
 
 --- See [SetBlendMode](lua://Texture:SetBlendMode)
 ---@return BlendMode mode Blend alphaMode
+---@nodiscard
 function Texture:GetBlendMode() end
 
 --- Gets the 8 texture coordinates that map to the Texture's corners.
@@ -18,24 +19,29 @@ function Texture:GetBlendMode() end
 ---@return number URy Upper right corner Y position, 0.0 to 1.0
 ---@return number LRx Lower right corner X position, 0.0 to 1.0
 ---@return number LRy Lower right corner Y position, 0.0 to 1.0
+---@nodiscard
 function Texture:GetTexCoord() end
 
 --- See (Texture:SetTexCoordModifiesRect)[lua://Texture:SetTexCoordModifiesRect]
 ---@return boolean
+---@nodiscard
 function Texture:GetTexCoordModifiesRect() end
 
 --- Gets this texture's current texture path.
 ---@return string path
+---@nodiscard
 function Texture:GetTexture() end
 
 ---@return number r [0 to 1]
 ---@return number g [0 to 1]
 ---@return number b [0 to 1]
 ---@return number a [0 to 1]
+---@nodiscard
 function Texture:GetVertexColor() end
 
 --- True if desaturation > 0.0
 ---@return boolean
+---@nodiscard
 function Texture:IsDesaturated() end
 
 ---@param mode BlendMode Blend alphaMode
@@ -44,6 +50,7 @@ function Texture:SetBlendMode(mode) end
 
 ---@param isGreyscale boolean
 ---@return nil|boolean isShaderSupported
+---@nodiscard
 function Texture:SetDesaturated(isGreyscale) end
 
 ---@param orientation "HORIZONTAL"|"Vertical"

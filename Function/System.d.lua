@@ -244,72 +244,89 @@ function ConsoleExec(command) end
 ---@return string version
 ---@return string build
 ---@return string date
+---@nodiscard
 function GetBuildInfo() end
 
 --- Returns the current framerate (full precision)
 ---@return number
+---@nodiscard
 function GetFramerate() end
 
 --- Returns the time in-game (server timezone).
 ---@return number hours
 ---@return number minutes
+---@nodiscard
 function GetGameTime() end
 
 ---@return string locale Client locale, ex. 'enUS'
+---@nodiscard
 function GetLocale() end
 
 --- Returns the cursor's position on the screen.
 --- - Coordinates unaffected by UI scale
 ---@return number x 0 at the left edge of the screen.
 ---@return number y 0 at the bottom edge of the screen.
+---@nodiscard
 function GetCursorPosition() end
 
 --- Get bandwidth and latency network information.
 ---@return number bandwidthIn Current incoming bandwidth (download) usage, measured in KB/s.
 ---@return number bandwidthOut Current outgoing bandwidth (upload) usage, measured in KB/s.
 ---@return number msLatency Updated every 30 seconds.
+---@nodiscard
 function GetNetStats() end
 
 --- returns the name of the server
 ---@return string
+---@nodiscard
 function GetRealmName() end
 
 --- Returns the height of the window in pixels.
 --- - Affected by UI scale.
 ---@return number
+---@nodiscard
 function GetScreenHeight() end
 
 --- Returns the width of the window in pixels.
 --- - Affected by UI scale.
 ---@return number
+---@nodiscard
 function GetScreenWidth() end
 
 --- Returns system uptime of your computer in seconds (millisecond precision).
 ---@return number
+---@nodiscard
 function GetTime() end
 
 --- Predicate to check if viewing a video cinematic.
 ---@return boolean
+---@nodiscard
 function InCinematic() end
 
 --- Returns true if the alt key is currently depressed.
 ---@return boolean
+---@nodiscard
 function IsAltKeyDown() end
 
 --- Returns true if the control key is currently depressed.
 ---@return boolean
+---@nodiscard
 function IsControlKeyDown() end
 
 ---@return boolean
+---@nodiscard
 function IsLinuxClient() end
 
 ---@return boolean
+---@nodiscard
 function IsMacClient() end
 
 ---@return boolean
+---@nodiscard
 function IsShiftKeyDown() end
 
 ---@return boolean
+---@nodiscard
 function IsWindowsClient() end
 
 --- Shows the opening movie for a player's race.
@@ -378,6 +395,7 @@ function debuginfo() end
 --- Given an object name will return the object itself.
 ---@param objectName string
 ---@return unknown object
+---@nodiscard
 function getglobal(objectName) end
 
 --- set the global "object" to the given value.

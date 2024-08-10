@@ -10,18 +10,22 @@ FontInstance = {}
 ---@return string filePath
 ---@return number fontheight Font height in pixels. Due to internal graphics engine workings, this will be ridiculously close to an integer.
 ---@return string fontFlags See [SetFont](lua://FontInstance:SetFont).
+---@nodiscard
 function FontInstance:GetFont() end
 
 ---Returns the font object from which the font instance's properties are inherited, or nil if none.
 ---@return nil|Font font
+---@nodiscard
 function FontInstance:GetFontObject() end
 
 ---Return the horizontal text justification.
 ---@return number
+---@nodiscard
 function FontInstance:GetJustifyH() end
 
 ---Return the vertical text justification.
 ---@return number
+---@nodiscard
 function FontInstance:GetJustifyV() end
 
 ---Returns the color of text shadow (r, g, b, a).
@@ -29,15 +33,18 @@ function FontInstance:GetJustifyV() end
 ---@return number g [0, 1]
 ---@return number b [0, 1]
 ---@return number a [0, 1]
+---@nodiscard
 function FontInstance:GetShadowColor() end
 
 ---Returns the text shadow offset (x, y).
 ---@return number x
 ---@return number y
+---@nodiscard
 function FontInstance:GetShadowOffset() end
 
 ---Returns the text spacing.
 ---@return number
+---@nodiscard
 function FontInstance:GetSpacing() end
 
 ---Returns the default text color.
@@ -45,6 +52,7 @@ function FontInstance:GetSpacing() end
 ---@return number g [0, 1]
 ---@return number b [0, 1]
 ---@return number a [0, 1]
+---@nodiscard
 function FontInstance:GetTextColor() end
 
 --- Sets the font to use for text, returns 1 if the path was valid, nil otherwise (no change occurs).

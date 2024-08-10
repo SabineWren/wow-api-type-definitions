@@ -4,6 +4,7 @@
 ---@param questIndex integer
 ---@param unit UnitId
 ---@return boolean
+---@nodiscard
 function IsUnitOnQuest(questIndex, unit) end
 
 -- AbandonQuest - Abandon the specified quest.

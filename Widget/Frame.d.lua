@@ -13,6 +13,7 @@ Frame = {}
 --- --- TODO: can this work with Font references instead of virtual font strings?
 ---@param inheritsFrom nil|string The name of a virtual font string. If nil, the font string does not inherit any properties.
 ---@return FontString
+---@nodiscard
 function Frame:CreateFontString(name, layer, inheritsFrom) end
 
 --- Create and return a new Texture as a child of this Frame.
@@ -20,10 +21,12 @@ function Frame:CreateFontString(name, layer, inheritsFrom) end
 ---@param layer nil|DrawLayer
 ---@param inheritsFrom? nil|string
 ---@return Texture
+---@nodiscard
 function Frame:CreateTexture(name, layer, inheritsFrom) end
 
 --- Create a title region for the frame if it does not have one.
 ---@return Region
+---@nodiscard
 function Frame:CreateTitleRegion() end
 
 --- Disable rendering of Regions in the specified draw layer.
@@ -60,51 +63,63 @@ function Frame:EnableMouseWheel(enableFlag) end
 
 --- Creates and returns a backdrop table suitable for use in SetBackdrop
 ---@return Backdrop
+---@nodiscard
 function Frame:GetBackdrop() end
 
 --- Gets the frame's backdrop border color (r, g, b, a)
 --- - These values describe any tint applied to the backdrop files, not the actual color and alpha of each pixel in those file.
 --- - These values also ignore other sources of transparency that could affect the appearance, such as Region:SetAlpha().
 ---@return number, number, number, number
+---@nodiscard
 function Frame:GetBackdropBorderColor() end
 
 --- Gets the frame's backdrop color (r, g, b, a)
 --- - These values describe any tint applied to the backdrop files, not the actual color and alpha of each pixel in those file.
 --- - These values also ignore other sources of transparency that could affect the appearance, such as Region:SetAlpha().
 ---@return number, number, number, number
+---@nodiscard
 function Frame:GetBackdropColor() end
 
 --- Returns a list of child frames of this frame.
 ---@return nil|(Frame[])
+---@nodiscard
 function Frame:GetChildren() end
 
 --- Get the scale factor of this object relative to the root window.
 ---@return number
+---@nodiscard
 function Frame:GetEffectiveScale() end
 
 ---@return integer
+---@nodiscard
 function Frame:GetFrameLevel() end
 
 ---@return FrameStrata
+---@nodiscard
 function Frame:GetFrameStrata() end
 
 ---@return FrameType
+---@nodiscard
 function Frame:GetFrameType() end
 
 --- Gets the frame's hit rectangle inset distances (l, r, t, b)
 ---@return number, number, number, number
+---@nodiscard
 function Frame:GetHitRectInsets() end
 
 --- Defaults to 0 for new frames.
 ---@return integer
+---@nodiscard
 function Frame:GetID() end
 
 --- Gets the frame's maximum allowed resize bounds (w, h)
 ---@return number, number
+---@nodiscard
 function Frame:GetMaxResize() end
 
 --- Gets the frame's minimum allowed resize bounds (w, h)
 ---@return number, number
+---@nodiscard
 function Frame:GetMinResize() end
 
 --- Get the number of "children" (frames and things derived from frames) this frame has.
@@ -113,67 +128,82 @@ function Frame:GetNumChildren() end
 
 --- Return the number of "regions" (fontstrings, textures) belonging to this frame.
 ---@return integer
+---@nodiscard
 function Frame:GetNumRegions() end
 
 --- Return the "regions" (fontstrings, textures) of the frame (multiple return values) belonging to this frame.
 ---@return nil|(FontString|Texture)[]
+---@nodiscard
 function Frame:GetRegions() end
 
 --- Get the scale factor of this object relative to its parent.
 ---@return number
+---@nodiscard
 function Frame:GetScale() end
 
 --- Get the function for one of this frame's handlers.
 ---@param scriptType ScriptTypeFrame
 ---@return nil|function
+---@nodiscard
 function Frame:GetScript(scriptType) end
 
 --- Return the frame's title region
 ---@return nil|Region
+---@nodiscard
 function Frame:GetTitleRegion() end
 
 --- Predicate to check if frame supports the handler type.
 --- - If you want to determine if the frame has a script, use :GetScript().
 ---@param scriptType ScriptTypeFrame
 ---@return boolean
+---@nodiscard
 function Frame:HasScript(scriptType) end
 
 --- Gets whether the frame is prohibited from being dragged off screen
 ---@return boolean
+---@nodiscard
 function Frame:IsClampedToScreen() end
 
 --- Determine if this frame is of the specified type, or a subclass of that type.
 ---@param frameType FrameType
 ---@return boolean
+---@nodiscard
 function Frame:IsFrameType(frameType) end
 
 --- Get whether this frame will get keyboard input.
 ---@return boolean
+---@nodiscard
 function Frame:IsKeyboardEnabled() end
 
 --- Get whether this frame will get mouse input.
 ---@return boolean
+---@nodiscard
 function Frame:IsMouseEnabled() end
 
 --- Get whether this frame will get mouse wheel notifications. New in 1.11.
 ---@return boolean
+---@nodiscard
 function Frame:IsMouseWheelEnabled() end
 
 --- Determine if the frame can be moved.
 ---@return boolean
+---@nodiscard
 function Frame:IsMovable() end
 
 --- Determine if the frame can be resized.
 ---@return boolean
+---@nodiscard
 function Frame:IsResizable() end
 
 --- Get whether the frame is set as toplevel.
 ---@return boolean
+---@nodiscard
 function Frame:IsToplevel() end
 
 --- Determine if this frame has been relocated by the user.
 --- - The position of named, movable, user-positioned frames is stored in the layout cache and is restored before PLAYER_LOGIN fires.
 ---@return boolean
+---@nodiscard
 function Frame:IsUserPlaced() end
 
 --- Lower this frame behind other frames.

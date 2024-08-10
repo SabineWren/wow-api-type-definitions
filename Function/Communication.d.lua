@@ -9,17 +9,20 @@ function DoEmote(emote, target) end
 --- - ex. "Common" or "Orcish"
 ---@param unit UnitId
 ---@return string
+---@nodiscard
 function GetDefaultLanguage(unit) end
 
 --- Returns the language specified by the index.
 --- - TODO what is the return for invalid index?
 ---@param index number Ranging from 1 up to GetNumLanguages().
 ---@return string
+---@nodiscard
 function GetLanguageByIndex(index) end
 
 --- Returns the number of languages your character can speak
 --- - Function name is correct. A Blizzard programmer typod it.
 ---@return number
+---@nodiscard
 function GetNumLaguages() end
 
 --- Does a random roll between the two values.

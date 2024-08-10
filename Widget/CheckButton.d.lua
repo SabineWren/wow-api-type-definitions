@@ -5,15 +5,18 @@
 CheckButton = {}
 
 ---@return boolean isChecked
+---@nodiscard
 --- - When a CheckButton is clicked, the state will already be toggled by the time the OnClick handler runs.
 function CheckButton:GetChecked() end
 
 --- Get the texture used for a checked box
 ---@return Texture
+---@nodiscard
 function CheckButton:GetCheckedTexture() end
 
 --- Get the texture used for a disabled checked box
 ---@return Texture
+---@nodiscard
 function CheckButton:GetDisabledCheckedTexture() end
 
 --- - Does not fire OnClick; use Click() if desired.

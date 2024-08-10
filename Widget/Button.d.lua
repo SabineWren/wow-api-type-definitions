@@ -20,10 +20,12 @@ function Button:Enable() end
 
 --- Return the current state of the Button.
 ---@return "PUSHED"|"NORMAL"
+---@nodiscard
 function Button:GetButtonState() end
 
 --- Return the font object for the Button when disabled
 ---@return Font
+---@nodiscard
 function Button:GetDisabledFontObject() end
 
 --- Get the color of this button's text when disabled (r, g, b, a)
@@ -31,24 +33,29 @@ function Button:GetDisabledFontObject() end
 ---@return number g [0, 1]
 ---@return number b [0, 1]
 ---@return number a [0, 1]
+---@nodiscard
 function Button:GetDisabledTextColor() end
 
 --- Get the texture for this button when disabled.
 ---@return Texture
+---@nodiscard
 function Button:GetDisabledTexture() end
 
 --- Returns the font, size, and flags currently used for display on the Button.
 ---@return Font font
 ---@return number size
 ---@return string fontFlags See [FontInstance:SetFont](lua://FontInstance:SetFont).
+---@nodiscard
 function Button:GetFont() end
 
 --- Get this button's label FontString
 ---@return FontString
+---@nodiscard
 function Button:GetFontString() end
 
 --- Return the font object for the Button when highlighted.
 ---@return Font
+---@nodiscard
 function Button:GetHighlightFontObject() end
 
 --- Get the color of this button's text when highlighted.
@@ -56,28 +63,34 @@ function Button:GetHighlightFontObject() end
 ---@return number g [0, 1]
 ---@return number b [0, 1]
 ---@return number a [0, 1]
+---@nodiscard
 function Button:GetHighlightTextColor() end
 
 --- Get the texture for this button when highlighted,
 --- or nil if the button does not yet have a highlight texture.
 ---@return nil|Texture
+---@nodiscard
 function Button:GetHighlightTexture() end
 
 --- Get the normal texture for this button.
 ---@return Texture
+---@nodiscard
 function Button:GetNormalTexture() end
 
 --- Get the text offset when this button is pushed (x, y).
 ---@return number x
 ---@return number y
+---@nodiscard
 function Button:GetPushedTextOffset() end
 
 --- Get the texture for this button when pushed
 ---@return Texture
+---@nodiscard
 function Button:GetPushedTexture() end
 
 --- Get the text label for the Button.
 ---@return string
+---@nodiscard
 function Button:GetText() end
 
 --- Get the normal color of this button's text (r, g, b, a)
@@ -85,23 +98,28 @@ function Button:GetText() end
 ---@return number g [0, 1]
 ---@return number b [0, 1]
 ---@return number a [0, 1]
+---@nodiscard
 function Button:GetTextColor() end
 
 --- Return the font object for the Button's normal text
 ---@return Font
+---@nodiscard
 function Button:GetTextFontObject() end
 
 --- Get the height of the Button's text.
 ---@return number
+---@nodiscard
 function Button:GetTextHeight() end
 
 --- Get the width of the Button's text.
 ---@return number
+---@nodiscard
 function Button:GetTextWidth() end
 
 --- Determine whether the Button is enabled.
 --- - Disabled buttons can't be clicked.
 ---@return boolean
+---@nodiscard
 function Button:IsEnabled() end
 
 --- Set the Button to always be drawn highlighted.
@@ -195,6 +213,7 @@ function Button:SetText(text) end
 ---@return number r [0, 1]
 ---@return number g [0, 1]
 ---@return number b [0, 1]
+---@nodiscard
 function Button:SetTextColor(r, g, b) end
 
 --- Set the font object from which to get settings for this Button's normal state.

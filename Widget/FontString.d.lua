@@ -7,16 +7,19 @@ FontString = {}
 
 --- Get whether long strings without spaces are wrapped or truncated
 ---@return boolean
+---@nodiscard
 function FontString:CanNonSpaceWrap() end
 
 --- Returns the width in pixels of the current string in the current font.
 --- - Ignores word wrap but includes truncation
 --- - If no width is explicitly set, GetWidth() will return the same result as GetStringWidth().
 ---@return number
+---@nodiscard
 function FontString:GetStringWidth() end
 
 --- Get the displayed text.
 ---@return nil|string
+---@nodiscard
 function FontString:GetText() end
 
 --- Create or remove an alpha gradient over the text.
@@ -24,6 +27,7 @@ function FontString:GetText() end
 ---@param start number Distance from the left in pixels that the gradient will start.
 ---@param length number Length in pixels of the gradient.
 ---@return nil|1 result 1 if the gradient changed, or nil if no action taken.
+---@nodiscard
 function FontString:SetAlphaGradient(start, length) end
 
 --- Set whether long strings without spaces are wrapped or truncated.

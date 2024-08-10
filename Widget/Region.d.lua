@@ -11,41 +11,51 @@ function Region:ClearAllPoints() end
 
 --- Y-location of Bottom edge of region (measured from bottom).
 ---@return nil|number
+---@nodiscard
 function Region:GetBottom() end
 
 --- X,Y locations of center point of the region (measured from bottom left).
 ---@return nil|number, nil|number
+---@nodiscard
 function Region:GetCenter() end
 
 ---@return number Zero if not anchored.
+---@nodiscard
 function Region:GetHeight() end
 
 --- X-location of Left edge of region (measured from left).
 ---@return nil|number
+---@nodiscard
 function Region:GetLeft() end
 
 --- Number of anchor points, or zero if none set.
 ---@return 0|1|2|3|4|5|6|7|8|9
+---@nodiscard
 function Region:GetNumPoints() end
 
 ---@return nil|Region
+---@nodiscard
 function Region:GetParent() end
 
 ---@return nil|AnchorPoint point
 ---@return nil|Region relativeTo Parent region.
 ---@return nil|number xOffset
 ---@return nil|number yOffset
+---@nodiscard
 function Region:GetPoint() end
 
 --- X-location of Right edge of region (measured from left).
 ---@return nil|number
+---@nodiscard
 function Region:GetRight() end
 
 --- Y-location of Top edge of region (measured from bottom).
 ---@return nil|number
+---@nodiscard
 function Region:GetTop() end
 
 ---@return number# Zero if not anchored.
+---@nodiscard
 function Region:GetWidth() end
 
 --- Set this object to hidden (it and all of its children will disappear).
@@ -57,12 +67,14 @@ function Region:Hide() end
 --- Determine if this object is shown (will be visible if its parent is visible).
 --- Frames are shown by default.
 ---@return boolean
+---@nodiscard
 function Region:IsShown() end
 
 --- Get whether the object is visible on screen.
 -- <br>Equivalent to (&:IsShown() and &:GetParent():IsVisible());
 -- <br>Does not consider transparency.
 ---@return boolean
+---@nodiscard
 function Region:IsVisible() end
 
 --- Sets TopLeft and BottomRight anchors of the receiving frame.
