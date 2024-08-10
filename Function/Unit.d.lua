@@ -5,16 +5,6 @@
 ---@return nil
 function AssistUnit(unit) end
 
---- - 1=Inspect (11.11 yards)
---- - 2=Trade (11.11 yards)
---- - 3=Duel (9.9 yards) (or 10?)
---- - 4=Follow (28 yards)
----@param unit UnitId
----@param distIndex 1|2|3|4
----@return nil|1 canInteract
----@nodiscard
-function CheckInteractDistance(unit, distIndex) end
-
 --- Drops an item from the cursor onto a unit.
 ---@param unit UnitId
 ---@return nil
