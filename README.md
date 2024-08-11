@@ -1,4 +1,6 @@
-[Completion Status](https://github.com/SabineWren/wow-api-type-definitions/issues/1)
+### Contributing
+- See [Completion Status](https://github.com/SabineWren/wow-api-type-definitions/issues/1) for remaining tasks.
+- UI functions go in `DefaultUI.d.lua`, not `/Function`, because they're part of the interface code.
 
 ### Usage
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice
