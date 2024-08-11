@@ -110,6 +110,36 @@
 --- | "OVERLAY"
 --- | "HIGHLIGHT"
 
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
+--- Affects how frames overlap. Ordered back to front.
+---@alias FrameStrata
+--- | "WORLD" Reserved for the world frame and cannot be assigned.
+--- | "BACKGROUND"
+--- | "LOW"
+--- | "MEDIUM"
+--- | "HIGH"
+--- | "DIALOG"
+--- | "FULLSCREEN"
+--- | "FULLSCREEN_DIALOG"
+--- | "TOOLTIP"
+
+---@alias FrameType
+--- | "Button"
+--- | "CheckButton"
+--- | "ColorSelect"
+--- | "DressUpModel"
+--- | "EditBox"
+--- | "Frame"
+--- | "GameTooltip"
+--- | "MessageFrame"
+--- | "Model"
+--- | "PlayerModel"
+--- | "ScrollFrame"
+--- | "SimpleHTML"
+--- | "Slider"
+--- | "StatusBar"
+--- | "TabardModel"
+
 ---@alias Gender
 --- | 1 unknown
 --- | 2 male
@@ -206,6 +236,21 @@ RANGEDSLOT
 TABARDSLOT
 ]]
 
+---@alias ItemQuality
+--- | 0 - Poor
+--- | 1 - Common
+--- | 2 - Uncommon
+--- | 3 - Rare
+--- | 4 - Epic
+--- | 5 - Legendary
+
+---@alias LootMethod
+--- | "freeforall"
+--- | "roundrobin"
+--- | "group"
+--- | "needbeforegreed"
+--- | "master"
+
 ---@alias MouseButton
 --- | "LeftButton"
 --- | "RightButton"
@@ -226,36 +271,6 @@ TABARDSLOT
 --- | "Button4Down"
 --- | "Button5Up"
 --- | "Button5Down"
-
---- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
---- Affects how frames overlap. Ordered back to front.
----@alias FrameStrata
---- | "WORLD" Reserved for the world frame and cannot be assigned.
---- | "BACKGROUND"
---- | "LOW"
---- | "MEDIUM"
---- | "HIGH"
---- | "DIALOG"
---- | "FULLSCREEN"
---- | "FULLSCREEN_DIALOG"
---- | "TOOLTIP"
-
----@alias FrameType
---- | "Button"
---- | "CheckButton"
---- | "ColorSelect"
---- | "DressUpModel"
---- | "EditBox"
---- | "Frame"
---- | "GameTooltip"
---- | "MessageFrame"
---- | "Model"
---- | "PlayerModel"
---- | "ScrollFrame"
---- | "SimpleHTML"
---- | "Slider"
---- | "StatusBar"
---- | "TabardModel"
 
 ---@alias MessageType
 --- | "BATTLEGROUND"

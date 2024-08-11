@@ -83,7 +83,8 @@ function SetRaidTarget(unit, mark) end
 ---@return nil
 function UninviteFromRaid(index) end
 
+--- @returns 1 if unit is a member of your raid.
 ---@param unit UnitId
----@return nil|1 isInRaid 1 if in raid.
+---@return nil|1
 ---@nodiscard
 function UnitInRaid(unit) end

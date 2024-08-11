@@ -166,18 +166,6 @@ function UnitHealth(unit) end
 ---@nodiscard
 function UnitHealthMax(unit) end
 
---- Returns true if the unit is a member of your party.
----@param unit UnitId
----@return boolean
----@nodiscard
-function UnitInParty(unit) end
-
---- Returns 1 if unit is in your raid, nil if not.
----@param unit UnitId
----@return boolean
----@nodiscard
-function UnitInRaid(unit) end
-
 --- Returns true if the specified unit is charmed, false otherwise.
 ---@param unit UnitId
 ---@return boolean
@@ -245,12 +233,6 @@ function UnitIsPVP(unit) end
 ---@return boolean
 ---@nodiscard
 function UnitIsPVPFreeForAll(unit) end
-
---- Returns true if the unit is the leader of its party.
----@param unit UnitId
----@return boolean
----@nodiscard
-function UnitIsPartyLeader(unit) end
 
 --- Returns true if the specified unit is a player character, false otherwise.
 ---@param unit UnitId
