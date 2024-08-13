@@ -39,6 +39,7 @@ function Region:GetParent() end
 
 ---@return nil|AnchorPoint point
 ---@return nil|Region relativeTo Parent region.
+---@return nil|AnchorPoint relativePoint Anchor point of the relativeTo frame.
 ---@return nil|number xOffset
 ---@return nil|number yOffset
 ---@nodiscard

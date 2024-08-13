@@ -109,9 +109,9 @@ function Texture:SetTexCoordModifiesRect(enableFlag) end
 
 --- Sets the texture to be displayed from a file or to a solid color.
 --- - Texture can be path or a loaded texture.
---- - TODO return might be always nil or always true.
----@param texture Texture
----@return nil
+--- - Returns 1 instead of nil, but that's still a unit return.
+---@param texture string|Texture
+---@return 1
 function Texture:SetTexture(texture) end
 
 --- Sets the texture to be displayed from a file or to a solid color.

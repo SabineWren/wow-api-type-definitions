@@ -5,7 +5,8 @@
 ScrollingMessageFrame = {}
 
 --- Add a message to the frame, with an optional color ID.
----@param text string
+--- - Passing nil, "", or invalid type will not print anything.
+---@param text nil|number|string
 ---@param r? number Red amount [0.0, 1.0]
 ---@param g? number Green amount [0.0, 1.0]
 ---@param b? number Blue amount [0.0, 1.0]
