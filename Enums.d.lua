@@ -38,6 +38,8 @@
 ---@alias BagId integer
 
 --- Add is most common, followed by Blend.
+--- Button highlight textures seem to ignore these options.
+--- TODO these need more testing.
 ---@alias BlendMode
 --- | "ADD" Additive blend.
 --- | "ALPHAKEY" One-bit alpha.

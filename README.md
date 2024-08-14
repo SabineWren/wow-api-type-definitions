@@ -6,9 +6,11 @@
 - Install [sumneko.lua](https://luals.github.io/) language server extension in your IDE of choice
 - Clone this repo into your addon directory and .gitignore it.
 - Configure `.luarc.json`, including path to root directory of these type definitions.
+- The language server doesn't support Lua 5.0, so avoid using features added in [Lua 5.1](https://www.lua.org/versions.html).
 ```
 {
    "diagnostics.globals": [
+      "arg",
       "arg1",
       "arg2",
       "arg3",
