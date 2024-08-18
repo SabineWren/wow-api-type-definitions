@@ -37,6 +37,10 @@
 --- Might not be safe to use a union type, so integer for now.
 ---@alias BagId integer
 
+---@alias BindingGroup
+--- | 1 Account Binding
+--- | 2 Character Binding
+
 --- Add is most common, followed by Blend.
 --- Button highlight textures seem to ignore these options.
 --- TODO these need more testing.
