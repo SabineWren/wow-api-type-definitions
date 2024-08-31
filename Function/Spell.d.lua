@@ -5,10 +5,10 @@
 function CastShapeshiftForm(spellIndex) end
 
 --- Cast the specified spell by ID.
----@param spellID number
+---@param spellIndex integer
 ---@param bookType BookType
 ---@return nil
-function CastSpell(spellID, bookType) end
+function CastSpell(spellIndex, bookType) end
 
 --- Cast the specified spell by display name.
 --- - Rank is optional, and defaults to highest possible.
@@ -63,7 +63,7 @@ function GetShapeshiftFormCooldown(index) end
 ---@return string texturePath
 ---@return nil|1 1 if this shapeshift is currently active.
 ---@return nil|1 1 if this shapeshift form may be entered.
----@return number SpellId Index of the spell that activates this ability.
+---@return integer spellIndex Index of the spell that activates this ability.
 ---@nodiscard
 function GetShapeshiftFormInfo(index) end
 

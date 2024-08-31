@@ -116,6 +116,14 @@
 --- | "OVERLAY"
 --- | "HIGHLIGHT"
 
+---@alias FoodTypes
+--- | "Bread"
+--- | "Cheese"
+--- | "Fish"
+--- | "Fruit"
+--- | "Fungus"
+--- | "Meat"
+
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
 --- Affects how frames overlap. Ordered back to front.
 ---@alias FrameStrata
@@ -311,6 +319,11 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "PARTY"
 --- | "RAID"
 --- | "WHISPER"
+
+---@alias PetHappiness
+--- | 1 Unhappy
+--- | 2 Content
+--- | 3 Happy
 
 ---@alias PowerType
 --- | 0 Mana
