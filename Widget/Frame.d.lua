@@ -334,7 +334,7 @@ function Frame:StartMoving() end
 
 --- Start sizing this frame using the specified anchor point.
 --- - The default value is "BottomRight"
----@param anchorPoint AnchorPoint
+---@param anchorPoint FramePoint
 ---@return nil
 function Frame:StartSizing(anchorPoint) end
 

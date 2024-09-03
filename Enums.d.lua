@@ -1,17 +1,6 @@
 --- Using alias in case we want to refine it later.
 ---@alias ActionBarSlot integer
 
----@alias AnchorPoint
---- | "Center"
---- | "TopLeft"
---- | "Top"
---- | "TopRight"
---- | "Right"
---- | "BottomRight"
---- | "Bottom"
---- | "BottomLeft"
---- | "Left"
-
 ---@alias AuraFilter
 --- | "HARMFUL"
 --- | "HELPFUL"
@@ -123,6 +112,29 @@
 --- | "Fruit"
 --- | "Fungus"
 --- | "Meat"
+
+---@alias FrameAnchor
+--- | "ANCHOR_TOPRIGHT" SetPoint("BOTTOMRIGHT",object,"TOPRIGHT")
+--- | "ANCHOR_RIGHT" SetPoint("BOTTOMLEFT",object,"TOPRIGHT")
+--- | "ANCHOR_BOTTOMRIGHT" SetPoint("TOPLEFT",object,"BOTTOMRIGHT")
+--- | "ANCHOR_TOPLEFT" SetPoint("BOTTOMLEFT",object,"TOPLEFT")
+--- | "ANCHOR_LEFT" SetPoint("BOTTOMRIGHT",object,"TOPLEFT")
+--- | "ANCHOR_BOTTOMLEFT" SetPoint("TOPRIGHT",object,"BOTTOMLEFT")
+--- | "ANCHOR_CURSOR"
+--- | "ANCHOR_PRESERVE"
+--- | "ANCHOR_NONE"
+
+--- [Open Documentation]](https://wowpedia.fandom.com/wiki/API_ScriptRegionResizing_SetPoint)
+---@alias FramePoint
+--- | "Center"
+--- | "TopLeft"
+--- | "Top"
+--- | "TopRight"
+--- | "Right"
+--- | "BottomRight"
+--- | "Bottom"
+--- | "BottomLeft"
+--- | "Left"
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/Frame_Strata)
 --- Affects how frames overlap. Ordered back to front.

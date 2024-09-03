@@ -37,9 +37,9 @@ function Region:GetNumPoints() end
 ---@nodiscard
 function Region:GetParent() end
 
----@return nil|AnchorPoint point
+---@return nil|FramePoint point
 ---@return nil|Region relativeTo Parent region.
----@return nil|AnchorPoint relativePoint Anchor point of the relativeTo frame.
+---@return nil|FramePoint relativePoint Anchor point of the relativeTo frame.
 ---@return nil|number xOffset
 ---@return nil|number yOffset
 ---@nodiscard
@@ -91,9 +91,9 @@ function Region:SetHeight(height) end
 function Region:SetParent(parent) end
 
 --- Set an anchor point for this region.
----@param point AnchorPoint
+---@param point FramePoint
 ---@param relativeRegion nil|string|Region nil uses screen edges.
----@param relativePoint AnchorPoint Defaults to "Center" if nil.
+---@param relativePoint FramePoint Defaults to "Center" if nil.
 ---@param xOffset? number Defaults to 0 if nil.
 ---@param yOffset? number Defaults to 0 if nil.
 function Region:SetPoint(point, relativeRegion, relativePoint, xOffset, yOffset) end

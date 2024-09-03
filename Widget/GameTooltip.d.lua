@@ -145,7 +145,7 @@ function GameTooltip:SetMinimumWidth(width) end
 --- - ex. SetOwner(frame, "TopRight") anchors relative to "BottomLeft"
 --- - ex. SetOwner(frame, "BottomLeft") anchors relative to "TopRight"
 ---@param frame Frame
----@param anchor AnchorPoint
+---@param anchor FrameAnchor
 ---@param x? number
 ---@param y? number
 ---@return nil

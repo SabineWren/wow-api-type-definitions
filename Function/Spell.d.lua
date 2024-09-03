@@ -74,15 +74,15 @@ function GetShapeshiftFormInfo(index) end
 ---@return number duration The number of seconds the cooldown will last, or zero if no cooldown.
 ---@nodiscard
 -- TODO confirm 'enable' isn't implemented (Stealth, Shadowmeld, Presence of Mind, etc.)
----@return number _1 Docs call it 'enable', but it always returns 1.
+---@return 1 _1 Docs call it 'enable', but it always returns 1.
 ---@nodiscard
 function GetSpellCooldown(spellIndex, bookType) end
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellName)
 ---@param spellIndex integer
 ---@param bookType BookType
----@return string name Name of the spell as it appears in the spellbook, eg. "Lesser Heal".
----@return string rank The spell rank or type, eg. "Rank 3", "Racial Passive". This can be an empty string. Note: for the Enchanting trade skill at rank Apprentice, the returned string contains a trailing space, ie. "Apprentice ". This might be the case for other trade skills and ranks also.
+---@return nil|string name Name of the spell as it appears in the spellbook, eg. "Lesser Heal".
+---@return nil|string rank The spell rank or type, eg. "Rank 3", "Racial Passive". This can be an empty string. Note: for the Enchanting trade skill at rank Apprentice, the returned string contains a trailing space, ie. "Apprentice ". This might be the case for other trade skills and ranks also.
 ---@nodiscard
 function GetSpellName(spellIndex, bookType) end
 
@@ -96,9 +96,10 @@ function GetSpellName(spellIndex, bookType) end
 function GetSpellTabInfo(spellbookTabIndex) end
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellTexture)
+-- TODO can this returrn nil?
 ---@param spellIndex integer
 ---@param bookType BookType
----@return string texturePath Texture path of tooltip for spell.
+---@return nil|string texturePath Texture path of tooltip for spell.
 ---@nodiscard
 function GetSpellTexture(spellIndex, bookType) end
 
@@ -107,7 +108,8 @@ function GetSpellTexture(spellIndex, bookType) end
 ---@nodiscard
 function GetTrackingTexture() end
 
---- TODO not documented - HELP WANTED because it sounds useful
+--- Predicate checking if spell currently casting.
+--- - This seems to always return false?
 ---@param spellIndex integer
 ---@param bookType BookType
 ---@return boolean

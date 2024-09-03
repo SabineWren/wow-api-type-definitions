@@ -13,3 +13,6 @@
 ---@overload fun(frame: Frame): nil|1
 ---@nodiscard
 function MouseIsOver(frame, topOffset, bottomOffset, leftOffset, rightOffset) end
+
+-- TODO document xml colorpicker
+-- https://wowpedia.fandom.com/wiki/Using_the_ColorPickerFrame?oldid=89462

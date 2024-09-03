@@ -152,7 +152,7 @@ function Button:SetDisabledTextColor(r, g, b, a) end
 
 --- Set the disabled texture for the Button.
 --- - Texture can be path or a loaded texture.
----@param texture string|Texture
+---@param texture nil|string|Texture nil removes current texture.
 ---@return nil
 function Button:SetDisabledTexture(texture) end
 
@@ -184,12 +184,12 @@ function Button:SetHighlightTextColor(r, g, b, a) end
 
 --- Set the highlight texture for the Button.
 --- - Texture can be path or a loaded texture.
----@param texture string|Texture
+---@param texture nil|string|Texture nil removes current texture.
 ---@return nil
 function Button:SetHighlightTexture(texture) end
 
 --- Set the normal texture for the Button.
----@param texture string|Texture
+---@param texture nil|string|Texture nil removes current texture.
 ---@return nil
 function Button:SetNormalTexture(texture) end
 
@@ -200,7 +200,7 @@ function Button:SetNormalTexture(texture) end
 function Button:SetPushedTextOffset(x, y) end
 
 --- Set the pushed texture for the Button
----@param texture string|Texture
+---@param texture nil|string|Texture nil removes current texture.
 ---@return nil
 function Button:SetPushedTexture(texture) end
 
