@@ -37,7 +37,7 @@ function Button:GetDisabledFontObject() end
 function Button:GetDisabledTextColor() end
 
 --- Get the texture for this button when disabled.
----@return Texture
+---@return nil|Texture
 ---@nodiscard
 function Button:GetDisabledTexture() end
 
@@ -67,13 +67,12 @@ function Button:GetHighlightFontObject() end
 function Button:GetHighlightTextColor() end
 
 --- Get the texture for this button when highlighted,
---- or nil if the button does not yet have a highlight texture.
 ---@return nil|Texture
 ---@nodiscard
 function Button:GetHighlightTexture() end
 
 --- Get the normal texture for this button.
----@return Texture
+---@return nil|Texture
 ---@nodiscard
 function Button:GetNormalTexture() end
 
@@ -84,7 +83,7 @@ function Button:GetNormalTexture() end
 function Button:GetPushedTextOffset() end
 
 --- Get the texture for this button when pushed
----@return Texture
+---@return nil|Texture
 ---@nodiscard
 function Button:GetPushedTexture() end
 
@@ -210,10 +209,10 @@ function Button:SetPushedTexture(texture) end
 function Button:SetText(text) end
 
 --- Set the text color for the Button.
----@return number r [0, 1]
----@return number g [0, 1]
----@return number b [0, 1]
----@nodiscard
+---@param r number [0, 1]
+---@param g number [0, 1]
+---@param b number [0, 1]
+---@return nil
 function Button:SetTextColor(r, g, b) end
 
 --- Set the font object from which to get settings for this Button's normal state.
