@@ -327,9 +327,11 @@ Note: The fourth number does not always stand for who made an item; it usually a
 
 ---@alias MessageType
 --- | "BATTLEGROUND"
+--- | "CHANNEL"
 --- | "GUILD"
 --- | "PARTY"
 --- | "RAID"
+--- | "SAY"
 --- | "WHISPER"
 
 ---@alias PetHappiness
