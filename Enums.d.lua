@@ -404,6 +404,7 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "partypet3"
 --- | "partypet4"
 --- | "pet" Current player's pet.
+--- | "pettarget" Confirmed this works, but not on wiki.
 --- | "player" Current Player
 --- Raid member (1-40)
 --- | "raid1"
