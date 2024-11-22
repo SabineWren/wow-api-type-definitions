@@ -30,3 +30,9 @@
 ---
 --- Fired whenever a raid is formed or disbanded, players are leaving or joining a raid (unsure if rejected join requests also fire the event), or when looting rules are changed (regardless of being in raid or party!)
 --- | "RAID_ROSTER_UPDATE"
+---
+--- Fired when a raid target icon is changed or removed. Also fired when player join or leave a party or raid.
+--- - Does not get triggered if a mob wearing a raid target icon dies (the icon is removed from that mob).
+--- | "RAID_TARGET_UPDATE"
+---
+--- | "READY_CHECK"

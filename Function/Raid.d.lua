@@ -54,6 +54,7 @@ function PromoteToAssistant(name) end
 
 --- Request which instances you are saved to.
 --- - Equivalent to typing /raidinfo
+--- - TODO this might trigger event UPDATE_INSTANCE_INFO
 ---@return nil
 function RequestRaidInfo() end
 

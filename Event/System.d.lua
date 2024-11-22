@@ -1,6 +1,11 @@
 ---@meta
 
 ---@alias EventSystem
+--- Fires when an AddOn tries use actions that are always forbidden.
+--- TODO Incomplete - Possible arguments: string, string
+--- https://wowpedia.fandom.com/wiki/ADDON_ACTION_FORBIDDEN
+--- | "ADDON_ACTION_FORBIDDEN"
+---
 --- This event fires whenever an AddOn is loaded (fires once for each AddOn loaded if multiple AddOns are being loaded), whether that is during the inital Loading Phase or when an AddOn is loaded using the LoadAddOn("addonname") or UIParentLoadAddon("addonname") function. This event always fires after that Saved Variables of the AddOn that just finished loading have been loaded from the disk.
 --- arg1 string Name of the AddOn that was just loaded.
 --- | "ADDON_LOADED"
@@ -12,7 +17,15 @@
 ---
 --- | "DISPLAY_SIZE_CHANGED"
 ---
+--- | "GM_PLAYER_INFO"
+---
+--- | "GMSURVEY_DISPLAY"
+---
 --- | "LOGOUT_CANCEL"
+---
+--- Sent when a macro tries use actions that are always forbidden
+--- - TODO Incomplete - Possible arg1 of "UNKNOWN()"
+--- | "MACRO_ACTION_FORBIDDEN"
 ---
 --- Fired when all memory allocated to the UI is exhausted.
 --- arg1 number Current memory limit (in MB).

@@ -37,6 +37,8 @@
 --- arg2 string Spell Name
 --- | "SPELLCAST_CHANNEL_START"
 ---
+--- | "SPELLCAST_CHANNEL_STOP"
+---
 --- Fired when a channelling spell is updated.
 --- arg1 number Remaining duration in milliseconds.
 --- | "SPELLCAST_CHANNEL_UPDATE"

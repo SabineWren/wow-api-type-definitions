@@ -55,11 +55,21 @@
 ---
 --- | "IGR_BILLING_NAG_DIALOG"
 ---
+--- See function RequestInspectHonorData
+--- | "INSPECT_HONOR_UPDATE"
+---
+--- See function NotifyInspect
+--- | "INSPECT_TALENT_READY"
+---
 --- Fired when the countdown to boot a player from an instance starts.
 --- | "INSTANCE_BOOT_START"
 ---
 --- Fired when the countdown to boot a player from an instance stops.
 --- | "INSTANCE_BOOT_STOP"
+---
+--- | "LOTTERY_ITEM_UPDATE"
+---
+--- | "LOTTERY_SHOW"
 ---
 --- Fired when a merchant frame closes.
 --- | "MERCHANT_CLOSED"
@@ -69,6 +79,8 @@
 ---
 --- Fired when a merchant updates
 --- | "MERCHANT_UPDATE"
+---
+--- | "MINIGAME_UPDATE"
 ---
 --- Fired when the mirror timer is paused.
 --- arg1 pause duration
@@ -95,6 +107,8 @@
 ---
 --- | "SELECT_LAST_CHARACTER"
 ---
+--- | "START_MINIGAME"
+---
 --- | "SUGGEST_REALM"
 ---
 --- Fired when it is possible to save a tabard.
@@ -109,6 +123,14 @@
 --- | "TAXIMAP_OPENED"
 ---
 --- | "TUTORIAL_TRIGGER"
+---
+--- | "UPDATE_INSTANCE_INFO"
+---
+--- | "UPDATE_LFG"
+---
+--- | "UPDATE_LFG_LIST"
+------
+--- | "UPDATE_LFG_TYPES"
 ---
 --- | "UPDATE_SELECTED_CHARACTER"
 ---

@@ -5,6 +5,9 @@
 --- arg1 MouseButton The mouse button used to click the button.
 --- | "ACTIONBAR_PAGE_CHANGED"
 ---
+--- Fired when the actionbar numbers disappear, typically when you finish dragging something to the actionbar.
+--- | "ACTIONBAR_HIDEGRID"
+---
 --- Fired when the actionbar numbers appear, typically when you drag a spell to the actionbar.
 --- arg1 MouseButton The mouse button used to drag the spell.
 --- | "ACTIONBAR_SHOWGRID"

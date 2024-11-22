@@ -14,6 +14,7 @@
 --- | EventLoot
 --- | EventMail
 --- | EventMap
+--- | EventMisc
 --- | EventParty
 --- | EventPet
 --- | EventPlayer

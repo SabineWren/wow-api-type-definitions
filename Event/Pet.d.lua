@@ -48,6 +48,8 @@
 --- Fired when a pet spell cooldown starts. It is not called when cooldown ends.
 --- | "PET_BAR_UPDATE_COOLDOWN"
 ---
+--- | "PET_DISMISS_START"
+---
 --- | "PET_STABLE_CLOSED"
 ---
 --- | "PET_STABLE_SHOW"

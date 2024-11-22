@@ -23,6 +23,18 @@
 --- Fired for non faction specific events in the battlegrounds such as the battle start announcement.
 --- | "CHAT_MSG_BG_SYSTEM_NEUTRAL"
 ---
+--- Fired when a message is received through the battleground group channel.
+--- arg1 string Chat message
+--- arg2 string author
+--- arg3 string language
+--- | "CHAT_MSG_BATTLEGROUND"
+---
+--- Fired when a message is received from the leader of the battleground group.
+--- arg1 string Chat message
+--- arg2 string author
+--- arg3 string language
+--- | "CHAT_MSG_BATTLEGROUND_LEADER"
+---
 --- Fired when the client recieves a channel message.
 --- arg1 string Chat message
 --- arg2 string Author
@@ -81,6 +93,11 @@
 ---
 --- | "CHAT_MSG_COMBAT_ERROR"
 ---
+--- Fires when player reputation changes.
+--- - ex. Your reputation with Timbermaw Hold has very slightly increased.
+--- TODO Incomplete - later expansions have args. Unknown if 1.12 does.
+--- | "CHAT_MSG_COMBAT_FACTION_CHANGE"
+---
 --- | "CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS"
 ---
 --- | "CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES"
@@ -98,6 +115,8 @@
 --- Fired when any hostile (NPC or player) dies near you.
 --- arg1 string Complete text from combat-log (e.g. "Snowshoe Rabbit dies.")
 --- | "CHAT_MSG_COMBAT_HOSTILE_DEATH"
+---
+--- | "CHAT_MSG_COMBAT_LOG"
 ---
 --- Fired when you gain reputation from killing a creature or finishing a quest.
 --- | "CHAT_MSG_COMBAT_MISC_INFO"
@@ -132,6 +151,9 @@
 --- arg2 string Name of the player who sent the message.
 --- | "CHAT_MSG_EMOTE"
 ---
+--- TODO Incomplete - Might have args
+--- | "CHAT_MSG_FILTERED"
+---
 --- Fired when a message is sent or received in the Guild channel.
 --- arg1 string Message that was sent/received.
 --- arg2 string Name of the player who sent the message.
@@ -143,6 +165,8 @@
 --- Fired when a unit loots an item.
 --- arg1 string Message that was sent/received.
 --- | "CHAT_MSG_LOOT"
+---
+--- | "CHAT_MSG_MONEY"
 ---
 --- | "CHAT_MSG_MONSTER_EMOTE"
 ---
@@ -165,7 +189,21 @@
 --- arg3 unknown Language the message was spoken in.(See [CHAT_MSG_SAY](http://www.wowwiki.com/Events_C_%28Cancel%2C_Character%2C_Chat%2C_Cinematic%2C_Clear%2C_Close%2C_Confirm%2C_Corpse%2C_Craft%2C_Current%2C_Cursor%2C_CVar%29#CHAT_MSG_SAY) for example code)
 --- | "CHAT_MSG_PARTY"
 ---
+--- Fires when a player speaks in /raid chat.
 --- | "CHAT_MSG_RAID"
+---
+--- arg1 string Message
+--- arg2 string Name of the boss
+--- | "CHAT_MSG_RAID_BOSS_EMOTE"
+---
+--- Fired when a message is sent or received from the raid leader.
+--- arg1 string Message
+--- arg2 string Author
+--- arg3 string Language
+--- | "CHAT_MSG_RAID_LEADER"
+---
+--- Fired when a warning message is sent or received from the raid leader.
+--- | "CHAT_MSG_RAID_WARNING"
 ---
 --- Fired when a message is sent or received in the Say channel.
 --- arg1 string Chat message
@@ -195,6 +233,9 @@
 --- * `ERR_SKILL_GAINED_S` (eg. "You have gained the Blacksmithing skill.")
 --- * `ERR_SKILL_UP_SI` (eg. "Your skill in Cooking has increased to 221.")
 --- | "CHAT_MSG_SKILL"
+---
+--- Probably works like CHAT_MSG_SPELL_AURA_GONE_OTHER
+--- | "CHAT_MSG_SPELL_AURA_GONE_PARTY"
 ---
 --- Fired whenever a buff or debuff wears off of a mob, npc, or another player.
 --- Examples: Thorns, Trueshot Aura, Recently Bandaged. arg1 is the full chat text, i.e. "Thorns fades from Someguy."

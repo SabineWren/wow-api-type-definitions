@@ -36,3 +36,8 @@
 ---
 --- Fired when a player is viewing the status of their quest.
 --- | "QUEST_PROGRESS"
+---
+--- Fired just before a quest goal was completed. At this point the game client's quest data is not yet updated, but will be after a subsequent QUEST_LOG_UPDATE event.
+--- TODO Incomplete - does 1.12 have arg1?
+--- arg1 unknown questIndex (not watch index)
+--- | "QUEST_WATCH_UPDATE"
