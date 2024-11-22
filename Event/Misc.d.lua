@@ -58,9 +58,6 @@
 --- See function RequestInspectHonorData
 --- | "INSPECT_HONOR_UPDATE"
 ---
---- See function NotifyInspect
---- | "INSPECT_TALENT_READY"
----
 --- Fired when the countdown to boot a player from an instance starts.
 --- | "INSTANCE_BOOT_START"
 ---

@@ -36,10 +36,11 @@ function GetInspectPVPRankProgress() end
 function HasInspectHonorData() end
 
 --- TODO documentation from 2008, so might be wrong.
+--- UPDATE - INSPECT_TALENT_READY doesn't exist until 2.3.0, but this function does exist in 1.12.
 --- - Must be in range to inspect.
 --- Triggers events:
 --- - UNIT_INVENTORY_CHANGED(unit) when inventory information is available.
---- - INSPECT_TALENT_READY when talents are available for inspection.
+--- - ~~INSPECT_TALENT_READY when talents are available for inspection.~~
 ---@param unit UnitId
 ---@return nil
 function NotifyInspect(unit) end
