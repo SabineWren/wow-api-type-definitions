@@ -10,3 +10,13 @@ UIParent = UIParent
 ---https://wowpedia.fandom.com/wiki/Make_frames_closable_with_the_Escape_key?oldid=213706
 ---@type string[]
 UISpecialFrames = UISpecialFrames
+
+---@param frame Frame
+---@param topOffset number
+---@param bottomOffset number
+---@param leftOffset number
+---@param rightOffset number
+---@return nil|1
+---@overload fun(frame: Frame): nil|1
+---@nodiscard
+function MouseIsOver(frame, topOffset, bottomOffset, leftOffset, rightOffset) end
