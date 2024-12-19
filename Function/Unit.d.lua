@@ -95,11 +95,10 @@ function UnitCanCooperate(unit, otherUnit) end
 ---@nodiscard
 function UnitCharacterPoints(unit) end
 
---- Returns the class name of the specified unit (ex. "Warrior" or "Shaman").
---- - TODO What if it's a pet or something? Does this return nil?
+--- Defaults to WARRIOR if unit has no class
 ---@param unit UnitId
 ---@return string classLocalized ex. "Mage", "Warrior", "Guerrier"
----@return string classEnglish ex. "MAGE", "WARRIOR"
+---@return CharacterClass classEnglish
 ---@nodiscard
 function UnitClass(unit) end
 

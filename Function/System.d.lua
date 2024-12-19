@@ -184,7 +184,7 @@
 --- | "igQuestLogClose"
 --- | "igQuestLogAbandonQuest"
 --- | "igQuestFailed"
---- | "igSocialOepn"-- [This is Not a Wiki Typo, "igSocialOepn" works in game]
+--- | "igSocialOepn"-- Not a typo. This works in game.
 --- | "igSocialClose"
 --- | "igMainMenuOpen"
 --- | "igMainMenuClose"
@@ -194,8 +194,8 @@
 --- | "igMainMenuContinue"
 --- | "igMainMenuOptionCheckBoxOn"
 --- | "igMainMenuOptionCheckBoxOff"
---- | "igMainMenuOptionFaerTab "-- [TODO Is this a Wiki Typo? Need to test in game]
---- | "igInventoryOepn"-- [This is Not a Wiki Typo, "igInventoryOepn" works in game]
+--- | "igMainMenuOptionFaerTab"-- Not a typo. This works in game.
+--- | "igInventoryOepn"-- Not a typo. This works in game.
 --- | "igInventoryClose"
 --- | "igInventoryRotateCharacter"
 --- | "igBackPackOpen"

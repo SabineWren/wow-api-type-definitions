@@ -32,7 +32,7 @@
 This repo includes work adapted from documentation:
 - Events from [Shagu](https://github.com/shagu/wow-vanilla-api), who sourced from namreebs "[WoW] 1.12.1.5875 Info Dump Thread"
 - Global Functions from [wowpedia](https://wowpedia.fandom.com/wiki/World_of_Warcraft_API?oldid=293146), 20 October 2006
-- Haven't added global variables yet, but you can find them from [MOUZU](https://github.com/MOUZU/Blizzard-WoW-Interface)
+- Interface globals (mostly unsupported) [MOUZU](https://github.com/MOUZU/Blizzard-WoW-Interface)
 - Widgets from [wowpedia](https://wowpedia.fandom.com/wiki/Widget_API?oldid=278403), 9 October 2006
 
 ### Licensing

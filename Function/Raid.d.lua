@@ -23,7 +23,7 @@ function GetNumRaidMembers() end
 ---@return 1|2|3|4|5|6|7|8 subgroup
 ---@return integer level 0 if Offline. Normally 0-60, but GM/developer accounts can exceed that.
 ---@return string classLocalized Character class, with the first letter capitalized, ex. "Priest". Works for offline characters.
----@return string classSystem English, fully capitalized, ex. "PRIEST, "WARRIOR", "WARLOCK".
+---@return CharacterClass classEnglish
 ---@return nil|"Offline"|string zone The name of the zone this character is currently in. This is the same value you see if you mouseover their portrait (if in group). May return nil when called on self; use location functions for that instead.
 ---@return nil|1 isOnline
 ---@return nil|1 isDead Hunter Feign Death does not show as dead for this.

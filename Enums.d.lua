@@ -48,6 +48,17 @@
 --- | `BOOKTYPE_PET`
 --- | `BOOKTYPE_SPELL`
 
+---@alias CharacterClass
+--- | "DRUID"
+--- | "HUNTER"
+--- | "MAGE"
+--- | "PALADIN"
+--- | "PRIEST"
+--- | "ROGUE"
+--- | "SHAMAN"
+--- | "WARLOCK"
+--- | "WARRIOR"
+
 --- Couldn't find a source for this except a sketchy forum post.
 --- In practice, I think 1.12 requires extra locale/OS files for non-Roman.
 ---@alias CharacterEncoding
