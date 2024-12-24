@@ -346,7 +346,7 @@ function PlayMusic(pathSoundFile) end
 function PlaySound(name) end
 
 --- Plays the specified sound file.
---- - Works with .wav, .mp3, and probably .ogg (TODO test in game)
+--- - Works with .wav, .mp3, and .ogg
 ---@param soundFilePath string
 ---@return nil
 function PlaySoundFile(soundFilePath) end

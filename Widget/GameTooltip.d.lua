@@ -142,8 +142,6 @@ function GameTooltip:SetMinimumWidth(width) end
 
 --- Anchors the tooltip to a temporary owner.
 --- - Relative anchor point is the opposite point on the owning frame.
---- - ex. SetOwner(frame, "TopRight") anchors relative to "BottomLeft"
---- - ex. SetOwner(frame, "BottomLeft") anchors relative to "TopRight"
 ---@param frame Frame
 ---@param anchor FrameAnchor
 ---@param x? number
