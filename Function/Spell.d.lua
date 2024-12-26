@@ -67,6 +67,13 @@ function GetShapeshiftFormCooldown(index) end
 ---@nodiscard
 function GetShapeshiftFormInfo(index) end
 
+--- Check wether the specified ability autocasts or not.
+---@param spellIndex integer
+---@param bookIndex BookType
+---@return nil|1 autocastable
+---@return nil|1 autostate
+function GetSpellAutocast(spellIndex, bookIndex) end
+
 -- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetSpellCooldown)
 ---@param spellIndex integer
 ---@param bookType BookType
@@ -166,6 +173,11 @@ function SpellStopTargeting() end
 ---@param unit UnitId
 ---@return nil
 function SpellTargetUnit(unit) end
+
+--- Toggles whether the specified ability should autocast or not (in the spellbook).
+---@param spellIndex integer
+---@param bookIndex BookType
+function ToggleSpellAutocast(spellIndex, bookIndex) end
 
 --- TODO not documented
 function UpdateSpells() end

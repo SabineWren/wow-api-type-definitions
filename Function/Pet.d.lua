@@ -1,5 +1,7 @@
 ---@meta
 
+--- Requires Stable window open.
+---@return nil
 function BuyStableSlot() end
 
 --- Cast the corresponding pet skill.
@@ -7,27 +9,39 @@ function BuyStableSlot() end
 ---@return nil
 function CastPetAction(index) end
 
---- Check wether the player is close enough to the pet untrainer.
+--- Check whether the player is close enough to the pet untrainer.
+---@return nil|1
+---@nodiscard
 function CheckPetUntrainerDist() end
 
---- ?.
+--- This doesn't seem to do anything
+---@param index integer
+---@return 1
+---@nodiscard
 function ClickStablePet(index) end
 
 --- Close the pet stables user interface.
+---@return nil
 function ClosePetStables() end
 
 --- Confirm the request for unlearning pet abilities
 function ConfirmPetUnlearn() end
 
---- Drops an item from the cursor onto a unit.
-function DropItemOnUnit(unit) end
-
+--- Measured in copper, not gold
+---@return integer
+---@nodiscard
 function GetNextStableSlotCost() end
 
---- Returns the number of pets in the stable.
+--- Returns the number of stabled pets.
+--- - Game client caches this value after visiting a stable. Otherwise 0.
+---@return integer
+---@nodiscard
 function GetNumStablePets() end
 
 --- Returns the number of stable slots you own.
+--- - Game client caches this value after visiting a stable. Otherwise 0.
+---@return integer
+---@nodiscard
 function GetNumStableSlots() end
 
 --- Returns cooldown information for the pet action at the specificed pet action bar slot.
@@ -61,8 +75,8 @@ function GetPetActionsUsable() end
 ---@nodiscard
 function GetPetExperience() end
 
---- Returns a list of the food types the player's pet can eat.
----@return FoodTypes[]
+--- Returns the food types the player's pet can eat.
+---@return FoodTypes ...
 ---@nodiscard
 function GetPetFoodTypes() end
 
@@ -100,15 +114,15 @@ function GetPetTimeRemaining() end
 function GetPetTrainingPoints() end
 
 --- Returns stable slot index for currently selected pet, starting from the left.
---- TODO does this work with index 0 for current pet?
----@return -1|1|2|3|4 slotIndex -1 if no slot selected.
+---@return 0|1|2|3|4 slot Defaults to current pet (0)
 ---@nodiscard
 function GetSelectedStablePet() end
 
---- Returns a list of the food types a specific stabled pet can eat.
---- TODO does this work with index 0 for current pet?
+--- Returns the food types a specific stabled pet can eat.
+--- - Game client caches this value after visiting a stable.
+--- - Surprisingly this does work for current pet (index 0), but only after visiting stable. See [GetPetFoodTypes()](lua://GetPetFoodTypes)
 ---@param index 0|1|2|3|4
----@return FoodTypes[]
+---@return FoodTypes ...
 ---@nodiscard
 function GetStablePetFoodTypes(index) end
 
@@ -179,36 +193,43 @@ function PetDismiss() end
 function PetFollow() end
 
 --- Determine if player has a pet with an action bar.
+---@return nil|1
+---@nodiscard
 function PetHasActionBar() end
 
 --- Set your pet into passive mode.
 function PetPassiveMode() end
 
 --- Renames the pet.
+---@param name string
 function PetRename(name) end
 
 --- Instruct your pet to remain still.
 function PetWait() end
 
 --- Drags an action from the specified pet action bar slot into the cursor.
+---@param slot ActionBarSlot
+---@return nil
 function PickupPetAction(slot) end
 
---- ?.
+--- Attaches a pet in your stable to your cursor.
+---@param index 0|1|2|3|4
+---@return nil
 function PickupStablePet(index) end
 
---- ?.
+--- Sets the paperdoll model in the pet stable to a new player model.
+--- - This method does not cause the model to be shown. The model still needs its :Show() method called afterward.
+--- - TODO What does this mean?
 function SetPetStablePaperdoll(modelObject) end
 
---- ?.
+---@param index 1|2|3|4
 function StablePet(index) end
 
---- Toggles whether the specified pet ability should autocast or not.
+--- Toggles whether the specified ability should autocast or not (in pet action bar).
+--- - See [GetSpellAutocast()](lua://GetSpellAutocast)
+--- - See [ToggleSpellAutocast()](lua://ToggleSpellAutocast)
+---@param index integer
 function TogglePetAutocast(index) end
 
---- Toggles whether the specified pet ability should autocast or not. (in the spellbook).
-function ToggleSpellAutocast(index, bookIndex) end
-
---- Check wether the specified pet ability autocasts or not.
-function GetSpellAutocast(index, bookIndex) end
-
+---@param index 1|2|3|4
 function UnstablePet(index) end

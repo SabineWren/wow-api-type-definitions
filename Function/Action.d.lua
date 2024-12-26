@@ -123,20 +123,10 @@ function IsConsumableAction(slot) end
 ---@nodiscard
 function IsEquippedAction(slot) end
 
---- Determine if player has a pet with an action bar.
----@return nil|1
----@nodiscard
-function PetHasActionBar() end
-
 --- Drags an action out of the specified quickbar slot and holds it on the cursor.
 ---@param slot ActionBarSlot
 ---@return nil
 function PickupAction(slot) end
-
---- Drags an action from the specified pet action bar slot into the cursor.
----@param slot ActionBarSlot
----@return nil
-function PickupPetAction(slot) end
 
 --- Drops an action from the cursor into the specified quickbar slot.
 --- - IMPORTANT: You can crash your client if you send an invalid slot number.
