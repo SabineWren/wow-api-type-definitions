@@ -20,11 +20,6 @@ function FollowUnit(unit) end
 ---@return nil
 function StartDuelUnit(unit) end
 
---- Selects the specified unit as the current target.
----@param unit UnitId
----@return nil
-function TargetUnit(unit) end
-
 --- Determine if the unit is in combat or has aggro.
 --- - Returns false if the unit being checked for aggro is out of range.
 --- - Returns false if a unit is proximity-aggroed. It wont return true until it either attacks or is attacked.
