@@ -22,9 +22,27 @@
 --- | "PASSIVE|HELPFUL|HARMFUL"
 --- | "PASSIVE|HARMFUL|HELPFUL"
 
---- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId)
---- Might not be safe to use a union type, so integer for now.
----@alias BagId integer
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId?oldid=364100)
+--- Subset of BagId that maps to InventorySlotId
+---@alias BagIdStrict
+--- | 1 bag 1 (from right)
+--- | 2 bag 2 (from right)
+--- | 3 bag 3 (from right)
+--- | 4 bag 4 (from right)
+--- | 5 (while bank open) bank bag 1 (left to right)
+--- | 6 (while bank open) bank bag 2 (left to right)
+--- | 7 (while bank open) bank bag 3 (left to right)
+--- | 8 (while bank open) bank bag 4 (left to right)
+--- | 9 (while bank open) bank bag 5 (left to right)
+--- | 10 (while bank open) bank bag 6 (left to right)
+
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId?oldid=364100)
+--- Usually only need 0 for backpack and 1-4 for player bags.
+---@alias BagId
+--- | -2 keyring
+--- | -1 (while bank open) bank content
+--- | 0 backpack
+--- | BagIdStrict
 
 ---@alias BindingGroup
 --- | 1 Account Binding
@@ -182,10 +200,11 @@
 --- | 2 male
 --- | 3 female
 
---- Regular inventory items 0-23
---- 40-67 are the 28 bank slots
---- Then come 7 bank slots
----@alias InventorySlot
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotId?oldid=204254)
+--- - Regular inventory items 0-23
+--- - 40-67 are the 28 bank slots
+--- - Then come 7 bank slots
+---@alias InventorySlotId
 --- | 0 = ammo
 --- | 1 = head
 --- | 2 = neck
@@ -206,38 +225,38 @@
 --- | 17 = off hand
 --- | 18 = ranged
 --- | 19 = tabard
---- | 20 = first bag (the rightmost one)
+--- | 20 = first bag (the rightmost one, excluding backpack)
 --- | 21 = second bag
 --- | 22 = third bag
 --- | 23 = fourth bag (the leftmost one)
---- | 40
---- | 41
---- | 42
---- | 43
---- | 44
---- | 45
---- | 46
---- | 47
---- | 48
---- | 49
---- | 50
---- | 51
---- | 52
---- | 53
---- | 54
---- | 55
---- | 56
---- | 57
---- | 58
---- | 59
---- | 60
---- | 61
---- | 62
---- | 63
---- | 64
---- | 65
---- | 66
---- | 67
+--- | 40 = bank slot 1
+--- | 41 = bank slot 2
+--- | 42 = bank slot 3
+--- | 43 = bank slot 4
+--- | 44 = bank slot 5
+--- | 45 = bank slot 6
+--- | 46 = bank slot 7
+--- | 47 = bank slot 8
+--- | 48 = bank slot 9
+--- | 49 = bank slot 10
+--- | 50 = bank slot 11
+--- | 51 = bank slot 12
+--- | 52 = bank slot 13
+--- | 53 = bank slot 14
+--- | 54 = bank slot 15
+--- | 55 = bank slot 16
+--- | 56 = bank slot 17
+--- | 57 = bank slot 18
+--- | 58 = bank slot 19
+--- | 59 = bank slot 20
+--- | 60 = bank slot 21
+--- | 61 = bank slot 22
+--- | 62 = bank slot 23
+--- | 63 = bank slot 24
+--- | 64 = bank slot 25
+--- | 65 = bank slot 26
+--- | 66 = bank slot 27
+--- | 67 = bank slot 28
 --- | 68 = 1st bank bag
 --- | 69 = 2nd bank bag
 --- | 70 = 3rd bank bag
@@ -246,8 +265,32 @@
 --- | 73 = 6th bank bag
 --- | 74 = 7th bank bag
 
----[Open Documentation](https://wowpedia.fandom.com/wiki/InventorySlotId)
----@alias InvSlotName string -- TODO
+---[Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotName?oldid=204252)
+---@alias InvSlotName
+--- | "HeadSlot"
+--- | "NeckSlot"
+--- | "ShoulderSlot"
+--- | "BackSlot"
+--- | "ChestSlot"
+--- | "ShirtSlot"
+--- | "TabardSlot"
+--- | "WristSlot"
+--- | "HandsSlot"
+--- | "WaistSlot"
+--- | "LegsSlot"
+--- | "FeetSlot"
+--- | "Finger0Slot"
+--- | "Finger1Slot"
+--- | "Trinket0Slot"
+--- | "Trinket1Slot"
+--- | "MainHandSlot"
+--- | "SecondaryHandSlot"
+--- | "RangedSlot"
+--- | "AmmoSlot"
+--- | "Bag0Slot"
+--- | "Bag1Slot"
+--- | "Bag2Slot"
+--- | "Bag3Slot"
 
 --[[
 -- GlobalString names for item slots

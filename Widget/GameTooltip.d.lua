@@ -109,7 +109,7 @@ function GameTooltip:SetHyperlink(link) end
 function GameTooltip:SetInboxItem(index) end
 
 ---@param unit UnitId
----@param slot InventorySlot
+---@param slot InventorySlotId
 ---@param isTerse? boolean Only show following: name, item level, equipment slot, item type, onUse/Proc, durability, race/class limitations.
 ---@return boolean hasItem Is there an item at the given slot?
 ---@return boolean hasCooldown unknown
