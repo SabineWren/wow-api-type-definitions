@@ -115,9 +115,11 @@ function GetWeaponEnchantInfo() end
 --- Returns 1 if a wand is equipped, false otherwise.
 function HasWandEquipped() end
 
--- TODO
 --- Returns whether an inventory item is locked, usually as it awaits pending action.
-function IsInventoryItemLocked(id) end
+---@param invSlot InventorySlotId
+---@return boolean isLocked
+---@nodiscard
+function IsInventoryItemLocked(invSlot) end
 
 -- TODO
 --- Map a keyring button to an inventory slot button for use in inventory functions.
