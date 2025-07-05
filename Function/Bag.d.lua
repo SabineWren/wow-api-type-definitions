@@ -1,9 +1,6 @@
 ---@meta
 
 -- TODO
--- function ContainerIDToInventoryID(bagID) end
-
--- TODO
 --- Get the name of one of the player's bags.
 -- function GetBagName(bagID) end
 

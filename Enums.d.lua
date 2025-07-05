@@ -22,13 +22,7 @@
 --- | "PASSIVE|HELPFUL|HARMFUL"
 --- | "PASSIVE|HARMFUL|HELPFUL"
 
---- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId?oldid=364100)
---- Subset of BagId that maps to InventorySlotId
----@alias BagIdStrict
---- | 1 bag 1 (from right)
---- | 2 bag 2 (from right)
---- | 3 bag 3 (from right)
---- | 4 bag 4 (from right)
+---@alias BankBagId
 --- | 5 (while bank open) bank bag 1 (left to right)
 --- | 6 (while bank open) bank bag 2 (left to right)
 --- | 7 (while bank open) bank bag 3 (left to right)
@@ -37,9 +31,18 @@
 --- | 10 (while bank open) bank bag 6 (left to right)
 
 --- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId?oldid=364100)
+--- Subset of BagId that maps to InventorySlotId
+---@alias BagIdStrict
+--- | 1 bag 1 (from right)
+--- | 2 bag 2 (from right)
+--- | 3 bag 3 (from right)
+--- | 4 bag 4 (from right)
+--- | BankBagId
+
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/BagId?oldid=364100)
 --- Usually only need 0 for backpack and 1-4 for player bags.
 ---@alias BagId
---- | -2 keyring
+--- | -2 keyRing
 --- | -1 (while bank open) bank content
 --- | 0 backpack
 --- | BagIdStrict
@@ -200,6 +203,20 @@
 --- | 2 male
 --- | 3 female
 
+---@alias InventorySlotId_Bag
+--- | 20 = first bag (the rightmost one, excluding backpack)
+--- | 21 = second bag
+--- | 22 = third bag
+--- | 23 = fourth bag (the leftmost one)
+
+---@alias InventorySlotId_BankBag
+--- | 68 = 1st bank bag
+--- | 69 = 2nd bank bag
+--- | 70 = 3rd bank bag
+--- | 71 = 4th bank bag
+--- | 72 = 5th bank bag
+--- | 73 = 6th bank bag
+
 --- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotId?oldid=204254)
 --- - Regular inventory items 0-23
 --- - 40-67 are the 28 bank slots
@@ -225,10 +242,7 @@
 --- | 17 = off hand
 --- | 18 = ranged
 --- | 19 = tabard
---- | 20 = first bag (the rightmost one, excluding backpack)
---- | 21 = second bag
---- | 22 = third bag
---- | 23 = fourth bag (the leftmost one)
+--- | InventorySlotId_Bag
 --- | 40 = bank slot 1
 --- | 41 = bank slot 2
 --- | 42 = bank slot 3
@@ -257,13 +271,7 @@
 --- | 65 = bank slot 26
 --- | 66 = bank slot 27
 --- | 67 = bank slot 28
---- | 68 = 1st bank bag
---- | 69 = 2nd bank bag
---- | 70 = 3rd bank bag
---- | 71 = 4th bank bag
---- | 72 = 5th bank bag
---- | 73 = 6th bank bag
---- | 74 = 7th bank bag
+--- | InventorySlotId_BankBag
 
 ---[Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotName?oldid=204252)
 ---@alias InvSlotName
