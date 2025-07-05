@@ -15,9 +15,6 @@ BOOKTYPE_SPELL = "spell"
 ---@type ColorPickerFrame
 ColorPickerFrame = ColorPickerFrame
 
----@type ScrollingMessageFrame
-DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
-
 ---@type Font
 GameFontNormalSmall = GameFontNormalSmall
 

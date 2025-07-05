@@ -81,7 +81,7 @@ function Frame:GetBackdropBorderColor() end
 function Frame:GetBackdropColor() end
 
 --- Returns a list of child frames of this frame.
----@return nil|(Frame[])
+---@return Frame ...
 ---@nodiscard
 function Frame:GetChildren() end
 
