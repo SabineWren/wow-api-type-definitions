@@ -4,8 +4,13 @@
 --- Get the name of one of the player's bags.
 -- function GetBagName(bagID) end
 
--- TODO
--- function GetContainerItemCooldown(bagID, slot) end
+---@param bagId BagId
+---@param slot integer
+---@return number start Time the cooldown period began.
+---@return number duration Duration of the cooldown period.
+---@return 0|1 enabled 1 if the item has a cooldown, 0 otherwise
+---@nodiscard
+function GetContainerItemCooldown(bagId, slot) end
 
 --- Get the info for an item in one of the player's bags.
 ---@param bagId BagId
@@ -20,9 +25,12 @@
 ---@nodiscard
 function GetContainerItemInfo(bagId, slot) end
 
--- TODO
---- Returns the itemLink of the item located in bag#, slot#.
--- function GetContainerItemLink(bagID, slot) end
+--- Returns the [itemLink](https://wowwiki-archive.fandom.com/wiki/ItemLink?oldid=368489) of the item located in bag#, slot#.
+---@param bagId BagId
+---@param slot integer Valid slots are 1 through BagSize. 1 is the left slot in the top row.
+---@return ItemLink
+---@nodiscard
+function GetContainerItemLink(bagId, slot) end
 
 --- Get the size of a bag.
 ---@param bagId BagId

@@ -66,21 +66,21 @@ function UnitAttackSpeed(unit) end
 --- Returns true if the first unit can assist the second, false otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitCanAssist(unit, otherUnit) end
 
 --- Returns true if the first unit can attack the second, false otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitCanAttack(unit, otherUnit) end
 
 --- Returns true if the first unit can cooperate with the second, false otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitCanCooperate(unit, otherUnit) end
 
@@ -137,7 +137,7 @@ function UnitDefense(unit) end
 
 --- Returns true if the specified unit exists, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitExists(unit) end
 
@@ -162,112 +162,112 @@ function UnitHealthMax(unit) end
 
 --- Returns true if the specified unit is charmed, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsCharmed(unit) end
 
 --- Returns true if the unit is a civilian NPC.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsCivilian(unit) end
 
 --- Returns 1 if the specified unit is connected or npc, nil if offline or not a valid unit.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsConnected(unit) end
 
 --- Returns true if the specified unit is a corpse, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsCorpse(unit) end
 
 --- Returns true if the specified unit is dead, nil otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsDead(unit) end
 
 --- Returns true if the specified unit is dead or a ghost, nil otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsDeadOrGhost(unit) end
 
 --- Returns true if the specified units are enemies, false otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsEnemy(unit, otherUnit) end
 
 --- Returns true if the specified units are friends (PC of same faction or friendly NPC), false otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsFriend(unit, otherUnit) end
 
 --- Returns true if the specified unit is a ghost, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsGhost(unit) end
 
 --- Returns true if the specified unit is flagged for PVP, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsPVP(unit) end
 
 --- Returns true if the specified unit is flagged for free-for-all PVP, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsPVPFreeForAll(unit) end
 
 --- Returns true if the specified unit is a player character, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsPlayer(unit) end
 
 --- Returns true if the specified unit is a mob, more powerful than its nominal level, false otherwise (ex. "elite" mobs)
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsPlusMob(unit) end
 
 --- Returns true if the specified unit is tapped, false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsTapped(unit) end
 
 --- Returns true if the specified unit is tapped by the player himself, otherwise false.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsTappedByPlayer(unit) end
 
 --- Returns true if the specified unit is trivial (Trivial means the unit is "grey" to the player. false otherwise.
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsTrivial(unit) end
 
 --- Determine if two units are the same unit.
 ---@param unit UnitId
 ---@param otherUnit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsUnit(unit, otherUnit) end
 
 ---1 if visible, nil if not
 ---@param unit UnitId
----@return boolean
+---@return 1|nil
 ---@nodiscard
 function UnitIsVisible(unit) end
 
