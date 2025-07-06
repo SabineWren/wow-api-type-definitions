@@ -191,6 +191,7 @@ function UnitIsCorpse(unit) end
 function UnitIsDead(unit) end
 
 --- Returns true if the specified unit is dead or a ghost, nil otherwise.
+--- - Returns true while Feign Death active.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
