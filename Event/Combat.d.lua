@@ -20,8 +20,5 @@
 --- | "PLAYER_ENTER_COMBAT"
 ---
 --- This event is fired whenever the player's target is changed, including when the target is lost.
---- TODO Sources give 3 different arg1 descriptions:
---- - (wowpedia diff history) no-args
---- - (wowwiki-archive) arg1 string Up if you click the target directly, down if you press Escape to clear the target selection, LeftButton if you select the target using static frames in the UI, nil if the target moves out of range and is lost.
---- - (Shagu) arg1 number Holds the same value as GetTime() yields.
+--- - No arguments
 --- | "PLAYER_TARGET_CHANGED"
