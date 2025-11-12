@@ -91,12 +91,21 @@ function Region:SetHeight(height) end
 function Region:SetParent(parent) end
 
 --- Set an anchor point for this region.
----@param point FramePoint
----@param relativeRegion nil|string|Region nil uses screen edges.
----@param relativePoint FramePoint Defaults to "Center" if nil.
----@param xOffset? number Defaults to 0 if nil.
----@param yOffset? number Defaults to 0 if nil.
+---@param point FramePoint The point on the object to use for attaching the obj (i.e. bind the left side of the frame)
+---@param relativeRegion nil|string|Region The name of the region to attach the obj to - an actual region variable can also be used (can be "UIParent"), or nil to anchor relative to the whole screen.
+---@param relativePoint? FramePoint The relative point to attach obj to (i.e. bind the frame to the left side of the parent). Defaults to "Center" if nil.
+---@param xOffset? number The X offset (-5 means 5 units left, 5 means 5 units right). Defaults to 0 if nil.
+---@param yOffset? number The Y offset (-5 means 5 units down, 5 means 5 units up). Defaults to 0 if nil.
+---@return nil
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_ScriptRegionResizing_SetPoint?oldid=376708)
+--- (from TBC but should be accurate)
 function Region:SetPoint(point, relativeRegion, relativePoint, xOffset, yOffset) end
+
+---@param point FramePoint
+---@param xOffset number
+---@param yOffset number
+---@return nil
+function Region:SetPoint(point, xOffset, yOffset) end
 
 --- No-op if width inferred from anchor points.
  ---@param width number
