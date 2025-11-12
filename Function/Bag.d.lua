@@ -1,8 +1,10 @@
 ---@meta
 
--- TODO
 --- Get the name of one of the player's bags.
--- function GetBagName(bagID) end
+---@param bagID BagId number of the bag the item is in, 0 is your backpack, 1-4 are the four additional bags, numbered right to left. When bank is opened, more numbers can be used for bank bags.
+---@return string? bagName the name of the specified bag if the number is valid; nil otherwise
+--- [Open Documentation](https://wowpedia.fandom.com/wiki/API_GetBagName?oldid=102096)
+function GetBagName(bagID) end
 
 ---@param bagId BagId
 ---@param slot integer
