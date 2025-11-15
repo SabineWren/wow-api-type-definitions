@@ -1,11 +1,11 @@
 ---@meta
 
-foreach = tab.foreach
-foreachi = tab.foreachi
-getn = tab.getn
-tinsert = tab.insert
-tremove = tab.remove
-sort = tab.sort
+foreach = table.foreach
+foreachi = table.foreachi
+getn = table.getn
+tinsert = table.insert
+tremove = table.remove
+sort = table.sort
 abs = math.abs
 
 ---@param x any (type not inferred)
@@ -59,13 +59,13 @@ sqrt = math.sqrt
 ---@return any x0 (type not inferred)
 ---@nodiscard
 tan = function(x) end
-strbyte = str.byte
-strchar = str.char
-strfind = str.find
-format = str.format
-gsub = str.gsub
-strlen = str.len
-strlower = str.lower
-strrep = str.rep
-strsub = str.sub
-strupper = str.upper
+strbyte = string.byte
+strchar = string.char
+strfind = string.find
+format = string.format
+gsub = string.gsub
+strlen = string.len
+strlower = string.lower
+strrep = string.rep
+strsub = string.sub
+strupper = string.upper
