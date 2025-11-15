@@ -85,6 +85,10 @@ function Frame:GetBackdropColor() end
 ---@nodiscard
 function Frame:GetChildren() end
 
+---@return nil
+---@nodiscard
+function Frame:GetChildren() end
+
 --- Get the scale factor of this object relative to the root window.
 ---@return number
 ---@nodiscard
@@ -123,7 +127,7 @@ function Frame:GetMaxResize() end
 function Frame:GetMinResize() end
 
 --- Get the number of "children" (frames and things derived from frames) this frame has.
----@return nil
+---@return integer
 function Frame:GetNumChildren() end
 
 --- Return the number of "regions" (fontstrings, textures) belonging to this frame.
@@ -132,7 +136,11 @@ function Frame:GetNumChildren() end
 function Frame:GetNumRegions() end
 
 --- Return the "regions" (fontstrings, textures) of the frame (multiple return values) belonging to this frame.
----@return nil|(FontString|Texture)[]
+---@return (FontString|Texture) ...
+---@nodiscard
+function Frame:GetRegions() end
+
+---@return nil
 ---@nodiscard
 function Frame:GetRegions() end
 
