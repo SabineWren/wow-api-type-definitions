@@ -388,6 +388,17 @@ function StopCinematic() end
 ---@return nil
 function StopMusic() end
 
+--- Returns the current error handler function.
+---@return function handler
+---@nodiscard
+function geterrorhandler() end
+
+--- Sets the error handler function.
+--- - Called by the client when a Lua error occurs in event handlers, OnUpdate, etc.
+---@param handler fun(message: string)
+---@return nil
+function seterrorhandler(handler) end
+
 --- Output win32 debug text. Freeware debug message viewer: DebugView
 --- - Return type not documented on wiki, except that it has no effect on live server.
 function debuginfo() end
