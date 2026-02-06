@@ -8,30 +8,35 @@ tremove = table.remove
 sort = table.sort
 abs = math.abs
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the arc cosine of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 acos = function(x) end
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the arc sine of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 asin = function(x) end
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the arc tangent of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 atan = function(x) end
 
----@param x any (type not inferred)
----@param y any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the arc tangent of `y/x` (in degrees).
+---@param y number
+---@param x number
+---@return number
 ---@nodiscard
-atan2 = function(x, y) end
+atan2 = function(y, x) end
 ceil = math.ceil
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the cosine of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 cos = function(x) end
 deg = math.deg
@@ -49,14 +54,16 @@ rad = math.rad
 random = math.random
 randomseed = math.randomseed
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the sine of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 sin = function(x) end
 sqrt = math.sqrt
 
----@param x any (type not inferred)
----@return any x0 (type not inferred)
+--- Returns the tangent of `x` (in degrees).
+---@param x number
+---@return number
 ---@nodiscard
 tan = function(x) end
 strbyte = string.byte
