@@ -39,6 +39,7 @@ ceil = math.ceil
 ---@return number
 ---@nodiscard
 cos = function(x) end
+date = os.date
 deg = math.deg
 exp = math.exp
 floor = math.floor
@@ -76,3 +77,4 @@ strlower = string.lower
 strrep = string.rep
 strsub = string.sub
 strupper = string.upper
+time = os.time
