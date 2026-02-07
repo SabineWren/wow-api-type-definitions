@@ -126,6 +126,11 @@ function GetInventoryItemTexture(unit, invSlot) end
 ---@nodiscard
 function GetInventorySlotInfo(slotName) end
 
+--- Returns the amount of money the player has, in copper.
+---@return integer
+---@nodiscard
+function GetMoney() end
+
 --- Return information about main and offhand weapon enchantments.
 --- - Used for temporary enchants, ex. poisons.
 --- - Self (player) only.

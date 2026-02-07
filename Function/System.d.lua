@@ -241,9 +241,9 @@
 function ConsoleExec(command) end
 
 --- Returns information about current client build.
----@return string version
----@return string build
----@return string date
+---@return string version ex. "1.12.1"
+---@return string build ex. "5875"
+---@return string date ex. "Sep 19 2006"
 ---@nodiscard
 function GetBuildInfo() end
 
