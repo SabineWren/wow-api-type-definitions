@@ -106,6 +106,7 @@ function Button:GetTextColor() end
 function Button:GetTextFontObject() end
 
 --- Get the height of the Button's text.
+--- - Reflects the height of the rendered text (which increases if the text wraps onto two lines), not the point size of the text's font.
 ---@return number
 ---@nodiscard
 function Button:GetTextHeight() end
@@ -212,8 +213,9 @@ function Button:SetText(text) end
 ---@param r number [0, 1]
 ---@param g number [0, 1]
 ---@param b number [0, 1]
+---@param a? number [0, 1]
 ---@return nil
-function Button:SetTextColor(r, g, b) end
+function Button:SetTextColor(r, g, b, a) end
 
 --- Set the font object from which to get settings for this Button's normal state.
 ---@param font Font

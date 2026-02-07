@@ -10,7 +10,7 @@ ScrollingMessageFrame = {}
 ---@param r? number Red amount [0.0, 1.0]
 ---@param g? number Green amount [0.0, 1.0]
 ---@param b? number Blue amount [0.0, 1.0]
----@param id? number A number that classifies the line of text for later changing the color.
+---@param id? number A color ID that classifies the line; see GetChatTypeIndex() and ChatTypeInfo table. Used by UpdateColorByID().
 ---@return nil
 function ScrollingMessageFrame:AddMessage(text, r, g, b, id) end
 
