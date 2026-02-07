@@ -70,12 +70,12 @@ function FontInstance:SetFont(path, height, flags) end
 ---@return nil
 function FontInstance:SetFontObject(font) end
 
----Sets horizontal text justification.
----@param justifyH HorizontalJustify
+---Sets horizontal text justification. Case insensitive.
+---@param justifyH HorizontalJustify|"Left"|"Right"|"Center"
 function FontInstance:SetJustifyH(justifyH) end
 
----Sets vertical text justification.
----@param justifyV VerticalJustify
+---Sets vertical text justification. Case insensitive.
+---@param justifyV VerticalJustify|"Top"|"Bottom"|"Middle"
 function FontInstance:SetJustifyV(justifyV) end
 
 ---Sets the text shadow color.
