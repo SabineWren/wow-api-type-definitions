@@ -258,7 +258,8 @@ function GetFramerate() end
 ---@nodiscard
 function GetGameTime() end
 
----@return string locale Client locale, ex. 'enUS'
+--- Return user interface language.
+---@return LocaleCode
 ---@nodiscard
 function GetLocale() end
 
