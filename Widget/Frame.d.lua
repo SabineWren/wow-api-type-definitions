@@ -45,18 +45,18 @@ function Frame:EnableDrawLayer(layer) end
 --- - The frame must be [shown](lua://ScriptRegion:Show) to receive keyboard events.
 --- - The FrameStrata has to be DIALOG or higher for this to work.
 --- - The frame must be shown to receive keyboard events. The frame receiving keyboard input is the only frame receiving keyboard input, which means if you show a frame that receives keyboard events, the character cannot move with the keyboard or use key bindings until that frame is hidden again.
----@param isEnable boolean
+---@param isEnable nil|1
 ---@return nil
 function Frame:EnableKeyboard(isEnable) end
 
 --- Set whether this frame will get mouse input.
 --- - See [DrawLayer](lua://DrawLayer) for details about cursor hover
----@param enableFlag boolean
+---@param enableFlag nil|1
 ---@return nil
 function Frame:EnableMouse(enableFlag) end
 
 ---Set whether this frame will get mouse wheel notifications.
----@param enableFlag boolean
+---@param enableFlag nil|1
 ---@return nil
 function Frame:EnableMouseWheel(enableFlag) end
 
@@ -163,54 +163,54 @@ function Frame:GetTitleRegion() end
 --- Predicate to check if frame supports the handler type.
 --- - If you want to determine if the frame has a script, use :GetScript().
 ---@param scriptType OnScriptMegaUnion
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:HasScript(scriptType) end
 
 --- Gets whether the frame is prohibited from being dragged off screen
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsClampedToScreen() end
 
 --- Determine if this frame is of the specified type, or a subclass of that type.
 ---@param frameType FrameType
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsFrameType(frameType) end
 
 --- Get whether this frame will get keyboard input.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsKeyboardEnabled() end
 
 --- Get whether this frame will get mouse input.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsMouseEnabled() end
 
 --- Get whether this frame will get mouse wheel notifications. New in 1.11.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsMouseWheelEnabled() end
 
 --- Determine if the frame can be moved.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsMovable() end
 
 --- Determine if the frame can be resized.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsResizable() end
 
 --- Get whether the frame is set as toplevel.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsToplevel() end
 
 --- Determine if this frame has been relocated by the user.
 --- - The position of named, movable, user-positioned frames is stored in the layout cache and is restored before PLAYER_LOGIN fires.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Frame:IsUserPlaced() end
 
@@ -266,7 +266,7 @@ function Frame:SetBackdropColor(r,g, b, a) end
 --- - Any calls to Region:SetPoint()
 --- - User dragging after Frame:StartMoving()
 --- - User resizing after Frame:StartSizing()
----@param isClamped boolean True clamps frame edges. False allows moving off screen.
+---@param isClamped nil|1 1 clamps frame edges, nil allows moving off screen.
 ---@return nil
 function Frame:SetClampedToScreen(isClamped) end
 
@@ -305,13 +305,13 @@ function Frame:SetMinResize(minWidth, minHeight) end
 
 --- Set whether the frame can be moved.
 --- - For simple automatic frame dragging behavior, see Frame:CreateTitleRegion().
----@param isMovable boolean True allows calling Frame:StartMoving()
+---@param isMovable nil|1 1 allows calling Frame:StartMoving()
 ---@return nil
 function Frame:SetMovable(isMovable) end
 
 --- Set whether the frame can be resized by the user.
 --- - Resizing begins with [Frame:StartSizing](lua://Frame:StartSizing) and finishes with [Frame:StopMovingOrSizing](lua://Frame:StopMovingOrSizing).
----@param isResizable boolean
+---@param isResizable nil|1
 ---@return nil
 function Frame:SetResizable(isResizable) end
 
@@ -324,7 +324,7 @@ function Frame:SetScale(scale) end
 --- Set whether the frame should raise itself when clicked.
 --- - Typically, this function should be applied to any window-like frames that are displayed in the UI.
 --- - When enabled, toplevel frames will raise their own frame level dynamically when clicked with the mouse.
----@param isTopLevel boolean
+---@param isTopLevel nil|1
 ---@return nil
 function Frame:SetToplevel(isTopLevel) end
 
@@ -332,7 +332,7 @@ function Frame:SetToplevel(isTopLevel) end
 --- - There is usually no need to explicitly call this function; the flag is automatically set by Frame:StartMoving(), and when the frame's position is restored from the layout cache.
 --- - Positions of anonymous frames (frames without a name) will not be restored.
 --- - Only frames created prior to the completion of the initial loading process (i.e. before PLAYER_LOGIN) will have their position restored.
----@param isUserPlaced boolean
+---@param isUserPlaced nil|1
 ---@return nil
 function Frame:SetUserPlaced(isUserPlaced) end
 

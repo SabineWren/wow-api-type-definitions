@@ -26,18 +26,18 @@ function ClickTargetTradeButton(index) end
 
 --- Selects the specified player as the current target.<br>
 --- EXAMPLE given a blue dragon and a player named "Greenknight"<br>
---- - Using false:<br>
---- /run TargetByName("Blue Dragon", false)<br>
---- /run TargetByName("Green Dragon", false)<br>
+--- - Using nil:<br>
+--- /run TargetByName("Blue Dragon", nil)<br>
+--- /run TargetByName("Green Dragon", nil)<br>
 --- /run DEFAULT_CHAT_FRAME:AddMessage(UnitName("target"))<br>
 --- // outputs "Greenknight", as "Green Dragon" fuzzy-targets the player<br>
---- - Using true:<br>
---- /run TargetByName("Blue Dragon", true)<br>
---- /run TargetByName("Green Dragon", true)<br>
+--- - Using 1:<br>
+--- /run TargetByName("Blue Dragon", 1)<br>
+--- /run TargetByName("Green Dragon", 1)<br>
 --- /run DEFAULT_CHAT_FRAME:AddMessage(UnitName("target"))<br>
 --- // outputs "Blue Dragon"
 ---@param name string Name of target.
----@param exactMatch boolean True for string equality. False for fuzzy matching.
+---@param exactMatch nil|1 1 for string equality, nil for fuzzy matching.
 ---@return nil
 function TargetByName(name, exactMatch) end
 
@@ -50,7 +50,7 @@ function TargetLastEnemy() end
 function TargetLastTarget() end
 
 --- Selects the nearest enemy as the current target.
----@param reverseFlag boolean True to cycle backwards
+---@param reverseFlag nil|1 1 to cycle backwards
 ---@return nil
 function TargetNearestEnemy(reverseFlag) end
 

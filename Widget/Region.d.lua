@@ -67,14 +67,14 @@ function Region:Hide() end
 
 --- Determine if this object is shown (will be visible if its parent is visible).
 --- Frames are shown by default.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Region:IsShown() end
 
 --- Get whether the object is visible on screen.
 -- <br>Equivalent to (&:IsShown() and &:GetParent():IsVisible());
 -- <br>Does not consider transparency.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Region:IsVisible() end
 

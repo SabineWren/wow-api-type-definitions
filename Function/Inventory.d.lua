@@ -46,7 +46,7 @@ function ContainerIDToInventoryID(bagId) end
 
 --- Predicate checking if the item currently held by cursor can go into the given inventory slot.
 ---@param invSlot InventorySlotId
----@return boolean
+---@return nil|1
 ---@nodiscard
 function CursorCanGoInSlot(invSlot) end
 
@@ -67,7 +67,7 @@ function GetInventoryAlertStatus(i) end
 --- Determine if an inventory item is broken (no durability).
 ---@param unit UnitId
 ---@param invSlot InventorySlotId
----@return boolean broken
+---@return nil|1 broken
 ---@nodiscard
 function GetInventoryItemBroken(unit, invSlot) end
 
@@ -144,7 +144,7 @@ function HasWandEquipped() end
 
 --- Returns whether an inventory item is locked, usually as it awaits pending action.
 ---@param invSlot InventorySlotId
----@return boolean isLocked
+---@return nil|1 isLocked
 ---@nodiscard
 function IsInventoryItemLocked(invSlot) end
 

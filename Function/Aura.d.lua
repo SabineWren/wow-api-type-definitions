@@ -48,7 +48,7 @@ function GetPlayerBuffTimeLeft(buffIndex) end
 --- - TODO return values taken from 2008 wiki. Might be inaccurate.
 ---@param unit UnitId
 ---@param index integer The index of the debuff to retrieve info for. Starts at 1, maximum 40.
----@param showCastable? boolean
+---@param showCastable? nil|1
 ---@return string name The name of the spell or effect of the debuff. This is the name shown in yellow when you mouse over the icon.
 ---@return string rank The rank of the spell or effect that caused the debuff. Returns "" if there is no rank.
 ---@return string icon Probably a texture path??
@@ -62,7 +62,7 @@ function UnitBuff(unit, index, showCastable) end
 --- - TODO return values taken from 2008 wiki. Might be inaccurate.
 ---@param unit UnitId
 ---@param index integer The index of the debuff to retrieve info for. Starts at 1, maximum 40.
----@param showDispellable? boolean
+---@param showDispellable? nil|1
 ---@return string name The name of the spell or effect of the debuff. This is the name shown in yellow when you mouse over the icon.
 ---@return string rank The rank of the spell or effect that caused the debuff. Returns "" if there is no rank.
 ---@return string icon Probably a texture path??

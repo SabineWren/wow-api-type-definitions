@@ -6,7 +6,7 @@ Button = {}
 --- Execute the click action of the button.
 --- TODO Check if args work, as wiki doesn't say when they were added. It's possible neither work.
 ---@param button? MouseButton Can pass any string, but handlers will expect mouse input.
----@param isDown? boolean
+---@param isDown? nil|1
 ---@return nil
 function Button:Click(button, isDown) end
 
@@ -117,7 +117,7 @@ function Button:GetTextWidth() end
 
 --- Determine whether the Button is enabled.
 --- - Disabled buttons can't be clicked.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function Button:IsEnabled() end
 
@@ -132,7 +132,7 @@ function Button:RegisterForClicks(...) end
 
 --- Set and optionally lock button state.
 ---@param state "PUSHED"|"NORMAL"
----@param isLock? boolean
+---@param isLock? nil|1
 ---@return nil
 function Button:SetButtonState(state, isLock) end
 

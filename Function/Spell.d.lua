@@ -16,7 +16,7 @@ function CastSpell(spellIndex, bookType) end
 --- - ex. CastSpellByName("Flash Heal") Casts on target
 --- - ex. CastSpellByName("Flash Heal", 1) Casts on self
 ---@param name string
----@param isSelf? boolean
+---@param isSelf? nil|1
 ---@return nil
 function CastSpellByName(name, isSelf) end
 
@@ -36,8 +36,8 @@ function GetNumSpellTabs() end
 --- Returns the spell reward for a quest.
 ---@return string texturePath
 ---@return string spellName The spell name
----@return boolean isTradeskillSpell
----@return boolean isSpellLearned
+---@return nil|1 isTradeskillSpell
+---@return nil|1 isSpellLearned
 ---@nodiscard
 function GetQuestLogRewardSpell() end
 
@@ -45,8 +45,8 @@ function GetQuestLogRewardSpell() end
 --- Returns the spell reward for the quest in the gossip window.
 ---@return string texturePath
 ---@return string spellName The spell name
----@return boolean isTradeskillSpell
----@return boolean isSpellLearned
+---@return nil|1 isTradeskillSpell
+---@return nil|1 isSpellLearned
 ---@nodiscard
 function GetRewardSpell() end
 
@@ -116,17 +116,17 @@ function GetSpellTexture(spellIndex, bookType) end
 function GetTrackingTexture() end
 
 --- Predicate checking if spell currently casting.
---- - This seems to always return false?
+--- - This seems to always return nil?
 ---@param spellIndex integer
 ---@param bookType BookType
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsCurrentCast(spellIndex, bookType) end
 
 --- Returns whether the icon in your spellbook is a Passive ability.
 ---@param spellIndex integer
 ---@param bookType BookType
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsSpellPassive(spellIndex, bookType) end
 
@@ -147,13 +147,13 @@ function PickupSpell(spellIndex, bookType) end
 --- TODO not documented
 function PlayerHasSpells() end
 
---- Returns true if the spell awaiting target selection can be cast on the specified unit.
+--- Returns 1 if the spell awaiting target selection can be cast on the specified unit.
 ---@param unit UnitId
----@return boolean
+---@return nil|1
 ---@nodiscard
 function SpellCanTargetUnit(unit) end
 
---- Returns true if a spell has been cast and is awaiting target selection.
+--- Returns 1 if a spell has been cast and is awaiting target selection.
 ---@return nil|1
 ---@nodiscard
 function SpellIsTargeting() end

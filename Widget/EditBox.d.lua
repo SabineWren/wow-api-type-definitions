@@ -86,34 +86,34 @@ function EditBox:HighlightText(startPos, endPos) end
 function EditBox:Insert(text) end
 
 --- Determine if the EditBox has autofocus enabled.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function EditBox:IsAutoFocus() end
 
 --- Determine if the EditBox accepts multiple lines.
 --- - @see [EditBox:SetMultiLine](lua://EditBox:SetMultiLine)
----@return boolean
+---@return nil|1
 ---@nodiscard
 function EditBox:IsMultiLine() end
 
 --- Determine if the EditBox only accepts numeric input.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function EditBox:IsNumeric() end
 
 --- Determine if the EditBox performs password masking.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function EditBox:IsPassword() end
 
 --- Make only alt+arrow keys work for navigating the edit box, not arrow keys alone.
----@param isEnabled boolean
+---@param isEnabled nil|1
 ---@return nil
 function EditBox:SetAltArrowKeyMode(isEnabled) end
 
 --- Set whether or not the editbox will attempt to get input focus when it gets shown (default: yes).
---- - Default to true
----@param isAutoFocus boolean
+--- - Default to 1
+---@param isAutoFocus nil|1
 ---@return nil
 function EditBox:SetAutoFocus(isAutoFocus) end
 
@@ -143,7 +143,7 @@ function EditBox:SetMaxBytes(maxBytes) end
 function EditBox:SetMaxLetters(maxLetters) end
 
 --- Set the EditBox's multi-line state
----@param isMultiLine boolean
+---@param isMultiLine nil|1
 ---@return nil
 function EditBox:SetMultiLine(isMultiLine) end
 
@@ -152,14 +152,14 @@ function EditBox:SetMultiLine(isMultiLine) end
 function EditBox:SetNumber(value) end
 
 --- Set if the EditBox only accepts numeric input
----@param isNumeric boolean
+---@param isNumeric nil|1
 ---@return nil
 function EditBox:SetNumeric(isNumeric) end
 
 --- Set the EditBox's password masking state.
 --- - Toggle whether all character in the EditBox are shown as *.
 --- - EditBox:GetText() returns normal characters, not stars.
----@param isPassword boolean
+---@param isPassword nil|1
 ---@return nil
 function EditBox:SetPassword(isPassword) end
 

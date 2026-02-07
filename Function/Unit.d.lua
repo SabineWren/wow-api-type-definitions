@@ -21,9 +21,9 @@ function FollowUnit(unit) end
 function StartDuelUnit(unit) end
 
 --- Determine if the unit is in combat or has aggro.
---- - Returns false if the unit being checked for aggro is out of range.
---- - Returns false if a unit is proximity-aggroed. It wont return true until it either attacks or is attacked.
---- - For hunters, returns true shortly after pet enters combat.
+--- - Returns nil if the unit being checked for aggro is out of range.
+--- - Returns nil if a unit is proximity-aggroed. It wont return 1 until it either attacks or is attacked.
+--- - For hunters, returns 1 shortly after pet enters combat.
 ---@param unit UnitId
 ---@return nil|1
 ---@nodiscard
@@ -63,21 +63,21 @@ function UnitAttackPower(unit) end
 ---@nodiscard
 function UnitAttackSpeed(unit) end
 
---- Returns true if the first unit can assist the second, false otherwise.
+--- Returns 1 if the first unit can assist the second, nil otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitCanAssist(unit, otherUnit) end
 
---- Returns true if the first unit can attack the second, false otherwise.
+--- Returns 1 if the first unit can attack the second, nil otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitCanAttack(unit, otherUnit) end
 
---- Returns true if the first unit can cooperate with the second, false otherwise.
+--- Returns 1 if the first unit can cooperate with the second, nil otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
 ---@return 1|nil
@@ -135,7 +135,7 @@ function UnitDamage(unit) end
 ---@nodiscard
 function UnitDefense(unit) end
 
---- Returns true if the specified unit exists, false otherwise.
+--- Returns 1 if the specified unit exists, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
@@ -160,13 +160,13 @@ function UnitHealth(unit) end
 ---@nodiscard
 function UnitHealthMax(unit) end
 
---- Returns true if the specified unit is charmed, false otherwise.
+--- Returns 1 if the specified unit is charmed, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsCharmed(unit) end
 
---- Returns true if the unit is a civilian NPC.
+--- Returns 1 if the unit is a civilian NPC.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
@@ -178,82 +178,82 @@ function UnitIsCivilian(unit) end
 ---@nodiscard
 function UnitIsConnected(unit) end
 
---- Returns true if the specified unit is a corpse, false otherwise.
+--- Returns 1 if the specified unit is a corpse, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsCorpse(unit) end
 
---- Returns true if the specified unit is dead, nil otherwise.
+--- Returns 1 if the specified unit is dead, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsDead(unit) end
 
---- Returns true if the specified unit is dead or a ghost, nil otherwise.
---- - Returns true while Feign Death active.
+--- Returns 1 if the specified unit is dead or a ghost, nil otherwise.
+--- - Returns 1 while Feign Death active.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsDeadOrGhost(unit) end
 
---- Returns true if the specified units are enemies, false otherwise.
+--- Returns 1 if the specified units are enemies, nil otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsEnemy(unit, otherUnit) end
 
---- Returns true if the specified units are friends (PC of same faction or friendly NPC), false otherwise.
+--- Returns 1 if the specified units are friends (PC of same faction or friendly NPC), nil otherwise.
 ---@param unit UnitId
 ---@param otherUnit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsFriend(unit, otherUnit) end
 
---- Returns true if the specified unit is a ghost, false otherwise.
+--- Returns 1 if the specified unit is a ghost, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsGhost(unit) end
 
---- Returns true if the specified unit is flagged for PVP, false otherwise.
+--- Returns 1 if the specified unit is flagged for PVP, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsPVP(unit) end
 
---- Returns true if the specified unit is flagged for free-for-all PVP, false otherwise.
+--- Returns 1 if the specified unit is flagged for free-for-all PVP, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsPVPFreeForAll(unit) end
 
---- Returns true if the specified unit is a player character, false otherwise.
+--- Returns 1 if the specified unit is a player character, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsPlayer(unit) end
 
---- Returns true if the specified unit is a mob, more powerful than its nominal level, false otherwise (ex. "elite" mobs)
+--- Returns 1 if the specified unit is a mob, more powerful than its nominal level, nil otherwise (ex. "elite" mobs)
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsPlusMob(unit) end
 
---- Returns true if the specified unit is tapped, false otherwise.
+--- Returns 1 if the specified unit is tapped, nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsTapped(unit) end
 
---- Returns true if the specified unit is tapped by the player himself, otherwise false.
+--- Returns 1 if the specified unit is tapped by the player himself, otherwise nil.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
 function UnitIsTappedByPlayer(unit) end
 
---- Returns true if the specified unit is trivial (Trivial means the unit is "grey" to the player. false otherwise.
+--- Returns 1 if the specified unit is trivial (Trivial means the unit is "grey" to the player), nil otherwise.
 ---@param unit UnitId
 ---@return 1|nil
 ---@nodiscard
@@ -308,7 +308,7 @@ function UnitName(unit) end
 ---@nodiscard
 function UnitOnTaxi(unit) end
 
---- Returns true if the specified unit is controlled by a player, false otherwise.
+--- Returns 1 if the specified unit is controlled by a player, nil otherwise.
 ---@param unit UnitId
 ---@return nil|1
 ---@nodiscard

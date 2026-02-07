@@ -31,7 +31,7 @@ function GetInspectHonorData() end
 function GetInspectPVPRankProgress() end
 
 --- Determine if the inspected unit's honor data is available.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function HasInspectHonorData() end
 

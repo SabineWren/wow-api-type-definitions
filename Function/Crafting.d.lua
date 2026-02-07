@@ -47,7 +47,7 @@ function GetCraftIcon(index) end
 ---@return string craftSubSpellName
 ---@return string craftType "header" or how hard it is to create the item; trivial, easy, medium or optimal.
 ---@return integer numAvailable This is the number of enchants you can perform with the reagents you got in your inventory (the number is also shown in the UI).
----@return nil|boolean isExpanded Only applies to headers. Indicates whether they are expanded or contracted. Nil if not applicable.
+---@return nil|1 isExpanded Only applies to headers. Indicates whether they are expanded or contracted.
 ---@return integer trainingPointCost This is the number of training points your pet needs to train this skill. Nil if the craft window is not a trainer.
 ---@return nil|integer requiredLevel The required (player or pet) level to train this skill if at a trainer. Nil if the craft window is not a trainer.
 ---@nodiscard

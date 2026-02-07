@@ -147,6 +147,6 @@ function SetActionBarToggles(bottomLeft, bottomRight, sideRight, sideRight2, alw
 --- This instructs the interface to use the action associated with the specified ID, optionally selfcasting.
 ---@param slot ActionBarSlot
 ---@param checkCursor? nil|0|1 If 0, use the action even if another item/skill is on the cursor. If 1, replace the action on the slot with the one on the cursor.
----@param onSelf? nil|0|1 If present and 1, the action is performed on the player. If "true" is passed instead of 1, Blizzard produces a Lua error.
+---@param onSelf? nil|0|1 If present and 1, the action is performed on the player.
 ---@return nil
 function UseAction(slot, checkCursor, onSelf) end

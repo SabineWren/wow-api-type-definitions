@@ -56,7 +56,7 @@ function FontInstance:GetSpacing() end
 function FontInstance:GetTextColor() end
 
 --- Sets the font to use for text, returns 1 if the path was valid, nil otherwise (no change occurs).
---- - TODO: this might return true if set successfully. Wiki unclear.
+--- - TODO: this might return 1 if set successfully. Wiki unclear.
 ---@param path string Path to font file on disk.
 ---@param height number Size in points.
 ---@param flags string Any comma-delimited combination of OUTLINE, THICK and MONOCHROME; otherwise must be at least an empty string (except for FontString objects).

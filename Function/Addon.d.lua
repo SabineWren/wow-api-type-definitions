@@ -57,9 +57,9 @@ function GetAddOnMetadata(addon, variable) end
 ---@nodiscard
 function GetNumAddOns() end
 
---- Returns true if the specified Addon is loaded.
+--- Returns whether the specified Addon is loaded.
 ---@param indexOrAddonName integer|string
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsAddOnLoaded(indexOrAddonName) end
 
@@ -67,14 +67,14 @@ function IsAddOnLoaded(indexOrAddonName) end
 --- - .toc field: ## LoadOnDemand: 1
 --- - Avoids loading until called with LoadAddOn.
 ---@param indexOrAddonName integer|string
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsAddOnLoadOnDemand(indexOrAddonName) end
 
 --- Request loading of a Load-On-Demand Addon.
---- - Returns true if success or already loaded.
+--- - Returns 1 if success or already loaded.
 ---@param indexOrAddonName integer|string
----@return boolean
+---@return nil|1
 ---@return nil|string reason Code if load failed.
 ---@nodiscard
 function LoadAddOn(indexOrAddonName) end

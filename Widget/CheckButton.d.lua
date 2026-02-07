@@ -20,7 +20,7 @@ function CheckButton:GetCheckedTexture() end
 function CheckButton:GetDisabledCheckedTexture() end
 
 --- - Does not fire OnClick; use Click() if desired.
----@param isChecked nil|1|boolean
+---@param isChecked nil|1
 function CheckButton:SetChecked(isChecked) end
 
 --- Set the texture to use for a checked box.
