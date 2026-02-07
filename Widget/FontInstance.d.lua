@@ -19,12 +19,12 @@ function FontInstance:GetFont() end
 function FontInstance:GetFontObject() end
 
 ---Return the horizontal text justification.
----@return number
+---@return HorizontalJustify
 ---@nodiscard
 function FontInstance:GetJustifyH() end
 
 ---Return the vertical text justification.
----@return number
+---@return VerticalJustify
 ---@nodiscard
 function FontInstance:GetJustifyV() end
 
@@ -71,11 +71,11 @@ function FontInstance:SetFont(path, height, flags) end
 function FontInstance:SetFontObject(font) end
 
 ---Sets horizontal text justification.
----@param justifyH "Left"|"Right"|"Center"
+---@param justifyH HorizontalJustify
 function FontInstance:SetJustifyH(justifyH) end
 
 ---Sets vertical text justification.
----@param justifyV "Top"|"Bottom"|"Middle"
+---@param justifyV VerticalJustify
 function FontInstance:SetJustifyV(justifyV) end
 
 ---Sets the text shadow color.

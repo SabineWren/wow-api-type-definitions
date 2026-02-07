@@ -203,6 +203,11 @@
 --- | 2 male
 --- | 3 female
 
+---@alias HorizontalJustify
+--- | "LEFT"
+--- | "CENTER"
+--- | "RIGHT"
+
 ---@alias InventorySlotId_Bag
 --- | 20 = first bag (the rightmost one, excluding backpack)
 --- | 21 = second bag
@@ -551,6 +556,11 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "raidpet39"
 --- | "raidpet40"
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
+
+---@alias VerticalJustify
+--- | "TOP"
+--- | "MIDDLE"
+--- | "BOTTOM"
 
 ---@alias ZonePvpType
 --- | nil equivalent to "contested"
