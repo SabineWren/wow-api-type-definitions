@@ -469,7 +469,6 @@ Note: The fourth number does not always stand for who made an item; it usually a
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/UnitId?type=revision&diff=6512501&oldid=364069)
 ---@alias UnitId
---- Base Values
 --- | "mouseover" The unit which the mouse is currently (or was most recently) hovering over.
 -- | "none" TODO: wiki doesn't make it clear if 1.12.1 supports "none"
 --- | "npc" The NPC with which the player is currently interacting.
