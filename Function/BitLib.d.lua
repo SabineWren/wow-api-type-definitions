@@ -1,5 +1,7 @@
 ---@meta
 
+--- 3rd party library bundled with WoW
+--- @link https://github.com/LuaDist/bitlib
 bit = {}
 
 --- Returns the one's complement of `a`.
