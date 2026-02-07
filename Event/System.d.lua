@@ -1,10 +1,7 @@
 ---@meta
 
 ---@alias EventSystem
---- | "ADDON_ACTION_FORBIDDEN"
---- Fires when an AddOn tries use actions that are always forbidden.
---- TODO Incomplete - Possible arguments: string, string
---- https://wowpedia.fandom.com/wiki/ADDON_ACTION_FORBIDDEN
+--- | "ADDON_ACTION_FORBIDDEN" # Fires when an AddOn tries use actions that are always forbidden. TODO Incomplete - Possible arguments: string, string. https://wowpedia.fandom.com/wiki/ADDON_ACTION_FORBIDDEN
 ---
 --- This event fires whenever an AddOn is loaded (fires once for each AddOn loaded if multiple AddOns are being loaded), whether that is during the inital Loading Phase or when an AddOn is loaded using the LoadAddOn("addonname") or UIParentLoadAddon("addonname") function. This event always fires after that Saved Variables of the AddOn that just finished loading have been loaded from the disk.
 --- arg1 string Name of the AddOn that was just loaded.
