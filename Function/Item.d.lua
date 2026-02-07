@@ -27,3 +27,18 @@ function GetItemInfo(itemId) end
 ---@return string itemTexture The name and path for the inventory icon texture for the item.
 ---@nodiscard
 function GetItemInfo(itemString) end
+
+--- Returns the color for an item quality.
+---@param quality ItemQuality
+---@return number r
+---@return number g
+---@return number b
+---@return string hex Color string, ex. "|cff9d9d9d"
+---@nodiscard
+function GetItemQualityColor(quality) end
+
+--- Returns a link to the indexed item in the merchant's inventory.
+---@param itemIndex number
+---@return string|nil
+---@nodiscard
+function GetMerchantItemLink(itemIndex) end

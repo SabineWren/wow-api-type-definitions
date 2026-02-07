@@ -4,7 +4,8 @@
 ---@return nil
 function CloseCraft() end
 
---- No wiki description, so types are guesswork.
+--- Collapses a craft skill header in the currently opened craft window.
+--- - Collapses all headers if index is 0.
 ---@param index integer 1 to GetNumCrafts()
 ---@return nil
 function CollapseCraftSkillLine(index) end
@@ -14,7 +15,8 @@ function CollapseCraftSkillLine(index) end
 ---@return nil
 function DoCraft(index) end
 
---- No wiki description, so types are guesswork.
+--- Expands a craft skill header in the currently opened craft window.
+--- - Expands all headers if index is 0.
 ---@param index integer 1 to GetNumCrafts()
 ---@return nil
 function ExpandCraftSkillLine(index) end
@@ -47,20 +49,20 @@ function GetCraftIcon(index) end
 ---@return string craftSubSpellName
 ---@return string craftType "header" or how hard it is to create the item; trivial, easy, medium or optimal.
 ---@return integer numAvailable This is the number of enchants you can perform with the reagents you got in your inventory (the number is also shown in the UI).
----@return nil|1 isExpanded Only applies to headers. Indicates whether they are expanded or contracted.
----@return integer trainingPointCost This is the number of training points your pet needs to train this skill. Nil if the craft window is not a trainer.
+---@return nil|1 isExpanded Only applies to headers. Indicates whether they are expanded or contracted. Nil if not applicable.
+---@return nil|integer trainingPointCost This is the number of training points your pet needs to train this skill. Nil if the craft window is not a trainer.
 ---@return nil|integer requiredLevel The required (player or pet) level to train this skill if at a trainer. Nil if the craft window is not a trainer.
 ---@nodiscard
 function GetCraftInfo(index) end
 
 --- Returns an itemLink for the specified craftable item.
 ---@param index integer 1 to GetNumCrafts()
----@return ItemLink
+---@return nil|ItemLink
 ---@nodiscard
 function GetCraftItemLink(index) end
 
---- Returns the localized name for the craft window, ex. Enchanting, Poisons, Cooking
----@return string
+--- Returns the localized name of the currently opened craft window, ex. Enchanting, Poisons, Cooking, Beast Training.
+---@return nil|string
 ---@nodiscard
 function GetCraftName() end
 
@@ -105,7 +107,7 @@ function GetCraftSpellFocus(index) end
 
 --- Returns the number of crafts in the currently opened crafting window.
 --- - Can then loop for [GetCraftInfo](lua://GetCraftInfo)
----@return integer
+---@return nil|integer
 ---@nodiscard
 function GetNumCrafts() end
 

@@ -101,21 +101,21 @@ function GetInventoryItemCount(unit, invSlot) end
 --- Returns an itemLink for an inventory (equipped) item.
 ---@param unit UnitId
 ---@param invSlot InventorySlotId
----@return string|nil link nil if slot is empty.
+---@return nil|string link nil if slot is empty.
 ---@nodiscard
 function GetInventoryItemLink(unit, invSlot) end
 
 --- Return the quality of an inventory item.
 ---@param unit UnitId
 ---@param invSlot InventorySlotId
----@return ItemQuality|nil quality nil if slot is empty.
+---@return nil|ItemQuality quality nil if slot is empty.
 ---@nodiscard
 function GetInventoryItemQuality(unit, invSlot) end
 
 --- Return the texture for an inventory item.
 ---@param unit UnitId
 ---@param invSlot InventorySlotId
----@return string|nil texturePath nil if slot is empty.
+---@return nil|string texturePath nil if slot is empty.
 ---@nodiscard
 function GetInventoryItemTexture(unit, invSlot) end
 
@@ -126,19 +126,24 @@ function GetInventoryItemTexture(unit, invSlot) end
 ---@nodiscard
 function GetInventorySlotInfo(slotName) end
 
+--- Returns the amount of money the player has, in copper.
+---@return integer
+---@nodiscard
+function GetMoney() end
+
 --- Return information about main and offhand weapon enchantments.
 --- - Used for temporary enchants, ex. poisons.
 --- - Self (player) only.
----@return 1|nil hasMainHandEnchant
+---@return nil|1 hasMainHandEnchant
 ---@return number mainHandExpiration Time remaining as thousands of seconds.
 ---@return integer mainHandCharges Charges remaining.
----@return 1|nil hasOffHandEnchant
+---@return nil|1 hasOffHandEnchant
 ---@return number offHandExpiration Time remaining as thousands of seconds.
 ---@return integer offHandCharges Charges remaining.
 ---@nodiscard
 function GetWeaponEnchantInfo() end
 
----@return 1|nil hasWand 1 if a wand is equipped, else nil.
+---@return nil|1 hasWand 1 if a wand is equipped, else nil.
 ---@nodiscard
 function HasWandEquipped() end
 

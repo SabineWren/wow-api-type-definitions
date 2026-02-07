@@ -347,6 +347,19 @@ Note: The fourth number does not always stand for who made an item; it usually a
 ]]
 ---@alias ItemLink string
 
+---@alias LocaleCode
+--- | "deDE"
+--- | "enGB"
+--- | "enUS"
+--- | "esES"
+--- | "esMX"
+--- | "frFR"
+--- | "koKR"
+--- | "ptBR"
+--- | "ruRU"
+--- | "zhCN"
+--- | "zhTW"
+
 ---@alias ItemQuality
 --- | 0 - Poor
 --- | 1 - Common

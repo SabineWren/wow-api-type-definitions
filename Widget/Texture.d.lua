@@ -23,7 +23,7 @@ function Texture:GetBlendMode() end
 function Texture:GetTexCoord() end
 
 --- See (Texture:SetTexCoordModifiesRect)[lua://Texture:SetTexCoordModifiesRect]
----@return 1|nil
+---@return nil|1
 ---@nodiscard
 function Texture:GetTexCoordModifiesRect() end
 
@@ -40,7 +40,7 @@ function Texture:GetTexture() end
 function Texture:GetVertexColor() end
 
 --- 1 if desaturation > 0.0
----@return 1|nil
+---@return nil|1
 ---@nodiscard
 function Texture:IsDesaturated() end
 
@@ -48,8 +48,8 @@ function Texture:IsDesaturated() end
 ---@return nil
 function Texture:SetBlendMode(mode) end
 
----@param isGreyscale 1|nil
----@return 1|nil isShaderSupported
+---@param isGreyscale nil|1
+---@return nil|1 isShaderSupported
 ---@nodiscard
 function Texture:SetDesaturated(isGreyscale) end
 
@@ -103,7 +103,7 @@ function Texture:SetTexCoord(minX, maxX, minY, maxY) end
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/API_Texture_SetTexCoordModifiesRect?type=revision&diff=5706207&oldid=190991)
 --- Set whether future SetTexCoord operations should modify the display rectangle rather than stretch the texture.
 --- - Defaults to nil; the texture will stretch to fill its frame to the edges.
----@param enableFlag 1|nil
+---@param enableFlag nil|1
 ---@return nil
 function Texture:SetTexCoordModifiesRect(enableFlag) end
 
