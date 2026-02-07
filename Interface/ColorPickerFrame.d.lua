@@ -5,7 +5,7 @@
 ---@class (exact) ColorPickerFrame : ColorSelect
 ---@field cancelFunc fun(): nil
 ---@field func fun(): nil
----@field hasOpacity boolean
+---@field hasOpacity nil|1
 ---@field opacity number 0 to 1
 ---@field previousValues [number, number, number] Values to apply on escape or close
 

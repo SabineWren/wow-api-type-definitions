@@ -39,7 +39,7 @@ function Texture:GetTexture() end
 ---@nodiscard
 function Texture:GetVertexColor() end
 
---- True if desaturation > 0.0
+--- 1 if desaturation > 0.0
 ---@return nil|1
 ---@nodiscard
 function Texture:IsDesaturated() end
@@ -102,7 +102,7 @@ function Texture:SetTexCoord(minX, maxX, minY, maxY) end
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/API_Texture_SetTexCoordModifiesRect?type=revision&diff=5706207&oldid=190991)
 --- Set whether future SetTexCoord operations should modify the display rectangle rather than stretch the texture.
---- - Defaults to false; the texture will stretch to fill its frame to the edges.
+--- - Defaults to nil; the texture will stretch to fill its frame to the edges.
 ---@param enableFlag nil|1
 ---@return nil
 function Texture:SetTexCoordModifiesRect(enableFlag) end
@@ -115,7 +115,7 @@ function Texture:SetTexCoordModifiesRect(enableFlag) end
 function Texture:SetTexture(texture) end
 
 --- Sets the texture to be displayed from a file or to a solid color.
---- - TODO return might be always nil or always true.
+--- - TODO return might be always nil or always 1.
 ---@param r number
 ---@param g number
 ---@param b number

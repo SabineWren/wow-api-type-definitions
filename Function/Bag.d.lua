@@ -19,10 +19,10 @@ function GetContainerItemCooldown(bagId, slot) end
 ---@param slot integer
 ---@return string texture Texture name
 ---@return integer itemCount Number of items in the bag slot
----@return boolean locked Locked by the server
+---@return nil|1 locked Locked by the server
 ---@return integer quality Numeric item quality
----@return boolean readable If the item can be "read" (a book)
----@return boolean lootable If the item is a temporary container containing items that can be looted
+---@return nil|1 readable If the item can be "read" (a book)
+---@return nil|1 lootable If the item is a temporary container containing items that can be looted
 ---@return ItemLink
 ---@nodiscard
 function GetContainerItemInfo(bagId, slot) end
@@ -40,9 +40,10 @@ function GetContainerItemLink(bagId, slot) end
 ---@nodiscard
 function GetContainerNumSlots(bagId) end
 
--- TODO
---- Returns 1 if the player has a keyring, nil otherwise.
--- function HasKey() end
+--- Returns whether the player has a keyring.
+---@return nil|1
+---@nodiscard
+function HasKey() end
 
 -- TODO
 --- Picks up the bag from the specified slot, placing it in the cursor. If an item is already picked up, this places the item into the specified slot, swapping the items if needed.

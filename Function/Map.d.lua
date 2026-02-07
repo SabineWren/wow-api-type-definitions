@@ -162,7 +162,7 @@ function UpdateWorldMapArrowFrames() end
 
 --- TODO Not documented on wiki<br>
 --- show or hide the arrow representing the player.
----@param bool boolean
+---@param bool nil|1
 function ShowWorldMapArrowFrame(bool) end
 
 --- TODO Not documented on wiki<br>

@@ -54,18 +54,18 @@ function GetPetActionCooldown(index) end
 
 --- Returns information on the pet action at the specified pet action bar slot.
 ---@param index integer
----@return string name The name of the action (or its global ID if isToken is true).
+---@return string name The name of the action (or its global ID if isToken is 1).
 ---@return string subtext The subtext for the action's tooltip.
----@return string texture The name (or its global ID, if isToken is true) of the texture for the action.
----@return boolean isToken Indicates if the action is a reference to a global action, or not (guess -- Flickering 28 Dec 2004)
----@return boolean isActive Returns true if the ability is currently active.
----@return boolean isAutoCastAllowed Returns true if this ability can use autocast.
----@return boolean isAutoCastEnabled Returns true if autocast is currently enabled for this ability.
+---@return string texture The name (or its global ID, if isToken is 1) of the texture for the action.
+---@return nil|1 isToken Indicates if the action is a reference to a global action, or not (guess -- Flickering 28 Dec 2004)
+---@return nil|1 isActive Returns 1 if the ability is currently active.
+---@return nil|1 isAutoCastAllowed Returns 1 if this ability can use autocast.
+---@return nil|1 isAutoCastEnabled Returns 1 if autocast is currently enabled for this ability.
 ---@nodiscard
 function GetPetActionInfo(index) end
 
 --- Returns a value indicating if the player's pet's actions can be used at this time.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function GetPetActionsUsable() end
 
@@ -136,13 +136,14 @@ function GetStablePetFoodTypes(index) end
 ---@nodiscard
 function GetStablePetInfo(index) end
 
---- Returns true if the player has pet spells.
----@return boolean
+--- Returns 1 if the player has pet spells.
+---@return nil|1
 ---@nodiscard
 function HasPetSpells() end
 
---- Returns true if the player has a pet User Interface.
----@return boolean
+--- Returns whether the player has a pet User Interface.
+---@return nil|1 hasPetUI
+---@return nil|1 isHunterPet Whether the pet is a hunter's pet.
 ---@nodiscard
 function HasPetUI() end
 
@@ -161,9 +162,9 @@ function PetAggressiveMode() end
 ---@return nil
 function PetAttack() end
 
---- Returns true if the pet is currently attacking.
+--- Returns 1 if the pet is currently attacking.
 --- - TODO does this require eyes of the beast?
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsPetAttackActive() end
 
@@ -171,15 +172,15 @@ function IsPetAttackActive() end
 ---@return nil
 function PetStopAttack() end
 
---- Returns true if the pet is abandonable.
+--- Returns 1 if the pet is abandonable.
 --- - See [PetAbandon](lua://PetAbandon)
----@return boolean
+---@return nil|1
 ---@nodiscard
 function PetCanBeAbandoned() end
 
---- Returns true if the pet can be renamed.
+--- Returns 1 if the pet can be renamed.
 --- - See [PetRename](lua://PetRename)
----@return boolean
+---@return nil|1
 ---@nodiscard
 function PetCanBeRenamed() end
 

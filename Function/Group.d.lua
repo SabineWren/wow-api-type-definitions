@@ -10,7 +10,7 @@ function CheckReadyCheckTime(isReady) end
 
 --- Indicate if you are ready or not.
 --- - Related event: READY_CHECK
----@param isReady boolean Actually nil|1, but boolean is better.
+---@param isReady nil|1
 ---@return nil
 function ConfirmReadyCheck(isReady) end
 
@@ -67,7 +67,7 @@ function GetNumPartyMembers() end
 function GetPartyLeaderIndex() end
 
 --- TODO Conflicting return types on wiki.
---- Both agree on nil, but not clear whether it's a boolean or a UnitId
+--- Both agree on nil, but not clear whether it's a nil|1 or a UnitId
 ---@param index RaidIndex
 ---@return nil|(UnitId|1) flagOrUnitId
 ---@nodiscard
@@ -84,8 +84,8 @@ function InviteByName(name) end
 ---@return nil
 function InviteToParty(unit) end
 
---- Returns true if the player is party leader.
----@return boolean
+--- Returns 1 if the player is party leader.
+---@return nil|1
 ---@nodiscard
 function IsPartyLeader() end
 

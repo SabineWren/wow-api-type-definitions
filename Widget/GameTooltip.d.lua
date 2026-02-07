@@ -53,7 +53,7 @@ function GameTooltip:GetAnchorType() end
 
 --- Owner means temporary anchor for tooltip.
 ---@param frame Frame
----@return boolean
+---@return nil|1
 ---@nodiscard
 function GameTooltip:IsOwned(frame) end
 
@@ -110,9 +110,9 @@ function GameTooltip:SetInboxItem(index) end
 
 ---@param unit UnitId
 ---@param slot InventorySlotId
----@param isTerse? boolean Only show following: name, item level, equipment slot, item type, onUse/Proc, durability, race/class limitations.
----@return boolean hasItem Is there an item at the given slot?
----@return boolean hasCooldown unknown
+---@param isTerse? nil|1 Only show following: name, item level, equipment slot, item type, onUse/Proc, durability, race/class limitations.
+---@return nil|1 hasItem Is there an item at the given slot?
+---@return nil|1 hasCooldown unknown
 ---@return number repairCost
 ---@nodiscard
 function GameTooltip:SetInventoryItem(unit, slot, isTerse) end
@@ -204,7 +204,7 @@ function GameTooltip:SetTalent(tabIndex, talentIndex) end
 ---@param g? number Optional green color value for text [0, 1]
 ---@param b? number Optional blue color value for text [0, 1]
 ---@param a? number Optional alpha value for the text, between 0 (transparent) and 1 (fully opaque).
----@param textWrap? boolean True if text should wrap; false if the tooltip must widen to fit it.
+---@param textWrap? nil|1 1 if text should wrap; nil if the tooltip must widen to fit it.
 function GameTooltip:SetText(text, r, g, b, a, textWrap) end
 
 --- TODO not documented on wiki

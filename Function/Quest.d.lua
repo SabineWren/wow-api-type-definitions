@@ -110,7 +110,7 @@ function GetQuestLogItemLink() end
 ---@param questIndex? QuestIndex
 function GetQuestLogLeaderBoard(ldrIndex, questIndex) end
 
---- Returns true if the currently loaded quest in the quest window can be shared.
+--- Returns 1 if the currently loaded quest in the quest window can be shared.
 function GetQuestLogPushable() end
 
 --- Returns the description and objectives required for the specified quest.
@@ -164,7 +164,7 @@ function GetTitleText() end
 --- no description
 function IsCurrentQuestFailed() end
 
---- Returns true if a quest is possible to complete.
+--- Returns 1 if a quest is possible to complete.
 function IsQuestCompletable() end
 
 --- Determine if the specified quest is watched.
@@ -173,7 +173,7 @@ function IsQuestWatched(questIndex) end
 --- Determine if the specified unit is on the given quest.
 ---@param questIndex integer
 ---@param unit UnitId
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsUnitOnQuest(questIndex, unit) end
 

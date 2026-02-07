@@ -6,7 +6,7 @@
 FontString = {}
 
 --- Get whether long strings without spaces are wrapped or truncated
----@return boolean
+---@return nil|1
 ---@nodiscard
 function FontString:CanNonSpaceWrap() end
 
@@ -31,7 +31,7 @@ function FontString:GetText() end
 function FontString:SetAlphaGradient(start, length) end
 
 --- Set whether long strings without spaces are wrapped or truncated.
----@param isWrap boolean
+---@param isWrap nil|1
 ---@return nil
 function FontString:SetNonSpaceWrap(isWrap) end
 

@@ -300,33 +300,33 @@ function GetScreenWidth() end
 function GetTime() end
 
 --- Predicate to check if viewing a video cinematic.
----@return boolean
+---@return nil|1
 ---@nodiscard
 function InCinematic() end
 
---- Returns true if the alt key is currently depressed.
----@return boolean
+--- Returns whether the alt key is currently depressed.
+---@return nil|1
 ---@nodiscard
 function IsAltKeyDown() end
 
---- Returns true if the control key is currently depressed.
----@return boolean
+--- Returns whether the control key is currently depressed.
+---@return nil|1
 ---@nodiscard
 function IsControlKeyDown() end
 
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsLinuxClient() end
 
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsMacClient() end
 
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsShiftKeyDown() end
 
----@return boolean
+---@return nil|1
 ---@nodiscard
 function IsWindowsClient() end
 
@@ -336,7 +336,7 @@ function OpeningCinematic() end
 
 --- Plays the specified mp3.
 --- - Also supports OggVorbis (.ogg) since WoW uses the [FMOD](https://www.fmod.com) sound engine.
---- - TODO might return a boolean 'willPlay', but if so, the value can't be relied on.
+--- - TODO might return a nil|1 'willPlay', but if so, the value can't be relied on.
 ---@param pathSoundFile string
 ---@return nil
 function PlayMusic(pathSoundFile) end
