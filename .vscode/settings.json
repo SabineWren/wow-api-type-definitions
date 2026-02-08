@@ -1,0 +1,57 @@
+{
+	// -----------------------------------------------------------
+	// ************ Global ************
+	// -----------------------------------------------------------
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"files.exclude": {
+		"LICENSE": true,
+		"node_modules": true,
+		"package-lock.json": true
+	},
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"search.exclude": {},
+	// -----------------------------------------------------------
+	// ************ TypeScript ************
+	// -----------------------------------------------------------
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "never",
+		"source.organizeImports.biome": "never"
+	},
+	"editor.formatOnSave": false,
+	// Formatter
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.format.indentSwitchCase": false,
+	"typescript.format.semicolons": "remove",
+	// Imports
+	"javascript.preferences.importModuleSpecifier": "non-relative",
+	"javascript.preferences.importModuleSpecifierEnding": "js",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"typescript.preferences.importModuleSpecifierEnding": "js",
+	// -----------------------------------------------------------
+	// ************ Icons ************
+	// -----------------------------------------------------------
+	// Can't add workspace-scope custom icons.
+	// https://github.com/vscode-icons/vscode-icons/issues/933
+	// Can override associations using default icons.
+	// https://github.com/vscode-icons/vscode-icons/wiki/ListOfFiles
+	// 'filename' boolean controls whether or not to include filename (case insensitive).
+	"vsicons.associations.files": [
+		// Pure (no effects)
+		{ "format": "svg", "extensions": [".type.ts"], "icon": "typescriptdef" },
+		{ "format": "svg", "extensions": ["type.ts"], "icon": "typescriptdef", "filename": true },
+		{ "format": "svg", "extensions": [".pure.ts"], "icon": "haskell" },
+		{ "format": "svg", "extensions": ["pure.ts"], "icon": "haskell", "filename": true },
+		// NodeJS
+		{ "format": "svg", "extensions": [".nodejs.ts"], "icon": "node", "filename": true, "overrides": "typescript" },
+		{ "format": "svg", "extensions": ["nodejs.ts"], "icon": "node", "filename": true },
+		// Tests
+		{ "format": "svg", "extensions": [".test.ts"], "icon": "test", "overrides": "testts" },
+		{ "format": "svg", "extensions": ["test.ts"], "icon": "test", "filename": true },
+		// Barrels
+		{ "format": "svg", "extensions": ["barrel.pure.ts"], "icon": "affinitydesigner", "filename": true },
+		{ "format": "svg", "extensions": ["barrel.nodejs.ts"], "icon": "affinitydesigner", "filename": true },
+	]
+}

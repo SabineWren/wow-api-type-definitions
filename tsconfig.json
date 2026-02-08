@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		// ************ Settings necessary for making the build work. ************
+		"allowJs": false,
+		"allowImportingTsExtensions": true,
+		"baseUrl": "./",
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
+		"lib": ["ES2024", "ESNext"],
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"noEmit": true,
+		"noErrorTruncation": true,
+		"paths": { "*": ["Inference/*"] },
+		"skipLibCheck": true,
+		// ************ Language features for code verification. ************
+		"exactOptionalPropertyTypes": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		"noImplicitOverride": true, // Not included in "strict"
+		"strict": true,
+		"useUnknownInCatchVariables": true,
+	},
+	"include": ["**/*"],
+	"exclude": ["node_modules/**/*"]
+}
