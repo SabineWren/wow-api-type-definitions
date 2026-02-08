@@ -100,7 +100,7 @@ const expression = (exp: N.Node): expReturn => {
 		return { _tag: "literal", Value: value.Value }
 	case "UnaryExpression":
 		// We could track down the identifier, and see if operator changes its type.
-		return { _tag: "literal", Value: exp.operator }
+		return { _tag: "literal", Value: exp.operator + expression(exp.argument).Value }
 	default:
 		throw new Error("Unexpected expression: " + JSON.stringify(exp))
 	}
@@ -146,11 +146,16 @@ const assignment = (x: N.Assignment_Global): string => {
 const funcDeclaration = (x: N.FunctionDeclaration): func => {
 	if (x.isLocal)
 		return { _tag: "func", Before: "", Value: _LOCAL }
-	if (x.parameters.some(y => y.type !== "Identifier"))
-		throw new Error("Invalid Parameter Identifier: " + JSON.stringify(x))
 
-	const params = x.parameters.map(x => x.name).join(", ")
-	const paramStubs = x.parameters.map(x => `---@param ${x.name} any (type not inferred)`)
+	const params = x.parameters
+		.map(x => x.type === "Identifier" ? x.name : x.raw).join(", ")
+	const paramStubs = x.parameters
+		.map((x): string => {
+			switch (x.type) {
+			case "Identifier": return `---@param ${x.name} any (type not inferred)`
+			case "VarargLiteral": return `---@param ${x.value} any (type not inferred)`
+			}
+		})
 
 	// Idk how to handle multiple returns with inconsistent types.
 	// Simple to take the last return from the function.

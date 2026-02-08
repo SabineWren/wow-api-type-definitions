@@ -5,7 +5,7 @@ export const Files = [
 	"ActionButton",
 	"AttackButton",
 	"AuctionFrame",
-	// "BankFrame",
+	"BankFrame",
 	// "BattlefieldFrame",
 	// "BonusActionBarFrame",
 	// "BuffFrame",

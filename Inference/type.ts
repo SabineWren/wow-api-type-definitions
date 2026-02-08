@@ -6,17 +6,41 @@ export const UnaryOperator = S.Literal("-", "+", "++", "--")
 export type BinaryOperator = typeof BinaryOperator.Type
 export type UnaryOperator = typeof UnaryOperator.Type
 
-// Leaves
+// ************ Literals ************
+export const BooleanLiteral = S.Struct({
+	type: S.Literal("BooleanLiteral"),
+	value: S.Boolean,
+})
+
+export const NilLiteral = S.Struct({
+	type: S.Literal("NilLiteral")
+})
+
+export const NumericLiteral = S.Struct({
+	type: S.Literal("NumericLiteral"),
+	/** Stringified numeric value */
+	raw: S.String,
+	value: S.Number,
+})
+
+export const StringLiteral = S.Struct({
+	type: S.Literal("StringLiteral"),
+	value: S.NullOr(S.String),
+	raw: S.String,
+})
+
+export const VarargLiteral = S.Struct({
+	type: S.Literal("VarargLiteral"),
+	value: S.Literal("..."),
+	raw: S.Literal("..."),
+})
+
+// ************ Leaves ************
 export const Binary = S.Struct({
 	type: S.Literal("BinaryExpression"),
 	operator: BinaryOperator,
 	left: S.Any,// Probably: rhs, Confirmed: CallExpression, StringLiteral
 	right: S.Any,
-})
-
-export const BooleanLiteral = S.Struct({
-	type: S.Literal("BooleanLiteral"),
-	value: S.Boolean,
 })
 
 export const ForGenericStatement = S.Struct({
@@ -37,28 +61,11 @@ export const IfStatement = S.Struct({
 	type: S.Literal("IfStatement"),
 })
 
-export const NilLiteral = S.Struct({
-	type: S.Literal("NilLiteral")
-})
-
-export const NumericLiteral = S.Struct({
-	type: S.Literal("NumericLiteral"),
-	/** Stringified numeric value */
-	raw: S.String,
-	value: S.Number,
-})
-
-export const StringLiteral = S.Struct({
-	type: S.Literal("StringLiteral"),
-	value: S.NullOr(S.String),
-	raw: S.String,
-})
-
-// Branches
+// ************ Branches ************
 const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 
 // I suspect a subset of nodes can appear on the right side in assignment, etc.
-// Confirmed: CallExpression, MemberExpression, Identifier
+// Confirmed: CallExpression, MemberExpression, Identifier, NumericLiteral
 // probably: StringLiteral
 const rhs = _node
 type rhs = Node
@@ -114,10 +121,10 @@ export const FunctionDeclaration = S.Struct({
 	/** null if anonymous function */
 	identifier: S.NullOr(Identifier),
 	isLocal: S.Boolean,
-	parameters: S.Array(Identifier),// Node[]??
+	parameters: S.Array(S.Union(Identifier, VarargLiteral)),// Node[]??
 })
-export type FunctionDeclaration = { type: "FunctionDeclaration", body: readonly Node[], identifier: null | typeof Identifier.Type, isLocal: boolean, parameters: readonly (typeof Identifier.Type)[] }
-export type FunctionDeclarationE = { type: "FunctionDeclaration", body: readonly NodeE[], identifier: null | typeof Identifier.Encoded, isLocal: boolean, parameters: readonly (typeof Identifier.Encoded)[] }
+export type FunctionDeclaration = { type: "FunctionDeclaration", body: readonly Node[], identifier: null | typeof Identifier.Type, isLocal: boolean, parameters: readonly (typeof Identifier.Type | typeof VarargLiteral.Type)[] }
+export type FunctionDeclarationE = { type: "FunctionDeclaration", body: readonly NodeE[], identifier: null | typeof Identifier.Encoded, isLocal: boolean, parameters: readonly (typeof Identifier.Encoded | typeof VarargLiteral.Encoded)[] }
 
 export const Index = S.Struct({
 	type: S.Literal("IndexExpression"),
@@ -143,15 +150,15 @@ export const MemberExpression = S.Struct({
 	identifier: Identifier,
 })
 export type MemberExpression = { type: "MemberExpression", indexer: "."|":", base: rhs, identifier: typeof Identifier.Type }
-export type MemberExpressionE = { type: "MemberExpression", indexer: "."|":", base: rhs, identifier: typeof Identifier.Encoded }
+export type MemberExpressionE = { type: "MemberExpression", indexer: "."|":", base: rhsE, identifier: typeof Identifier.Encoded }
 
 export const UnaryExpression = S.Struct({
 	type: S.Literal("UnaryExpression"),
 	operator: UnaryOperator,
-	argument: MemberExpression,// TODO This is probably a node of some type
+	argument: rhs,
 })
-export type UnaryExpression = { type: "UnaryExpression", operator: typeof UnaryOperator.Type, argument: MemberExpression }
-export type UnaryExpressionE = { type: "UnaryExpression", operator: typeof UnaryOperator.Encoded, argument: MemberExpressionE }
+export type UnaryExpression = { type: "UnaryExpression", operator: typeof UnaryOperator.Type, argument: rhs }
+export type UnaryExpressionE = { type: "UnaryExpression", operator: typeof UnaryOperator.Encoded, argument: rhsE }
 
 export const ReturnStatement = S.Struct({
 	type: S.Literal("ReturnStatement"),
@@ -190,7 +197,7 @@ export const TableKeyString = S.Struct({
 export type TableKeyString = { type: "TableKeyString", key: { name: string }, value: TableValue }
 export type TableKeyStringE = { type: "TableKeyString", key: { name: string }, value: TableValueE }
 
-// Tree
+// ************ Tree ************
 export const Node = S.Union(
 	// Leaves
 	Binary,
@@ -202,6 +209,7 @@ export const Node = S.Union(
 	NumericLiteral,
 	StringLiteral,
 	Identifier,
+	VarargLiteral,
 	// Branches
 	Assignment_Global,
 	Assignment_Local,
@@ -232,6 +240,7 @@ export type Node =
 	| typeof NilLiteral.Type
 	| typeof NumericLiteral.Type
 	| typeof StringLiteral.Type
+	| typeof VarargLiteral.Type
 	// Branches
 	| Assignment_Global
 	| Assignment_Local
@@ -260,6 +269,7 @@ type NodeE =
 	| typeof NilLiteral.Encoded
 	| typeof NumericLiteral.Encoded
 	| typeof StringLiteral.Encoded
+	| typeof VarargLiteral.Encoded
 	// Branches
 	| Assignment_GlobalE
 	| Assignment_LocalE
