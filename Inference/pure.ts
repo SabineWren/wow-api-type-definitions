@@ -143,7 +143,7 @@ const assignment = (x: N.Assignment_Global): string => {
 	}
 }
 
-const funcDeclaration = (x: N.Function_Declaration): func => {
+const funcDeclaration = (x: N.FunctionDeclaration): func => {
 	if (x.isLocal)
 		return { _tag: "func", Before: "", Value: _LOCAL }
 	if (x.parameters.some(y => y.type !== "Identifier"))
