@@ -30,6 +30,8 @@ const annotateDirectory = async (source: string, out: string, filenames: readonl
 
 		const astRaw: typeof N.AST.Encoded = Pipe(
 			await readFileContents(fpSource),
+			// LuaParse crashes on semicolon after break.
+			text => text.replaceAll("break;\n", "break\n"),
 			text => Parser.parse(text, { luaVersion: "5.1" }).body,
 		)
 		const ast = S.Decode(N.AST)(astRaw)

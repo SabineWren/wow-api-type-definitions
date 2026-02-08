@@ -1,10 +1,19 @@
 import { S } from "./Lib/pure.ts"
 
-export const BinaryOperator = S.Literal("..", "<", ">", "+", "-", "*", "/")
-export const UnaryOperator = S.Literal("-", "+", "++", "--")
+export const BinaryOperator = S.Literal(
+	"..",
+	"<", "<=", "==", "~=", ">=", ">",
+	"+", "-", "*", "/",
+)
+export const UnaryOperator = S.Literal("not", "-", "+", "++", "--")
 
 export type BinaryOperator = typeof BinaryOperator.Type
 export type UnaryOperator = typeof UnaryOperator.Type
+
+// ************ Simple ************
+export const BreakStatement = S.Struct({
+	type: S.Literal("BreakStatement"),
+})
 
 // ************ Literals ************
 export const BooleanLiteral = S.Struct({
@@ -35,11 +44,15 @@ export const VarargLiteral = S.Struct({
 	raw: S.Literal("..."),
 })
 
+const literal = S.Union(BooleanLiteral, NilLiteral, NumericLiteral, StringLiteral, VarargLiteral)
+type literal = typeof literal.Type
+type literalE = typeof literal.Encoded
+
 // ************ Leaves ************
 export const Binary = S.Struct({
 	type: S.Literal("BinaryExpression"),
 	operator: BinaryOperator,
-	left: S.Any,// Probably: rhs, Confirmed: CallExpression, StringLiteral
+	left: S.Any,// Probably: any rhs, Confirmed: CallExpression, StringLiteral
 	right: S.Any,
 })
 
@@ -57,19 +70,38 @@ const Identifier = S.Struct({
 	name: S.String,
 })
 
-export const IfStatement = S.Struct({
-	type: S.Literal("IfStatement"),
-})
-
 // ************ Branches ************
-const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 
+const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 // I suspect a subset of nodes can appear on the right side in assignment, etc.
-// Confirmed: CallExpression, MemberExpression, Identifier, NumericLiteral
-// probably: StringLiteral
+// Confirmed: CallExpression, MemberExpression, Identifier, literal, TableConstructorExpression, TableValue
 const rhs = _node
 type rhs = Node
 type rhsE = NodeE
+
+// ************ Clauses ************
+const IfClause = S.Struct({
+	type: S.Literal("IfClause"),
+	condition: rhs,
+	body: S.Array(_node),
+})
+// type IfClause = { type: "IfClause", condition: rhs, body: readonly Node[] }
+// type IfClauseE = { type: "IfClause", condition: rhsE, body: readonly NodeE[] }
+
+const ElseifClause = S.Struct({
+	type: S.Literal("ElseifClause"),
+	condition: rhs,
+	body: S.Array(_node),
+})
+
+const ElseClause = S.Struct({
+	type: S.Literal("ElseClause"),
+	body: S.Array(_node),
+})
+
+const clauses = S.Union(IfClause, ElseifClause, ElseClause)
+
+// ************ Not clauses ************
 
 const _assignment = S.Struct({
 	init: S.Array(_node),
@@ -126,13 +158,12 @@ export const FunctionDeclaration = S.Struct({
 export type FunctionDeclaration = { type: "FunctionDeclaration", body: readonly Node[], identifier: null | typeof Identifier.Type, isLocal: boolean, parameters: readonly (typeof Identifier.Type | typeof VarargLiteral.Type)[] }
 export type FunctionDeclarationE = { type: "FunctionDeclaration", body: readonly NodeE[], identifier: null | typeof Identifier.Encoded, isLocal: boolean, parameters: readonly (typeof Identifier.Encoded | typeof VarargLiteral.Encoded)[] }
 
-export const Index = S.Struct({
-	type: S.Literal("IndexExpression"),
-	index: _node,
-	base: Identifier,
+export const IfStatement = S.Struct({
+	type: S.Literal("IfStatement"),
+	clauses: S.Array(clauses),
 })
-export type Index = { type: "IndexExpression", index: Node, base: typeof Identifier.Type }
-export type IndexE = { type: "IndexExpression", index: NodeE, base: typeof Identifier.Encoded }
+export type IfStatement = { type:"IfStatement", clauses: readonly (typeof clauses.Type)[] }
+export type IfStatementE = { type:"IfStatement", clauses: readonly (typeof clauses.Encoded)[] }
 
 export const LogicalExpression = S.Struct({
 	type: S.Literal("LogicalExpression"),
@@ -151,6 +182,30 @@ export const MemberExpression = S.Struct({
 })
 export type MemberExpression = { type: "MemberExpression", indexer: "."|":", base: rhs, identifier: typeof Identifier.Type }
 export type MemberExpressionE = { type: "MemberExpression", indexer: "."|":", base: rhsE, identifier: typeof Identifier.Encoded }
+
+export const IndexExpression = S.Struct({
+	type: S.Literal("IndexExpression"),
+	base: rhs,// Seen: Identifier, IndexExpression, MemberExpression
+	index: _node,
+})
+export type IndexExpression = { type: "IndexExpression", index: Node, base: rhs }
+export type IndexExpressionE = { type: "IndexExpression", index: NodeE, base: rhsE }
+
+const RepeatStatement = S.Struct({
+	type: S.Literal("RepeatStatement"),
+	condition: rhs,
+	body: S.Array(_node),
+})
+export type RepeatStatement = { type: "RepeatStatement", condition: rhs, body: readonly Node[] }
+export type RepeatStatementE = { type: "RepeatStatement", condition: rhsE, body: readonly NodeE[] }
+
+export const WhileStatement = S.Struct({
+	type: S.Literal("WhileStatement"),
+	condition: rhs,
+	body: S.Array(_node),
+})
+export type WhileStatement = { type: "WhileStatement", condition: rhs, body: readonly Node[] }
+export type WhileStatementE = { type: "WhileStatement", condition: rhsE, body: readonly NodeE[] }
 
 export const UnaryExpression = S.Struct({
 	type: S.Literal("UnaryExpression"),
@@ -183,28 +238,28 @@ export type TableValueE = { type: "TableValue", value: NodeE }
 
 export const TableKey = S.Struct({
 	type: S.Literal("TableKey"),
-	key: S.Struct({ raw: S.Literal(null) }),// TODO
-	value: TableValue,
+	key: S.Union(literal, UnaryExpression),
+	value: S.Union(TableConstructorExpression, TableValue),
 })
-export type TableKey = { type: "TableKey", key: { raw: null }, value: TableValue }
-export type TableKeyE = { type: "TableKey", key: { raw: null }, value: TableValueE }
+export type TableKey = { type: "TableKey", key: literal | UnaryExpression, value: TableConstructorExpression | TableValue }
+export type TableKeyE = { type: "TableKey", key: literalE | UnaryExpressionE, value: TableConstructorExpressionE | TableValueE }
 
 export const TableKeyString = S.Struct({
 	type: S.Literal("TableKeyString"),
-	key: S.Struct({ name: S.String }),
-	value: TableValue,
+	key: Identifier,
+	value: rhs,
 })
-export type TableKeyString = { type: "TableKeyString", key: { name: string }, value: TableValue }
-export type TableKeyStringE = { type: "TableKeyString", key: { name: string }, value: TableValueE }
+export type TableKeyString = { type: "TableKeyString", key: typeof Identifier.Type, value: rhs }
+export type TableKeyStringE = { type: "TableKeyString", key: typeof Identifier.Encoded, value: rhsE }
 
 // ************ Tree ************
 export const Node = S.Union(
 	// Leaves
 	Binary,
 	BooleanLiteral,
+	BreakStatement,
 	ForGenericStatement,
 	ForNumericStatement,
-	IfStatement,
 	NilLiteral,
 	NumericLiteral,
 	StringLiteral,
@@ -217,9 +272,12 @@ export const Node = S.Union(
 	CallExpression,
 	StringCallExpression,
 	FunctionDeclaration,
-	Index,
+	IfStatement,
+	IndexExpression,
 	LogicalExpression,
 	MemberExpression,
+	RepeatStatement,
+	WhileStatement,
 	UnaryExpression,
 	ReturnStatement,
 	TableConstructorExpression,
@@ -233,10 +291,10 @@ export type Node =
 	// Leaves
 	| typeof Binary.Type
 	| typeof BooleanLiteral.Type
+	| typeof BreakStatement.Type
 	| typeof ForGenericStatement.Type
 	| typeof ForNumericStatement.Type
 	| typeof Identifier.Type
-	| typeof IfStatement.Type
 	| typeof NilLiteral.Type
 	| typeof NumericLiteral.Type
 	| typeof StringLiteral.Type
@@ -248,9 +306,12 @@ export type Node =
 	| CallExpression
 	| StringCallExpression
 	| FunctionDeclaration
-	| Index
+	| IfStatement
+	| IndexExpression
 	| LogicalExpression
 	| MemberExpression
+	| RepeatStatement
+	| WhileStatement
 	| UnaryExpression
 	| ReturnStatement
 	| TableConstructorExpression
@@ -262,10 +323,10 @@ type NodeE =
 	// Leaves
 	| typeof Binary.Encoded
 	| typeof BooleanLiteral.Encoded
+	| typeof BreakStatement.Encoded
 	| typeof ForGenericStatement.Encoded
 	| typeof ForNumericStatement.Encoded
 	| typeof Identifier.Encoded
-	| typeof IfStatement.Encoded
 	| typeof NilLiteral.Encoded
 	| typeof NumericLiteral.Encoded
 	| typeof StringLiteral.Encoded
@@ -277,9 +338,12 @@ type NodeE =
 	| CallExpressionE
 	| StringCallExpressionE
 	| FunctionDeclarationE
-	| IndexE
+	| IfStatementE
+	| IndexExpressionE
 	| LogicalExpressionE
 	| MemberExpressionE
+	| RepeatStatementE
+	| WhileStatementE
 	| UnaryExpressionE
 	| ReturnStatementE
 	| TableConstructorExpressionE

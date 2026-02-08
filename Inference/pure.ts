@@ -50,8 +50,12 @@ const expression = (exp: N.Node): expReturn => {
 		const indexer = expression(exp.index)
 		if (indexer._tag === _LOCAL)
 			return indexer
-		else
-			return { _tag: "literal", Value: `${exp.base.name}[${indexer.Value}]` }
+		else {
+			const left = exp.base.type === "Identifier"
+				? exp.base.name
+				: expression(exp.base).Value
+			return { _tag: "literal", Value: `${left}[${indexer.Value}]` }
+		}
 	}
 	case "LocalStatement":
 		return { _tag: _LOCAL, Value: "LocalStatement" }
@@ -84,7 +88,7 @@ const expression = (exp: N.Node): expReturn => {
 	case "TableKey": {
 		const right = expression(exp.value)
 		const value = right._tag === _LOCAL ? "nil" : right.Value
-		return { _tag: "literal", Value: `[${exp.key.raw}] = ${value}` }
+		return { _tag: "literal", Value: `[${expression(exp.key).Value}] = ${value}` }
 	}
 	case "TableKeyString": {
 		const right = expression(exp.value)
@@ -106,25 +110,9 @@ const expression = (exp: N.Node): expReturn => {
 	}
 }
 
-const assignment = (x: N.Assignment_Global): string => {
-	if (x.variables.length > 1) {
-		// const msg = x.variables
-		// 	.map((x, i) => `${[i]}: ${JSON.stringify(x)}`)
-		// 	.join("\n")
-		console.warn(`[${x.variables.length}]` + " extra variables")
-		return _LOCAL
-	}
-	if (x.init.length > 1) {
-		const msg = "WARNING -- unexpected multi assignment" + "\n" + JSON.stringify(x.init)
-		throw new Error("assignment2: " + msg)
-	}
-	if (x.variables.length === 0)
-		throw new Error("Assignment unexpected empty variables")
-	if (x.init.length === 0)
-		throw new Error("Assignment unexpected empty init")
-
-	const left = expression(x.variables[0]!).Value
-	const right = expression(x.init[0]!)
+const singleAssignment = (left1: N.Node, right1: N.Node): string => {
+	const left = expression(left1).Value
+	const right = expression(right1)
 	switch (right._tag) {
 		case _LOCAL:
 			return _LOCAL
@@ -138,9 +126,34 @@ const assignment = (x: N.Assignment_Global): string => {
 			return right.HasValue
 				? `${left} = ${right.Value}`
 				: `${left} = ${right.Value} ---@type ${right.Type}`
+		case "statement":
+			return `${left} = ${right.Value}`
+		case "assign":
+			// This is probably wrong. TODO test A = B = C
+			return `${left} = ${right.Value}`
 		default:
+			right satisfies never
 			throw new Error("Unexpected case: " + JSON.stringify(right))
 	}
+}
+
+const _nil: typeof N.NilLiteral.Type = { type: "NilLiteral" }
+const assignment = (x: N.Assignment_Global): string => {
+	// X, Y = 1 evaluates to:
+	// X, Y = 1, nil
+	// So pad with nils
+	const init = x.variables.map((_, i) => x.init[i] ?? _nil)
+	// X = 1, 2 evaluates to:
+	// x = 1
+	// so truncate unused values
+	const vars = x.variables.slice(0, init.length)
+	// T.T
+	if (vars.length === 0 || vars.length !== init.length)
+		throw new Error("Assignment unexpected init or variables list")
+
+	return vars
+		.map((l, i) => singleAssignment(l, init[i]!))// TODO Array.Map2
+		.join("\n")
 }
 
 const funcDeclaration = (x: N.FunctionDeclaration): func => {
