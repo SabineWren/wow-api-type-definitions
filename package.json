@@ -2,6 +2,7 @@
 	"devDependencies": {
 		"@types/express": "^5.0.6",
 		"@types/node": "^25.0.10",
+		"effect": "^3.19.16",
 		"expect": "^30.1.2",
 		"luaparse": "^0.3.1",
 		"purity-seal": "^0.0.0",

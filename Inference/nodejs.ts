@@ -2,8 +2,10 @@
 import * as Parser from "luaparse"
 import { existsSync, promises as Fs } from "node:fs"
 import path from "node:path"
+import { Pipe } from "purity-seal"
+import { S } from "./Lib/pure.ts"
 import { AnnotateFile } from "./pure.ts"
-import type * as N from "./type.ts"
+import * as N from "./type.ts"
 
 const _FILENAMES_TURTLE = [
 	//	"FrameXML/ActionButton",
@@ -114,13 +116,15 @@ const _FILENAMES_TURTLE = [
 	// "GlueXML/RealmWizard",
 ]
 
-const parseAst = (text: string): readonly N.Node[] =>
-	Parser.parse(text, { luaVersion: "5.1" }).body
+const _FILENAMES_Vanilla = [
+	"ActionButton",
+	"AttackButton",
+]
 
-const dist = path.resolve("./Defs/")
-// if (!existsSync(dist)) await Fs.mkdir(dist)
+const dist = path.resolve("./UI_Vanilla")
+if (!existsSync(dist)) await Fs.mkdir(dist)
 
-for (const name of ["AttackButton"]) {
+for (const name of _FILENAMES_Vanilla) {
 	const file = await Fs.open(path.resolve("./Inference/vanilla/" + name + ".lua"))
 
 	const lines = []
@@ -129,24 +133,26 @@ for (const name of ["AttackButton"]) {
 	}
 	const text = lines.join("\n")
 
+	const astRaw: typeof N.AST.Encoded = Parser.parse(text, { luaVersion: "5.1" }).body
 	try {
-		const ast = parseAst(text)
-
-		// Debugging
-		// const parsed = JSON.stringify(ast)
-		// const outFile = await Fs.open(path.resolve(dist + name + ".json"), "w")
-		// await outFile.write(parsed, 0)
-		// await outFile.close()
-
-		// Normal
+		const ast = Pipe(S.DecodeThrows(N.AST)(astRaw))
 		const annotations = AnnotateFile(ast)
 		if (annotations.length > 0) {
-			// const outFile = await Fs.open(path.resolve(dist + name + ".d.lua"), "w")
-			// await outFile.write("---@meta\n\n" + annotations, 0)
-			// await outFile.close()
+			const outFile = await Fs.open(path.resolve(dist + "/" + name + ".d.lua"), "w")
+			await outFile.write("---@meta\n\n" + annotations, 0)
+			await outFile.close()
 		}
 	} catch (e) {
-		console.log(e)
+		try {
+			const parsed = JSON.stringify(astRaw, null, "\t")
+			const fp = path.resolve(dist + "/" + name + ".json")
+			const outFile = await Fs.open(fp, "w")
+			await outFile.write(parsed, 0)
+			await outFile.close()
+			console.error("Error -- AST dumped", fp, e)
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	await file.close()

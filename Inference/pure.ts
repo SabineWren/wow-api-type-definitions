@@ -99,7 +99,8 @@ const expression = (exp: N.Node): expReturn => {
 			throw new Error("Undefined TablueValue: " + JSON.stringify(exp))
 		return { _tag: "literal", Value: value.Value }
 	case "UnaryExpression":
-		return { _tag: "literal", Value: exp.operator + exp.argument.raw }
+		// We could track down the identifier, and see if operator changes its type.
+		return { _tag: "literal", Value: exp.operator }
 	default:
 		throw new Error("Unexpected expression: " + JSON.stringify(exp))
 	}
