@@ -28,16 +28,16 @@ const annotateDirectory = async (source: string, out: string, filenames: readonl
 		const fpDefs = path.resolve(dist + "/" + name + ".d.lua")
 		const fpAST = path.resolve(dist + "/" + name + ".json")
 
-		const ast = Pipe(
+		const astRaw: typeof N.AST.Encoded = Pipe(
 			await readFileContents(fpSource),
 			text => Parser.parse(text, { luaVersion: "5.1" }).body,
-			S.Decode(N.AST),
 		)
+		const ast = S.Decode(N.AST)(astRaw)
 		if (Result.IsError(ast)) {
-			const parsed = JSON.stringify(ast.error, null, "\t")
 			const outFile = await Fs.open(fpAST, "w")
-			await outFile.write(parsed, 0)
+			await outFile.write(JSON.stringify(astRaw, null, "\t"), 0)
 			await outFile.close()
+			console.error(ast.error)
 			console.error("Error -- AST dumped", fpAST)
 		} else {
 			const annotations = AnnotateFile(ast.value)
