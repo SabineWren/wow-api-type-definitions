@@ -1,24 +1,29 @@
 import { Brand, Either, Schema } from "effect"
-import { Flow, Pipe } from "purity-seal"
+import { Pipe, Result } from "purity-seal"
 import * as S from "effect/Schema"
 
-export const DecodeThrows = <I, IE>(schema: S.Schema<I, IE, never>) => (t: IE): I =>
-	Pipe(t, Schema.decodeUnknownEither(schema), eitherGetOrThrow)
+export const Decode = <I, IE>(schema: S.Schema<I, IE, never>) => (t: IE): Result<I, string> =>
+	Pipe(t, Schema.decodeUnknownEither(schema), eitherToResult)
 
-export const Encode = <I, IE>(schema: S.Schema<I, IE, never>): ((data: I) => IE) =>
-	Flow(Schema.encodeSync(schema, { propertyOrder: "none" }))
+export const DecodeThrows = <I, IE>(schema: S.Schema<I, IE, never>) => (t: IE): I =>
+	Pipe(t, Schema.decodeUnknownEither(schema), eitherToResult, Result.GetOrThrow)
+
+export const Encode = <I, IE>(schema: S.Schema<I, IE, never>) =>
+	(data: I): IE => Pipe(data, Schema.encodeSync(schema, { propertyOrder: "none" }))
 
 export const Validate = <A, I, R>(schema: S.Schema<A, I, R>, a: Brand.Brand.Unbranded<A>): A =>
-	Pipe(a, Schema.validateEither(schema), eitherGetOrThrow)
+	Pipe(a, Schema.validateEither(schema), eitherToResult, Result.GetOrThrow)
 
-const eitherGetOrThrow = <R, L>(e: Either.Either<R, L>): R => {
+const eitherToResult = <R, L>(e: Either.Either<R, L>): Result<R, string> => {
 	switch (e._tag) {
-		case "Left":
-			const msg = e.left! && typeof e.left === "object" && "message" in e.left
-				? e.left.message as string
-				: JSON.stringify(e, null, 2)
-			throw new Error(msg)
-		case "Right": return e.right
+		case "Left": return Pipe(
+			e.left && typeof e.left === "object" && "message" in e.left
+				? e.left.message
+				: e.left,
+			e => typeof e === "string" ? e : JSON.stringify(e, null, 2),
+			Result.Error,
+		)
+		case "Right": return Result.Ok(e.right)
 	}}
 
 export {
