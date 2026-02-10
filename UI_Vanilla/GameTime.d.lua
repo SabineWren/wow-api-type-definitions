@@ -1,7 +1,7 @@
 ---@meta
 
-GAMETIME_DAWN = 0 ---@type number
-GAMETIME_DUSK = 0 ---@type number
+GAMETIME_DAWN = 0---@type number
+GAMETIME_DUSK = 0---@type number
 
 ---@return nil
 function GameTimeFrame_Update() end

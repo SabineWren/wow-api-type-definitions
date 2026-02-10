@@ -3,7 +3,7 @@
 MAX_COMBO_POINTS = 5
 MAX_TARGET_DEBUFFS = 16
 MAX_TARGET_BUFFS = 5
-CURRENT_TARGETTARGET = nil ---@type nil
+CURRENT_TARGETTARGET = nil---@type nil
 UnitReactionColor = { { r = 1.0, g = 0.0, b = 0.0 }, { r = 1.0, g = 0.0, b = 0.0 }, { r = 1.0, g = 0.5, b = 0.0 }, { r = 1.0, g = 1.0, b = 0.0 }, { r = 0.0, g = 1.0, b = 0.0 }, { r = 0.0, g = 1.0, b = 0.0 }, { r = 0.0, g = 1.0, b = 0.0 } }
 
 ---@return nil

@@ -2,7 +2,7 @@
 
 MAX_TUTORIAL_ALERTS = 10
 TUTORIALFRAME_QUEUE = {  }
-LAST_TUTORIAL_BUTTON_SHOWN = nil ---@type nil
+LAST_TUTORIAL_BUTTON_SHOWN = nil---@type nil
 
 ---@return nil
 function TutorialFrame_OnHide() end

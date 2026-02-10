@@ -126,7 +126,7 @@ const singleAssignment = (left1: N.Node, right1: N.Node): string => {
 		case "typedLiteral":
 			return right.HasValue
 				? `${left} = ${right.Value}`
-				: `${left} = ${right.Value} ---@type ${right.Type}`
+				: `${left} = ${right.Value}---@type ${right.Type}`
 		case "statement":
 			return `${left} = ${right.Value}`
 		case "assign":
@@ -208,7 +208,7 @@ const funcDeclaration = (x: N.FunctionDeclaration): func => {
 	return { _tag: "func", Before: before, Value: declaration }
 }
 
-export const AnnotateFile = (nodes: readonly N.Node[]) => nodes
+export const AnnotateFile = (nodes: readonly N.Node[]): string => nodes
 	.map((node): assign | func | statement => {
 		// Top level tokens
 		switch (node.type) {

@@ -1,9 +1,9 @@
 ---@meta
 
-SELECTED_DOCK_FRAME = nil ---@type nil
+SELECTED_DOCK_FRAME = nil---@type nil
 DOCKED_CHAT_FRAMES = {  }
 DOCK_COPY = {  }
-MOVING_CHATFRAME = nil ---@type nil
+MOVING_CHATFRAME = nil---@type nil
 CHAT_TAB_SHOW_DELAY = 0.2
 CHAT_FRAME_FADE_TIME = 0.15
 DEFAULT_CHATFRAME_ALPHA = 0.25

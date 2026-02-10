@@ -22,8 +22,8 @@ function TaxiNodeOnButtonEnter(button) end
 
 ---@return nil
 function DrawOneHopLines() end
-TAXIROUTE_LINEFACTOR = 0 ---@type number
-TAXIROUTE_LINEFACTOR_2 = 0 ---@type number
+TAXIROUTE_LINEFACTOR = 0---@type number
+TAXIROUTE_LINEFACTOR_2 = 0---@type number
 
 ---@param T any (type not inferred)
 ---@param C any (type not inferred)

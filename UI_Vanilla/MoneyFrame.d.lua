@@ -6,7 +6,7 @@ MONEY_BUTTON_SPACING = -4
 MONEY_BUTTON_SPACING_SMALL = -4
 COPPER_PER_SILVER = 100
 SILVER_PER_GOLD = 100
-COPPER_PER_GOLD = 0 ---@type number
+COPPER_PER_GOLD = 0---@type number
 COIN_BUTTON_WIDTH = 32
 MoneyTypeInfo = {  }
 MoneyTypeInfo["PLAYER"] = { UpdateFunc = function() end, PickupFunc = function(amount) end, DropFunc = function() end, collapse = 1, canPickup = 1, showSmallerCoins = "Backpack" }

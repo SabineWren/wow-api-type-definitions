@@ -1,15 +1,15 @@
 ---@meta
 
 NUM_MULTIBAR_BUTTONS = 12
-SHOW_MULTI_ACTIONBAR_1 = nil ---@type nil
-SHOW_MULTI_ACTIONBAR_2 = nil ---@type nil
-SHOW_MULTI_ACTIONBAR_3 = nil ---@type nil
-SHOW_MULTI_ACTIONBAR_4 = nil ---@type nil
-STATE_MultiBar1 = nil ---@type nil
-STATE_MultiBar2 = nil ---@type nil
-STATE_MultiBar3 = nil ---@type nil
-STATE_MultiBar4 = nil ---@type nil
-STATE_AlwaysShowMultibars = nil ---@type nil
+SHOW_MULTI_ACTIONBAR_1 = nil---@type nil
+SHOW_MULTI_ACTIONBAR_2 = nil---@type nil
+SHOW_MULTI_ACTIONBAR_3 = nil---@type nil
+SHOW_MULTI_ACTIONBAR_4 = nil---@type nil
+STATE_MultiBar1 = nil---@type nil
+STATE_MultiBar2 = nil---@type nil
+STATE_MultiBar3 = nil---@type nil
+STATE_MultiBar4 = nil---@type nil
+STATE_AlwaysShowMultibars = nil---@type nil
 
 ---@return nil
 function MultiActionBarFrame_OnLoad() end
