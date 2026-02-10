@@ -29,6 +29,7 @@ const eitherToResult = <R, L>(e: Either.Either<R, L>): Result<R, string> => {
 export {
 	Any,
 	Array,
+	NonEmptyArray,
 	Boolean,
 	brand as Brand,
 	clamp as Clamp,

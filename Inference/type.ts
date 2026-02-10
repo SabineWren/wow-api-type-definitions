@@ -1,4 +1,4 @@
-import { S } from "./Lib/pure.ts"
+import { Array, S } from "./Lib/pure.ts"
 
 export const BinaryOperator = S.Literal(
 	"..",
@@ -85,8 +85,8 @@ const IfClause = S.Struct({
 	condition: rhs,
 	body: S.Array(_node),
 })
-// type IfClause = { type: "IfClause", condition: rhs, body: readonly Node[] }
-// type IfClauseE = { type: "IfClause", condition: rhsE, body: readonly NodeE[] }
+// type IfClause = { type: "IfClause", condition: rhs, body: Array<Node> }
+// type IfClauseE = { type: "IfClause", condition: rhsE, body: Array<NodeE> }
 
 const ElseifClause = S.Struct({
 	type: S.Literal("ElseifClause"),
@@ -105,10 +105,10 @@ const clauses = S.Union(IfClause, ElseifClause, ElseClause)
 
 const _assignment = S.Struct({
 	init: S.Array(_node),
-	variables: S.Array(rhs),
+	variables: S.NonEmptyArray(rhs),
 })
-type _assignment = { init: readonly Node[], variables: readonly rhs[] }
-type _assignmentE = { init: readonly NodeE[], variables: readonly rhsE[] }
+type _assignment = { init: Array.Array<Node>, variables: Array.NonEmpty<rhs> }
+type _assignmentE = { init: Array.Array<NodeE>, variables: Array.NonEmpty<rhsE> }
 
 export const Assignment_Global = S.Struct({
 	..._assignment.fields,
@@ -129,8 +129,8 @@ export const CallExpression = S.Struct({
 	base: rhs,
 	arguments: S.Array(_node),
 })
-type CallExpression = { type: "CallExpression", base: rhs, arguments: readonly Node[] }
-type CallExpressionE = { type: "CallExpression", base: rhsE, arguments: readonly NodeE[] }
+type CallExpression = { type: "CallExpression", base: rhs, arguments: Array<Node> }
+type CallExpressionE = { type: "CallExpression", base: rhsE, arguments: Array<NodeE> }
 
 export const CallStatement = S.Struct({
 	type: S.Literal("CallStatement"),
@@ -155,15 +155,15 @@ export const FunctionDeclaration = S.Struct({
 	isLocal: S.Boolean,
 	parameters: S.Array(S.Union(Identifier, VarargLiteral)),// Node[]??
 })
-export type FunctionDeclaration = { type: "FunctionDeclaration", body: readonly Node[], identifier: null | typeof Identifier.Type, isLocal: boolean, parameters: readonly (typeof Identifier.Type | typeof VarargLiteral.Type)[] }
-export type FunctionDeclarationE = { type: "FunctionDeclaration", body: readonly NodeE[], identifier: null | typeof Identifier.Encoded, isLocal: boolean, parameters: readonly (typeof Identifier.Encoded | typeof VarargLiteral.Encoded)[] }
+export type FunctionDeclaration = { type: "FunctionDeclaration", body: Array<Node>, identifier: null | typeof Identifier.Type, isLocal: boolean, parameters: Array<typeof Identifier.Type | typeof VarargLiteral.Type> }
+export type FunctionDeclarationE = { type: "FunctionDeclaration", body: Array<NodeE>, identifier: null | typeof Identifier.Encoded, isLocal: boolean, parameters: Array<typeof Identifier.Encoded | typeof VarargLiteral.Encoded> }
 
 export const IfStatement = S.Struct({
 	type: S.Literal("IfStatement"),
 	clauses: S.Array(clauses),
 })
-export type IfStatement = { type:"IfStatement", clauses: readonly (typeof clauses.Type)[] }
-export type IfStatementE = { type:"IfStatement", clauses: readonly (typeof clauses.Encoded)[] }
+export type IfStatement = { type:"IfStatement", clauses: Array<typeof clauses.Type> }
+export type IfStatementE = { type:"IfStatement", clauses: Array<typeof clauses.Encoded> }
 
 export const LogicalExpression = S.Struct({
 	type: S.Literal("LogicalExpression"),
@@ -196,16 +196,16 @@ const RepeatStatement = S.Struct({
 	condition: rhs,
 	body: S.Array(_node),
 })
-export type RepeatStatement = { type: "RepeatStatement", condition: rhs, body: readonly Node[] }
-export type RepeatStatementE = { type: "RepeatStatement", condition: rhsE, body: readonly NodeE[] }
+export type RepeatStatement = { type: "RepeatStatement", condition: rhs, body: Array<Node> }
+export type RepeatStatementE = { type: "RepeatStatement", condition: rhsE, body: Array<NodeE> }
 
 export const WhileStatement = S.Struct({
 	type: S.Literal("WhileStatement"),
 	condition: rhs,
 	body: S.Array(_node),
 })
-export type WhileStatement = { type: "WhileStatement", condition: rhs, body: readonly Node[] }
-export type WhileStatementE = { type: "WhileStatement", condition: rhsE, body: readonly NodeE[] }
+export type WhileStatement = { type: "WhileStatement", condition: rhs, body: Array<Node> }
+export type WhileStatementE = { type: "WhileStatement", condition: rhsE, body: Array<NodeE> }
 
 export const UnaryExpression = S.Struct({
 	type: S.Literal("UnaryExpression"),
@@ -219,15 +219,15 @@ export const ReturnStatement = S.Struct({
 	type: S.Literal("ReturnStatement"),
 	arguments: S.Array(_node),
 })
-export type ReturnStatement = { type: "ReturnStatement", arguments: readonly Node[] }
-export type ReturnStatementE = { type: "ReturnStatement", arguments: readonly NodeE[] }
+export type ReturnStatement = { type: "ReturnStatement", arguments: Array<Node> }
+export type ReturnStatementE = { type: "ReturnStatement", arguments: Array<NodeE> }
 
 export const TableConstructorExpression = S.Struct({
 	type: S.Literal("TableConstructorExpression"),
 	fields: S.Array(_node),
 })
-export type TableConstructorExpression = { type: "TableConstructorExpression", fields: readonly Node[] }
-export type TableConstructorExpressionE = { type: "TableConstructorExpression", fields: readonly NodeE[] }
+export type TableConstructorExpression = { type: "TableConstructorExpression", fields: Array<Node> }
+export type TableConstructorExpressionE = { type: "TableConstructorExpression", fields: Array<NodeE> }
 
 export const TableValue = S.Struct({
 	type: S.Literal("TableValue"),

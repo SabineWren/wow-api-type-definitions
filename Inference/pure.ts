@@ -1,4 +1,5 @@
 import { Pipe } from "purity-seal"
+import { Array } from "./Lib/pure.ts"
 import type * as N from "./type.ts"
 
 const _LOCAL = "**local**"
@@ -138,23 +139,14 @@ const singleAssignment = (left1: N.Node, right1: N.Node): string => {
 }
 
 const _nil: typeof N.NilLiteral.Type = { type: "NilLiteral" }
-const assignment = (x: N.Assignment_Global): string => {
-	// X, Y = 1 evaluates to:
-	// X, Y = 1, nil
-	// So pad with nils
-	const init = x.variables.map((_, i) => x.init[i] ?? _nil)
-	// X = 1, 2 evaluates to:
-	// x = 1
-	// so truncate unused values
-	const vars = x.variables.slice(0, init.length)
-	// T.T
-	if (vars.length === 0 || vars.length !== init.length)
-		throw new Error("Assignment unexpected init or variables list")
-
-	return vars
-		.map((l, i) => singleAssignment(l, init[i]!))// TODO Array.Map2
+/**
+  * @example `X, Y = 1` evaluates to `X, Y = 1, nil` So pad with nils
+  * @example `X = 1, 2` evaluates to `x = 1` so truncate unused values
+*/
+const assignment = (x: N.Assignment_Global): string =>
+	Array.Map2PadRight_(x.variables, x.init, _nil, singleAssignment)
 		.join("\n")
-}
+
 
 const funcDeclaration = (x: N.FunctionDeclaration): func => {
 	if (x.isLocal)
