@@ -215,17 +215,17 @@
 --- | 23 = fourth bag (the leftmost one)
 
 ---@alias InventorySlotId_BankBag
---- | 68 = 1st bank bag
---- | 69 = 2nd bank bag
---- | 70 = 3rd bank bag
---- | 71 = 4th bank bag
---- | 72 = 5th bank bag
---- | 73 = 6th bank bag
+--- | 64 = 1st bank bag
+--- | 65 = 2nd bank bag
+--- | 66 = 3rd bank bag
+--- | 67 = 4th bank bag
+--- | 68 = 5th bank bag
+--- | 69 = 6th bank bag
 
---- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotId?oldid=204254)
+--- [Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotId?oldid=171817)
 --- - Regular inventory items 0-23
---- - 40-67 are the 28 bank slots
---- - Then come 7 bank slots
+--- - 40-63 are the 24 bank slots
+--- - Then come 6 bank slots
 ---@alias InventorySlotId
 --- | 0 = ammo
 --- | 1 = head
@@ -272,10 +272,6 @@
 --- | 61 = bank slot 22
 --- | 62 = bank slot 23
 --- | 63 = bank slot 24
---- | 64 = bank slot 25
---- | 65 = bank slot 26
---- | 66 = bank slot 27
---- | 67 = bank slot 28
 --- | InventorySlotId_BankBag
 
 ---[Open Documentation](https://wowwiki-archive.fandom.com/wiki/InventorySlotName?oldid=204252)
