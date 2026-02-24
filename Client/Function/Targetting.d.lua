@@ -11,7 +11,7 @@ function AssistByName(playerName) end
 ---@return nil
 function AssistUnit(unit) end
 
---- Attacks targetted unit.
+--- Attacks targeted unit.
 ---@return nil
 function AttackTarget() end
 
