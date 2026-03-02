@@ -1,8 +1,8 @@
 import { describe, it } from "node:test"
 import { expect } from "expect"
 import { Result } from "purity-seal"
-import { ParseAst } from "./Ast.nodejs.ts"
-import { AnnotateFile } from "./pure.ts"
+import { ParseAst } from "./AST.nodejs.ts"
+import { AnnotateFile } from "./v1.pure.ts"
 
 await describe("Assignment", async () => {
 	await it("Ignore locals", () => {

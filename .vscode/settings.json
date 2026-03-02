@@ -42,10 +42,10 @@
 		// Pure (no effects)
 		{ "format": "svg", "extensions": [".type.ts"], "icon": "typescriptdef" },
 		{ "format": "svg", "extensions": ["type.ts"], "icon": "typescriptdef", "filename": true },
-		{ "format": "svg", "extensions": [".pure.ts"], "icon": "haskell" },
-		{ "format": "svg", "extensions": ["pure.ts"], "icon": "haskell", "filename": true },
+		{ "format": "svg", "extensions": [".pure.ts"], "icon": "sketch" },
+		{ "format": "svg", "extensions": ["pure.ts"], "icon": "sketch", "filename": true },
 		// NodeJS
-		{ "format": "svg", "extensions": [".nodejs.ts"], "icon": "node", "filename": true, "overrides": "typescript" },
+		{ "format": "svg", "extensions": [".nodejs.ts"], "icon": "node", "overrides": "typescript" },
 		{ "format": "svg", "extensions": ["nodejs.ts"], "icon": "node", "filename": true },
 		// Tests
 		{ "format": "svg", "extensions": [".test.ts"], "icon": "test", "overrides": "testts" },

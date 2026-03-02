@@ -1,6 +1,6 @@
 import { Pipe } from "purity-seal"
 import { Array } from "./Lib/pure.ts"
-import type * as N from "./type.ts"
+import type * as N from "./AST.type.ts"
 
 const _LOCAL = "**local**"
 

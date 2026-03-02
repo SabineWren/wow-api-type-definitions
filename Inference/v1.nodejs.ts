@@ -1,8 +1,8 @@
 import { existsSync, promises as Fs } from "node:fs"
 import path from "node:path"
 import { Pipe, Result } from "purity-seal"
-import { ParseAst } from "./Ast.nodejs.ts"
-import { AnnotateFile } from "./pure.ts"
+import { ParseAst } from "./AST.nodejs.ts"
+import { AnnotateFile } from "./v1.pure.ts"
 import * as Turtle from "./FilesTurtle.type.ts"
 import * as Vanilla from "./FilesVanilla.type.ts"
 

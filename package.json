@@ -9,9 +9,9 @@
 		"typescript": "^5.9.3"
 	},
 	"scripts": {
-		"infer": "node --enable-source-maps ./Inference/nodejs.ts",
-		"test": "node --enable-source-maps --test ./**/test.ts --watch",
-		"test-once": "node --enable-source-maps --test ./**/test.ts",
+		"infer": "node --enable-source-maps ./Inference/v1.nodejs.ts",
+		"test": "node --enable-source-maps --test ./**/{test,*.test}.ts --watch",
+		"test-once": "node --enable-source-maps --test ./**/{test,*.test}.ts",
 		"typecheck": "tsc --watch --project tsconfig.json --preserveWatchOutput",
 		"typecheck-once": "tsc --project tsconfig.json"
 	},
