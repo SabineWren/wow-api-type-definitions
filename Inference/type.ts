@@ -48,22 +48,6 @@ const literal = S.Union(BooleanLiteral, NilLiteral, NumericLiteral, StringLitera
 type literal = typeof literal.Type
 type literalE = typeof literal.Encoded
 
-// ************ Leaves ************
-export const Binary = S.Struct({
-	type: S.Literal("BinaryExpression"),
-	operator: BinaryOperator,
-	left: S.Any,// Probably: any rhs, Confirmed: CallExpression, StringLiteral
-	right: S.Any,
-})
-
-export const ForGenericStatement = S.Struct({
-	type: S.Literal("ForGenericStatement"),
-})
-
-export const ForNumericStatement = S.Struct({
-	type: S.Literal("ForNumericStatement"),
-})
-
 /** Variable reference */
 const Identifier = S.Struct({
 	type: S.Literal("Identifier"),
@@ -78,6 +62,35 @@ const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 const rhs = _node
 type rhs = Node
 type rhsE = NodeE
+
+export const Binary = S.Struct({
+	type: S.Literal("BinaryExpression"),
+	operator: BinaryOperator,
+	left: _node,
+	right: _node,
+})
+export type Binary = { type: "BinaryExpression", operator: BinaryOperator, left: Node, right: Node }
+type BinaryE = { type: "BinaryExpression", operator: BinaryOperator, left: NodeE, right: NodeE }
+
+export const ForGenericStatement = S.Struct({
+	type: S.Literal("ForGenericStatement"),
+	variables: S.Array(Identifier),
+	iterators: S.Array(_node),
+	body: S.Array(_node),
+})
+export type ForGenericStatement = { type: "ForGenericStatement", variables: Array<typeof Identifier.Type>, iterators: Array<Node>, body: Array<Node> }
+type ForGenericStatementE = { type: "ForGenericStatement", variables: Array<typeof Identifier.Encoded>, iterators: Array<NodeE>, body: Array<NodeE> }
+
+export const ForNumericStatement = S.Struct({
+	type: S.Literal("ForNumericStatement"),
+	variable: Identifier,
+	start: _node,
+	end: _node,
+	step: S.NullOr(_node),
+	body: S.Array(_node),
+})
+export type ForNumericStatement = { type: "ForNumericStatement", variable: typeof Identifier.Type, start: Node, end: Node, step: Node | null, body: Array<Node> }
+type ForNumericStatementE = { type: "ForNumericStatement", variable: typeof Identifier.Encoded, start: NodeE, end: NodeE, step: NodeE | null, body: Array<NodeE> }
 
 // ************ Clauses ************
 const IfClause = S.Struct({
@@ -167,11 +180,12 @@ export type IfStatementE = { type:"IfStatement", clauses: Array<typeof clauses.E
 
 export const LogicalExpression = S.Struct({
 	type: S.Literal("LogicalExpression"),
+	operator: S.Literal("and", "or"),
 	left: _node,
 	right: _node,
 })
-export type LogicalExpression = { type: "LogicalExpression", left: Node, right: Node }
-export type LogicalExpressionE = { type: "LogicalExpression", left: NodeE, right: NodeE }
+export type LogicalExpression = { type: "LogicalExpression", operator: "and" | "or", left: Node, right: Node }
+export type LogicalExpressionE = { type: "LogicalExpression", operator: "and" | "or", left: NodeE, right: NodeE }
 
 /** ex. this.Foo, Bar:Baz */
 export const MemberExpression = S.Struct({
@@ -289,11 +303,8 @@ export const AST = S.Array(Node)
 
 export type Node =
 	// Leaves
-	| typeof Binary.Type
 	| typeof BooleanLiteral.Type
 	| typeof BreakStatement.Type
-	| typeof ForGenericStatement.Type
-	| typeof ForNumericStatement.Type
 	| typeof Identifier.Type
 	| typeof NilLiteral.Type
 	| typeof NumericLiteral.Type
@@ -302,9 +313,12 @@ export type Node =
 	// Branches
 	| Assignment_Global
 	| Assignment_Local
+	| Binary
 	| CallStatement
 	| CallExpression
 	| StringCallExpression
+	| ForGenericStatement
+	| ForNumericStatement
 	| FunctionDeclaration
 	| IfStatement
 	| IndexExpression
@@ -321,11 +335,8 @@ export type Node =
 
 type NodeE =
 	// Leaves
-	| typeof Binary.Encoded
 	| typeof BooleanLiteral.Encoded
 	| typeof BreakStatement.Encoded
-	| typeof ForGenericStatement.Encoded
-	| typeof ForNumericStatement.Encoded
 	| typeof Identifier.Encoded
 	| typeof NilLiteral.Encoded
 	| typeof NumericLiteral.Encoded
@@ -334,9 +345,12 @@ type NodeE =
 	// Branches
 	| Assignment_GlobalE
 	| Assignment_LocalE
+	| BinaryE
 	| CallStatement
 	| CallExpressionE
 	| StringCallExpressionE
+	| ForGenericStatementE
+	| ForNumericStatementE
 	| FunctionDeclarationE
 	| IfStatementE
 	| IndexExpressionE
