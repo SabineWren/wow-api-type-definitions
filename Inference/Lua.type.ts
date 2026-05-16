@@ -1,44 +1,45 @@
 // We may encounter variables without knowing all relevant constraints, so
 // create placeholder meta-variable types, and zonk them after unification.
 // https://youtu.be/-TJGhGa04F8
-export type MetaVariable = {
-	readonly _tag: "meta"
-	readonly Id: number
-}
+export type MetaVariable = Readonly<{
+	_tag: "meta"
+	Id: number
+}>
 
-export type TableField = {
-	readonly Name: string
-	readonly Type: Tree
-}
+export type TableField = Readonly<{
+	Name: string
+	Type: Tree
+}>
 
-export type FuncParam = {
-	readonly Name: string
-	readonly Type: Tree
-}
+export type FuncParam = Readonly<{
+	Name: string
+	Type: Tree
+}>
 
-export type FuncReturn = {
-	readonly Name?: string
-	readonly Type: Tree
-}
+export type FuncReturn = Readonly<{
+	Name?: string
+	Type: Tree
+}>
 
 export type Nil = { readonly _tag: "nil" }
 export type Unknown = { readonly _tag: "unknown" }
+export type Reference = { readonly _tag: "class", readonly Name: string }
 
 export type Boolean = { readonly _tag: "boolean" }
 export type Number = { readonly _tag: "number" }
 export type String = { readonly _tag: "string" }
-export type Literal = {
-	readonly _tag: "literal"
-	readonly BaseType: Boolean["_tag"] | Number["_tag"] | String["_tag"]
-	readonly Value: string
-}
+export type Literal = Readonly<{
+	_tag: "literal"
+	BaseType: Boolean["_tag"] | Number["_tag"] | String["_tag"]
+	Value: string
+}>
 
-export type Function = {
-	readonly _tag: "function"
-	readonly HasVararg: boolean
-	readonly Params: readonly FuncParam[]
-	readonly Returns: readonly FuncReturn[]
-}
+export type Function = Readonly<{
+	_tag: "function"
+	HasVararg: boolean
+	Params: readonly FuncParam[]
+	Returns: readonly FuncReturn[]
+}>
 /** LuaLS requires parameter names on functions. This makes
  * it impossible to union functions, as param names may change.
  * ex. `(a: int) => int | (b: string) => int` = (?: int | string) -> int
@@ -47,16 +48,16 @@ export type Function = {
 export type FunctionAny = { _tag: "function-any" }
 
 // This allows tables that mix key-value pairs and auto-indexed array elements.
-export type Table = {
-	readonly _tag: "table"
+export type Table = Readonly<{
+	_tag: "table"
 	/** Keep these sorted for deterministic serialization. */
-	readonly Fields: readonly TableField[]
-	readonly ArrayElement?: Tree
-}
+	Fields: readonly TableField[]
+	ArrayElement?: Tree
+}>
 
 export type Leaf =
 	| Boolean
-	| { readonly _tag: "class", readonly Name: string }
+	| Reference
 	| Function
 	| FunctionAny
 	| Literal
