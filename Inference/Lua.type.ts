@@ -23,7 +23,7 @@ export type FuncReturn = Readonly<{
 
 export type Nil = { readonly _tag: "nil" }
 export type Unknown = { readonly _tag: "unknown" }
-export type Reference = { readonly _tag: "class", readonly Name: string }
+export type ClassType = { readonly _tag: "class", readonly Name: string }
 
 export type Boolean = { readonly _tag: "boolean" }
 export type Number = { readonly _tag: "number" }
@@ -57,7 +57,7 @@ export type Table = Readonly<{
 
 export type Leaf =
 	| Boolean
-	| Reference
+	| ClassType
 	| Function
 	| FunctionAny
 	| Literal
@@ -119,7 +119,7 @@ export const Table = (fields: readonly TableField[], arrayElement?: Tree): Tree 
 export const Func = (params: readonly FuncParam[], returns: readonly FuncReturn[], hasVararg: boolean): Tree =>
 	intern({ _tag: "function", HasVararg: hasVararg, Params: params, Returns: returns })
 
-export const Reference = (name: string): Tree =>
+export const ClassType = (name: string): Tree =>
 	intern({ _tag: "class", Name: name })
 
 export const Meta = (id: number): Tree =>

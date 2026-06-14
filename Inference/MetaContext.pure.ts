@@ -46,5 +46,5 @@ export const Lookup = (id: number): State<MetaContext, MetaEntry> => ctx => {
 		return [entry, ctx]
 }
 
-export const IsSolved = (id: number): State<MetaContext, boolean> =>
-	State.Map(Lookup(id), entry => entry.Solved)
+// export const IsSolved = (id: number): State<MetaContext, boolean> =>
+// 	State.Map(Lookup(id), entry => entry.Solved)
