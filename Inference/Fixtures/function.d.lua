@@ -13,7 +13,7 @@ function G() end
 ---@nodiscard
 function H(x, y) end
 
----@param x any
----@return any y
+---@param x number
+---@return number y
 ---@nodiscard
 function I(x) end

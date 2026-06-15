@@ -3,7 +3,6 @@
 		// ************ Settings necessary for making the build work. ************
 		"allowJs": false,
 		"allowImportingTsExtensions": true,
-		"baseUrl": "./",
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
 		"lib": ["ES2024", "ESNext"],
@@ -11,7 +10,6 @@
 		"moduleResolution": "nodenext",
 		"noEmit": true,
 		"noErrorTruncation": true,
-		"paths": { "*": ["Inference/*"] },
 		"skipLibCheck": true,
 		// ************ Language features for code verification. ************
 		"exactOptionalPropertyTypes": true,
@@ -19,6 +17,7 @@
 		"noUncheckedSideEffectImports": true,
 		"noImplicitOverride": true, // Not included in "strict"
 		"strict": true,
+		"types": ["node"],
 		"useUnknownInCatchVariables": true,
 	},
 	"include": ["**/*"],
