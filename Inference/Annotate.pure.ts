@@ -1,6 +1,10 @@
 import type * as N from "./AST.type.ts"
-import { Nil, Unknown, Literal, Func, type Tree, type FuncParam, type FuncReturn } from "./Lua.type.ts"
-import { Pipe } from "purity-seal"
+import { type Tree } from "./Lua.type.ts"
+import { InferFiles, type GlobalVariable } from "./Infer.pure.ts"
+import { Empty, type MetaContext } from "./MetaContext.pure.ts"
+import { Zonk } from "./Zonk.pure.ts"
+import { State } from "./Lib/State/pure.ts"
+import { Option, Pipe } from "purity-seal"
 
 const annotateType = (t: Tree): string => {
 	switch (t._tag) {
@@ -76,61 +80,17 @@ const annotateGlobal = (name: string, type: Tree): string => {
 	}
 }
 
-const inferExpression = (node: N.Node): Tree => {
-	switch (node.type) {
-	case "NumericLiteral":
-		return Literal("number", node.raw)
-	case "StringLiteral":
-		return Literal("string", node.raw)
-	case "BooleanLiteral":
-		return Literal("boolean", String(node.value))
-	case "NilLiteral":
-		return Nil
-	default:
-		return Unknown
-	}
-}
+const annotateGlobals = (decls: readonly GlobalVariable[]): Option<string> =>
+	decls.length === 0
+		? Option.None()
+		: Option.Some("---@meta\n\n" + decls.map(d => annotateGlobal(d.Name, d.Type)).join("\n\n") + "\n")
 
-export const AnnotateFile = (nodes: readonly N.Node[]): string => {
-	const globals: string[] = []
+// TODO - The type should change because zonking strips the metavariables.
+const zonkDecls = (decls: readonly GlobalVariable[], ctx: MetaContext): readonly GlobalVariable[] =>
+	decls.map(d => ({ Name: d.Name, Type: Zonk(d.Type, ctx) }))
 
-	for (const node of nodes) {
-		switch (node.type) {
-		case "AssignmentStatement":
-			for (let i = 0; i < node.variables.length; i++) {
-				const variable = node.variables[i]!
-				if (variable.type !== "Identifier") continue
-				const init = node.init[i]
-				const type = init !== undefined ? inferExpression(init) : Nil
-				globals.push(annotateGlobal(variable.name, type))
-			}
-			break
-		case "FunctionDeclaration": {
-			if (node.isLocal || node.identifier === null) break
-			const params: FuncParam[] = []
-			let hasVararg = false
-			for (const p of node.parameters) {
-				if (p.type === "VarargLiteral") { hasVararg = true; continue }
-				params.push({ Name: p.name, Type: Unknown })
-			}
-			const lastReturn = node.body.findLast(n => n.type === "ReturnStatement")
-			const returns: FuncReturn[] = []
-			if (lastReturn !== undefined && lastReturn.type === "ReturnStatement") {
-				for (const arg of lastReturn.arguments) {
-					const ret: FuncReturn = arg.type === "Identifier"
-						? { Type: inferExpression(arg), Name: arg.name }
-						: { Type: inferExpression(arg) }
-					returns.push(ret)
-				}
-			}
-			globals.push(annotateGlobal(node.identifier.name, Func(params, returns, hasVararg)))
-			break
-		}
-		}
-	}
-
-	if (globals.length === 0)
-		return "---@meta\n"
-	else
-		return "---@meta\n\n" + globals.join("\n\n") + "\n"
+/** Reads all files, infers types, then writes annotations. */
+export const AnnotateFiles = (files: readonly (readonly N.Node[])[]): readonly Option<string>[] => {
+	const [globalsPerFiles, ctx] = State.Run(InferFiles(files), Empty)
+	return globalsPerFiles.map(decls => annotateGlobals(zonkDecls(decls, ctx)))
 }

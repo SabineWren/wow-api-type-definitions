@@ -1,13 +1,4 @@
-Currently globals infer nil if not assigned when declared.
-We need to store all globals in metacontext, and infer
-types before annotating any output.
-
-TODO metavariable code:
-- Infer param from operator usage
-- Infer return types (union of all return statements, or 'nil' if none)
-- Update global vars based on usage
-
-TODO annotations:
+TODO:
 - Union types (probably need sorting)
 - Records/Classes
 - Tables (literals, parameters, returns)

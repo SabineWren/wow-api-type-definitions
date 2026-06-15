@@ -17,3 +17,18 @@ function H(x, y) end
 ---@return number y
 ---@nodiscard
 function I(x) end
+
+---@param x string | number
+---@return string
+---@nodiscard
+function J(x) end
+
+---@param x number
+---@return string
+---@nodiscard
+function K(x) end
+
+---@param x number
+---@return number
+---@nodiscard
+function L(x) end

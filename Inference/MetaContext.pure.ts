@@ -38,6 +38,18 @@ export const Solve = (id: number, type: Tree): State<MetaContext, void> => ctx =
 	}
 }
 
+// Overwrite a metavariable's solution. Unlike Solve, this does not throw when
+// the entry is already solved; used to narrow a solution to a more specific type.
+export const Refine = (id: number, type: Tree): State<MetaContext, void> => ctx => {
+	if (!ctx.Entries.has(id))
+		throw new Error(`Unknown metavariable ${id}`)
+	const entries = new Map([
+		...ctx.Entries,
+		[id, { Solved: true, Type: type }],
+	])
+	return [undefined, { Entries: entries, NextId: ctx.NextId }]
+}
+
 export const Lookup = (id: number): State<MetaContext, MetaEntry> => ctx => {
 	const entry = ctx.Entries.get(id)
 	if (entry === undefined)

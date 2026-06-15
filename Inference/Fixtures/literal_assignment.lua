@@ -1,6 +1,6 @@
 -- Assume constants
-SOME_ENUM_1 = 1
-SOME_ENUM_N = 5
+GLOBAL_ENUM_1 = 1
+GLOBAL_ENUM_5 = 5
 HELLO = "world!"
 FLAG = true
 

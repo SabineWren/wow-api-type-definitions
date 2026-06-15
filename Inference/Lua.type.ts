@@ -68,8 +68,9 @@ export type Leaf =
 	| Table
 	| Unknown
 
+export type NodeUnion = { readonly _tag: "union", readonly Members: ReadonlySet<Leaf> }
 export type Branch =
-	| { readonly _tag: "union", readonly Members: ReadonlySet<Leaf> }
+	| NodeUnion
 
 export type Tree =
 	| Branch
