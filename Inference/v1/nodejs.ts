@@ -1,10 +1,11 @@
 import { existsSync, promises as Fs } from "node:fs"
 import path from "node:path"
 import { Pipe, Result } from "purity-seal"
-import { ParseAst } from "./AST.nodejs.ts"
-import { AnnotateFile } from "./v1.pure.ts"
-import * as Turtle from "./FilesTurtle.type.ts"
-import * as Vanilla from "./FilesVanilla.type.ts"
+import * as AST from "../Tree/AST.nodejs.ts"
+import * as Turtle from "../FilesTurtle.type.ts"
+import * as Vanilla from "../FilesVanilla.type.ts"
+
+import { AnnotateFile } from "./pure.ts"
 
 const readFileContents = async (fp: string): Promise<string> => {
 	const file = await Fs.open(fp)
@@ -25,7 +26,7 @@ const annotateDirectory = async (source: string, out: string, filenames: readonl
 		const fpDefs = path.resolve(dist + "/" + name + ".d.lua")
 		const fpAST = path.resolve(dist + "/" + name + ".json")
 
-		const ast = ParseAst(await readFileContents(fpSource))
+		const ast = AST.Parse(await readFileContents(fpSource))
 
 		if (Result.IsError(ast)) {
 			const outFile = await Fs.open(fpAST, "w")

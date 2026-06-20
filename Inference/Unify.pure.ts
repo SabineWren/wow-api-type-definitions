@@ -1,9 +1,9 @@
-import { type Leaf, Meta, type NodeUnion, Union, type Tree } from "./Lua.type.ts"
+import * as Type from "./Tree/Type.type.ts"
 import { Lookup, Refine, Solve, type MetaContext } from "./MetaContext.pure.ts"
 import { type State } from "./Lib/State/pure.ts"
 
 // Follow metavariable chain until unsolved or concrete type
-const resolve_rec = (t: Tree, ctx: MetaContext): Tree => {
+const resolve_rec = (t: Type.Unsolved, ctx: MetaContext): Type.Unsolved => {
 	if (t._tag !== "meta")
 		return t
 	else {
@@ -12,7 +12,7 @@ const resolve_rec = (t: Tree, ctx: MetaContext): Tree => {
 	}
 }
 
-const narrowUnion = (u: NodeUnion, x: Exclude<Tree, NodeUnion>): Leaf => {
+const narrowUnion = (u: Type.UnsolvedUnion, x: Exclude<Type.Unsolved, Type.UnsolvedUnion>): Type.UnsolvedSingle => {
 	// This shouldn't fail in a well-typed program.
 	if (u.Members.has(x)) return x
 	else throw new Error("TODO narrow (Node) - implement a 'never' type")
@@ -20,7 +20,7 @@ const narrowUnion = (u: NodeUnion, x: Exclude<Tree, NodeUnion>): Leaf => {
 
 // Narrow two concrete types to their intersection. A parameter must satisfy
 // every use, so accumulated constraints combine by meet, not union.
-const Meet = (a: Tree, b: Tree): Tree => {
+const Meet = (a: Type.Unsolved, b: Type.Unsolved): Type.Unsolved => {
 	// Reference equality here assumes types are interned.
 	if (a === b)
 		return a
@@ -31,7 +31,7 @@ const Meet = (a: Tree, b: Tree): Tree => {
 	else if (a._tag === "union" && b._tag === "union") {
 		const inter = a.Members.intersection(b.Members)
 		if (inter.size === 0) throw new Error("TODO narrow (intersection) - implement a 'never' type")
-		else return Union(...inter)
+		else return Type.MkUnion(...inter)
 	}
 	else
 		// TODO - what to do if both concrete? Newest wins for now.
@@ -39,12 +39,12 @@ const Meet = (a: Tree, b: Tree): Tree => {
 		return b
 }
 
-const constrain = (id: number, other: Tree): State<MetaContext, void> => ctx => {
+const constrain = (id: number, other: Type.Unsolved): State<MetaContext, void> => ctx => {
 	const [entry] = Lookup(id)(ctx)
 	if (!entry.Solved)
 		return Solve(id, other)(ctx)
 	else {
-		const current = resolve_rec(Meta(id), ctx)
+		const current = resolve_rec(Type.MkMeta(id), ctx)
 		const o = resolve_rec(other, ctx)
 		// TODO - clean this up
 		// These next 2 cases are the same:
@@ -59,7 +59,7 @@ const constrain = (id: number, other: Tree): State<MetaContext, void> => ctx => 
 	}
 }
 
-export const Unify = (a: Tree, b: Tree): State<MetaContext, void> => ctx => {
+export const Unify = (a: Type.Unsolved, b: Type.Unsolved): State<MetaContext, void> => ctx => {
 	if (a._tag === "meta")
 		return constrain(a.Id, b)(ctx)
 	else if (b._tag === "meta")

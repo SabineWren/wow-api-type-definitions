@@ -4,7 +4,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { Flow, Option, Pipe, Result } from "purity-seal"
 
 import { AnnotateFiles } from "./Annotate.pure.ts"
-import { ParseAst } from "./AST.nodejs.ts"
+import * as AST from "./Tree/AST.nodejs.ts"
 
 const fixturesDir = new URL("./Fixtures/", import.meta.url)
 const toFilepath = (filename: string) => new URL(filename, fixturesDir)
@@ -22,7 +22,7 @@ void describe("v2 Fixtures", async () => {
 
 	const keys = inpNames.map(x => x.replace(/\.lua$/, ""))
 	const outs = Pipe(
-		inpNames.map(Flow(read, ParseAst, Result.GetOrThrow)),
+		inpNames.map(Flow(read, AST.Parse, Result.GetOrThrow)),
 		AnnotateFiles,
 		xs => new Map(zip2(keys, xs)),
 	)

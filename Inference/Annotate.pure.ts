@@ -1,12 +1,12 @@
-import type * as N from "./AST.type.ts"
-import { type Tree } from "./Lua.type.ts"
+import type * as N from "./Tree/AST.type.ts"
+import type * as Type from "./Tree/Type.type.ts"
 import { InferFiles, type GlobalVariable } from "./Infer.pure.ts"
 import { Empty, type MetaContext } from "./MetaContext.pure.ts"
 import { Zonk } from "./Zonk.pure.ts"
 import { State } from "./Lib/State/pure.ts"
 import { Option, Pipe } from "purity-seal"
 
-const annotateType = (t: Tree): string => {
+const annotateType = (t: Type.Unsolved): string => {
 	switch (t._tag) {
 	// ************ Branch ************
 	// TODO - Perhaps we should sort union members?
@@ -41,7 +41,7 @@ const annotateType = (t: Tree): string => {
 
 const isAllCaps = (name: string): boolean => /^[A-Z][A-Z_0-9]*$/.test(name)
 
-const assignmentValue = (type: Tree): string => {
+const assignmentValue = (type: Type.Unsolved): string => {
 	if (type._tag === "literal")
 		return type.Value
 	else if (type._tag === "nil")
@@ -53,7 +53,7 @@ const assignmentValue = (type: Tree): string => {
 		return "nil"
 }
 
-const annotateGlobal = (name: string, type: Tree): string => {
+const annotateGlobal = (name: string, type: Type.Unsolved): string => {
 	if (type._tag === "function") {
 		const params = type.Params.map(p => `---@param ${p.Name} ${annotateType(p.Type)}`)
 		const returns = type.Returns.length === 0

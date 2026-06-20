@@ -1,4 +1,4 @@
-import { Array, S } from "./Lib/pure.ts"
+import { Array, S } from "../Lib/pure.ts"
 
 export const BinaryOperator = S.Literal(
 	"..",

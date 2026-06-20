@@ -1,17 +1,17 @@
-import { Pipe } from "purity-seal"
+import { type Array, Pipe } from "purity-seal"
 
-import type * as N from "./AST.type.ts"
-import { Boolean, Func, Literal, Nil, Number, String, Union, Unknown, type FuncParam, type FuncReturn, type Tree } from "./Lua.type.ts"
+import type * as N from "./Tree/AST.type.ts"
+import * as Type from "./Tree/Type.type.ts"
 import { FreshMeta, type MetaContext } from "./MetaContext.pure.ts"
 import { Unify } from "./Unify.pure.ts"
 import { State } from "./Lib/State/pure.ts"
 
-type env = ReadonlyMap<string, Tree>
+type env = ReadonlyMap<string, Type.Unsolved>
 const emptyEnv: env = new Map()
 
 export type GlobalVariable = Readonly<{
 	Name: string
-	Type: Tree
+	Type: Type.Unsolved
 }>
 
 // TODO DRY violation - AST types file BinaryOperator should depend on this.
@@ -21,47 +21,50 @@ export type GlobalVariable = Readonly<{
 // (string | number) -> (string | number) -> string
 const arithmeticOps: ReadonlySet<N.BinaryOperator> = new Set(["+", "-", "*", "/"])
 const comparisonOps: ReadonlySet<N.BinaryOperator> = new Set(["<", "<=", "==", "~=", ">=", ">"])
-const stringUnionOperand: Tree = Union(String, Number)
+const stringUnionOperand: Type.Unsolved = Type.MkUnion(Type.String, Type.Number)
 
-const inferBinary = (node: N.Binary, env: env): State<MetaContext, Tree> =>
+const inferBinary = (node: N.Binary, env: env): State<MetaContext, Type.Unsolved> =>
 	State.Bind(
 		inferExpression(node.left, env),
 		left => State.Bind(
 			inferExpression(node.right, env),
-			(right): State<MetaContext, Tree> => {
+			(right): State<MetaContext, Type.Unsolved> => {
 				if (comparisonOps.has(node.operator))
-					return State.Pure(Boolean)
+					return State.Pure(Type.Boolean)
 				else if (node.operator === "..") {
 					const l = Unify(stringUnionOperand, left)
 					const r = Unify(stringUnionOperand, right)
-					return State.Bind(l, () => State.Map(r, () => String))
+					return State.Bind(l, () => State.Map(r, () => Type.String))
 				}
 				else if (arithmeticOps.has(node.operator)) {
-					const l = Unify(left, Number)
-					const r = Unify(right, Number)
-					return State.Bind(l, () => State.Map(r, () => Number))
+					const l = Unify(left, Type.Number)
+					const r = Unify(right, Type.Number)
+					return State.Bind(l, () => State.Map(r, () => Type.Number))
 				}
 				else
-					return State.Pure(Unknown)
+					return State.Pure(Type.Unknown)
 			},
 		)
 	)
 
-const inferExpression = (node: N.Node, env: env): State<MetaContext, Tree> => {
+const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolved> => {
 	switch (node.type) {
-	case "NumericLiteral": return State.Pure(Literal("number", node.raw))
-	case "StringLiteral": return State.Pure(Literal("string", node.raw))
-	case "BooleanLiteral": return State.Pure(Literal("boolean", node.value ? "true" : "false"))
-	case "NilLiteral": return State.Pure(Nil)
-	case "Identifier": return State.Pure(env.get(node.name) ?? Unknown)
+	case "NumericLiteral": return State.Pure(Type.MkLiteral("number", node.raw))
+	case "StringLiteral": return State.Pure(Type.MkLiteral("string", node.raw))
+	case "BooleanLiteral": return State.Pure(Type.MkLiteral("boolean", node.value ? "true" : "false"))
+	case "NilLiteral": return State.Pure(Type.Nil)
+	case "Identifier": return State.Pure(env.get(node.name) ?? Type.Unknown)
 	case "BinaryExpression": return inferBinary(node, env)
-	default: return State.Pure(Unknown)
+	default: return State.Pure(Type.Unknown)
 	}
 }
 
-const inferBody = (body: readonly N.Node[], env: env): State<MetaContext, readonly FuncReturn[]> => ctx => {
+const inferBody = (
+	body: Array<N.Node>,
+	env: env,
+): State<MetaContext, Array<Type.FuncReturn<Type.MetaVariable>>> => ctx => {
 	let scope = env
-	let returns: readonly FuncReturn[] = []
+	let returns: Array<Type.FuncReturn<Type.MetaVariable>> = []
 
 	for (const stmt of body) {
 		if (stmt.type === "LocalStatement") {
@@ -71,14 +74,14 @@ const inferBody = (body: readonly N.Node[], env: env): State<MetaContext, readon
 				if (variable.type !== "Identifier") continue
 
 				const [type, next] = Pipe(
-					init !== undefined ? inferExpression(init, scope) : State.Pure<MetaContext, Tree>(Nil),
+					init !== undefined ? inferExpression(init, scope) : State.Pure<MetaContext, Type.Unsolved>(Type.Nil),
 					f => f(ctx),
 				)
 				ctx = next
 				scope = new Map([...scope, [variable.name, type]])
 			}
 		} else if (stmt.type === "ReturnStatement") {
-			const rs: FuncReturn[] = []
+			const rs: Type.FuncReturn<Type.MetaVariable>[] = []
 			for (const arg of stmt.arguments) {
 				const [type, next] = inferExpression(arg, scope)(ctx)
 				ctx = next
@@ -93,8 +96,8 @@ const inferBody = (body: readonly N.Node[], env: env): State<MetaContext, readon
 	return [returns, ctx]
 }
 
-const inferFunction = (node: N.FunctionDeclaration): State<MetaContext, Tree> => ctx => {
-	const params: FuncParam[] = []
+const inferFunction = (node: N.FunctionDeclaration): State<MetaContext, Type.Unsolved> => ctx => {
+	const params: Type.FuncParam<Type.MetaVariable>[] = []
 	let scope: env = emptyEnv
 	let hasVararg = false
 
@@ -108,10 +111,10 @@ const inferFunction = (node: N.FunctionDeclaration): State<MetaContext, Tree> =>
 	}
 
 	const [returns, next] = inferBody(node.body, scope)(ctx)
-	return [Func(params, returns, hasVararg), next]
+	return [Type.MkFunc(params, returns, hasVararg), next]
 }
 
-const inferFile = (nodes: readonly N.Node[]): State<MetaContext, readonly GlobalVariable[]> => ctx => {
+const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVariable>> => ctx => {
 	const globals: GlobalVariable[] = []
 
 	for (const node of nodes) {
@@ -123,7 +126,7 @@ const inferFile = (nodes: readonly N.Node[]): State<MetaContext, readonly Global
 				if (variable.type !== "Identifier") continue
 
 				const [type, next] = Pipe(
-					init !== undefined ? inferExpression(init, emptyEnv) : State.Pure<MetaContext, Tree>(Nil),
+					init !== undefined ? inferExpression(init, emptyEnv) : State.Pure<MetaContext, Type.Unsolved>(Type.Nil),
 					f => f(ctx),
 				)
 				ctx = next
@@ -144,9 +147,9 @@ const inferFile = (nodes: readonly N.Node[]): State<MetaContext, readonly Global
 }
 
 export const InferFiles = (
-	files: readonly (readonly N.Node[])[],
-): State<MetaContext, readonly (readonly GlobalVariable[])[]> => ctx => {
-	const perFile: (readonly GlobalVariable[])[] = []
+	files: Array<Array<N.Node>>,
+): State<MetaContext, Array<Array<GlobalVariable>>> => ctx => {
+	const perFile: Array<GlobalVariable>[] = []
 	for (const nodes of files) {
 		const [decls, next] = inferFile(nodes)(ctx)
 		ctx = next

@@ -1,10 +1,11 @@
 // @ts-expect-error
 import * as Parser from "luaparse"
 import { Pipe } from "purity-seal"
-import { Result, S } from "./Lib/pure.ts"
+import { Result, S } from "../Lib/pure.ts"
+
 import * as N from "./AST.type.ts"
 
-export const ParseAst = (source: string): Result<typeof N.AST.Type, { raw: string; reason: string }> => {
+export const Parse = (source: string): Result<typeof N.AST.Type, { raw: string; reason: string }> => {
 	const raw = Pipe(
 		// LuaParse crashes on semicolon after break.
 		source.replaceAll("break;\n", "break\n"),
