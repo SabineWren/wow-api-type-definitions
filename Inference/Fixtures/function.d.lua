@@ -7,9 +7,9 @@ function F() end
 ---@nodiscard
 function G() end
 
----@param x any
----@param y any
----@return any x
+---@param x unknown
+---@param y unknown
+---@return unknown x
 ---@nodiscard
 function H(x, y) end
 

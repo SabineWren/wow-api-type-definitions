@@ -1,11 +1,6 @@
--- Assume constants
-GLOBAL_ENUM_1 = 1
-GLOBAL_ENUM_5 = 5
-HELLO = "world!"
-FLAG = true
-
 -- Value indicates mutation
 W = nil
+EMPTY_TABLE = { }
 
 -- Casing indicates mutation
 x = 7
@@ -16,3 +11,6 @@ WeIRd = 20
 -- Locals
 local x = 1
 local world = "hello!"
+
+-- From function
+Inferred_Number = (function(a) return a + 1 end)(1)

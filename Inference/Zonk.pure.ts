@@ -20,7 +20,7 @@ export const Zonk = (t: Type.Unsolved, ctx: MetaContext): Type.Solved => {
 			return Type.Unknown
 	}
 	case "table":
-		return Type.MkTable(
+		return Type.Table(
 			t.Fields.map((f): Type.TableField<never> => ({ Name: f.Name, Type: Zonk(f.Type, ctx) })),
 			t.ArrayElement !== undefined ? Zonk(t.ArrayElement, ctx) : undefined,
 		)

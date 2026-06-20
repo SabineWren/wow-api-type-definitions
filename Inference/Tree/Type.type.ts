@@ -6,19 +6,19 @@ import { Intern } from "./Intern.pure.ts"
 // https://youtu.be/-TJGhGa04F8
 export type MetaVariable = Readonly<{ _tag: "meta", Id: number }>
 
-export type TableField<MV> = Readonly<{ Name: string, Type: _type<MV> }>
+export type TableField<MV> = Readonly<{ Name: string, Type: TypeTerm<MV> }>
 
-export type FuncParam<MV> = Readonly<{ Name: string, Type: _type<MV> }>
-export type FuncReturn<MV> = Readonly<{ Name?: string, Type: _type<MV> }>
+export type FuncParam<MV> = Readonly<{ Name: string, Type: TypeTerm<MV> }>
+export type FuncReturn<MV> = Readonly<{ Name?: string, Type: TypeTerm<MV> }>
 
 export type Nil = Readonly<{ _tag: "nil" }>
 export type Unknown = Readonly<{ _tag: "unknown" }>
-export type MkClassType = Readonly<{ _tag: "class", Name: string }>
+export type ClassType = Readonly<{ _tag: "class", Name: string }>
 
 export type Boolean = Readonly<{ _tag: "boolean" }>
 export type Number = Readonly<{ _tag: "number" }>
 export type String = Readonly<{ _tag: "string" }>
-export type MkLiteral = Readonly<{
+export type Literal = Readonly<{
 	_tag: "literal"
 	BaseType: Boolean["_tag"] | Number["_tag"] | String["_tag"]
 	Value: string
@@ -38,7 +38,7 @@ export type Function<MV> = Readonly<{
 export type FunctionAny = { _tag: "function-any" }
 
 // This allows tables that mix key-value pairs and auto-indexed array elements.
-export type MkTable<MV> = Readonly<{
+export type Table<MV> = Readonly<{
 	_tag: "table"
 	/** Keep these sorted for deterministic serialization. */
 	Fields: Array<TableField<MV>>
@@ -47,15 +47,15 @@ export type MkTable<MV> = Readonly<{
 
 type single<MV> =
 	| Boolean
-	| MkClassType
+	| ClassType
 	| Function<MV>
 	| FunctionAny
-	| MkLiteral
+	| Literal
 	| MV
 	| Nil
 	| Number
 	| String
-	| MkTable<MV>
+	| Table<MV>
 	| Unknown
 
 type union<MV> = Readonly<{
@@ -66,9 +66,9 @@ type union<MV> = Readonly<{
 export type UnsolvedSingle = single<MetaVariable>
 export type UnsolvedUnion = union<MetaVariable>
 
-type _type<MV> = single<MV> | union<MV>
-export type Unsolved = _type<MetaVariable>
-export type Solved = _type<never>
+export type TypeTerm<MV> = single<MV> | union<MV>
+export type Unsolved = TypeTerm<MetaVariable>
+export type Solved = TypeTerm<never>
 
 // ************ Constructors ************
 export const Nil: Nil = Intern({ _tag: "nil" })
@@ -77,13 +77,13 @@ export const Number: Number = Intern({ _tag: "number" })
 export const String: String = Intern({ _tag: "string" })
 export const Unknown: Unknown = Intern({ _tag: "unknown" })
 
-export const MkLiteral = (baseType: "boolean" | "number" | "string", value: string): Unsolved =>
+export const Literal = (baseType: "boolean" | "number" | "string", value: string): Unsolved =>
 	Intern({ _tag: "literal", BaseType: baseType, Value: value })
 
-export const MkTable = <MV extends never | MetaVariable>(
+export const Table = <MV extends never | MetaVariable>(
 	fields: Array<TableField<MV>>,
-	arrayElement?: _type<MV>,
-): _type<MV> =>
+	arrayElement?: TypeTerm<MV>,
+): TypeTerm<MV> =>
 	Intern(
 		arrayElement !== undefined
 			? { _tag: "table", Fields: fields, ArrayElement: arrayElement }
@@ -94,16 +94,16 @@ export const MkFunc = <MV extends never | MetaVariable>(
 	params: Array<FuncParam<MV>>,
 	returns: Array<FuncReturn<MV>>,
 	hasVararg: boolean,
-): _type<MV> =>
+): TypeTerm<MV> =>
 	Intern({ _tag: "function", HasVararg: hasVararg, Params: params, Returns: returns })
 
-export const MkClassType = (name: string): Unsolved =>
+export const ClassType = (name: string): Unsolved =>
 	Intern({ _tag: "class", Name: name })
 
 export const MkMeta = (id: number): Unsolved =>
 	Intern({ _tag: "meta", Id: id })
 
-export const MkUnion = <MV extends never | MetaVariable>(...types: Array<_type<MV>>): _type<MV> => {
+export const MkUnion = <MV extends never | MetaVariable>(...types: Array<TypeTerm<MV>>): TypeTerm<MV> => {
 	// Reference equality is okay because members are interned
 	const union = new Set<single<MV>>()
 	for (const t of types) {

@@ -1,15 +1,10 @@
 ---@meta
 
-GLOBAL_ENUM_1 = 1
-
-GLOBAL_ENUM_5 = 5
-
-HELLO = "world!"
-
-FLAG = true
-
 ---@type nil
 W = nil
+
+---@type { }
+EMPTY_TABLE = { }
 
 ---@type number
 x = 7
@@ -22,3 +17,6 @@ z = false
 
 ---@type number
 WeIRd = 20
+
+---@type number
+Inferred_Number = nil

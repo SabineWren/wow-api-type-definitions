@@ -1,12 +1,14 @@
 import type * as N from "./Tree/AST.type.ts"
 import type * as Type from "./Tree/Type.type.ts"
-import { InferFiles, type GlobalVariable } from "./Infer.pure.ts"
-import { Empty, type MetaContext } from "./MetaContext.pure.ts"
+import { InferFiles, type GlobalVarSolved, type GlobalVarUnsolved } from "./Infer.pure.ts"
+import { Empty } from "./MetaContext.pure.ts"
 import { Zonk } from "./Zonk.pure.ts"
 import { State } from "./Lib/State/pure.ts"
-import { Option, Pipe } from "purity-seal"
+import { Array, Option, Pipe } from "purity-seal"
 
-const annotateType = (t: Type.Unsolved): string => {
+const isAllCaps = (name: string): boolean => /^[A-Z][A-Z_0-9]*$/.test(name)
+
+const annotateType = (t: Type.Solved): string => {
 	switch (t._tag) {
 	// ************ Branch ************
 	// TODO - Perhaps we should sort union members?
@@ -27,7 +29,6 @@ const annotateType = (t: Type.Unsolved): string => {
 	}
 	case "function-any": return "function"
 	case "literal": return t.BaseType
-	case "meta": throw new Error(`Cannot annotate unzonked metavariable ?${t.Id}`)
 	case "nil": return "nil"
 	case "number": return "number"
 	case "string": return "string"
@@ -35,62 +36,81 @@ const annotateType = (t: Type.Unsolved): string => {
 		t.Fields.map(f => `${f.Name}: ${annotateType(f.Type)}`),
 		fields => `{ ${fields.join(", ")} }`
 	)
-	case "unknown": return "any"
+	case "unknown": return "unknown"
 	}
 }
 
-const isAllCaps = (name: string): boolean => /^[A-Z][A-Z_0-9]*$/.test(name)
-
-const assignmentValue = (type: Type.Unsolved): string => {
-	if (type._tag === "literal")
+const assignmentValue = (type: Type.Solved): string => {
+	switch(type._tag) {
+	case "literal":
 		return type.Value
-	else if (type._tag === "nil")
+	case "table":
+		return "{ }"
+	default:
 		return "nil"
-	else
-		// TODO - this is probably wrong.
-		// Need to build a test suite for each case and figure out
-		// what output should be.
-		return "nil"
-}
-
-const annotateGlobal = (name: string, type: Type.Unsolved): string => {
-	if (type._tag === "function") {
-		const params = type.Params.map(p => `---@param ${p.Name} ${annotateType(p.Type)}`)
-		const returns = type.Returns.length === 0
-			? "---@return nil"
-			: Pipe(
-				type.Returns.map(r => `---@return ${annotateType(r.Type)}${r.Name !== undefined ? ` ${r.Name}` : ""}`),
-				xs => type.Returns.some(r => r.Type._tag !== "nil")
-					? [...xs, "---@nodiscard"]
-					: xs,
-			)
-		const header = Pipe(
-			type.Params.map(p => p.Name),
-			xs => type.HasVararg ? [...xs, "..."] : xs,
-			xs => `function ${name}(${xs.join(", ")}) end`,
-		)
-		return params.concat(returns, header).join("\n")
-	} else {
-		const value = assignmentValue(type)
-		// Heuristically detect global constants as SNAKE_CASE literals
-		if (type._tag === "literal" && isAllCaps(name))
-			return `${name} = ${value}`
-		else
-			return `---@type ${annotateType(type)}\n${name} = ${value}`
 	}
 }
 
-const annotateGlobals = (decls: readonly GlobalVariable[]): Option<string> =>
-	decls.length === 0
-		? Option.None()
-		: Option.Some("---@meta\n\n" + decls.map(d => annotateGlobal(d.Name, d.Type)).join("\n\n") + "\n")
+const annotateConstant = (name: string, type: Type.Literal | Type.Table<never>): string => {
+	const value = (() => {
+		switch (type._tag) {
+		case "literal": return type.Value
+		case "table": return `{ ${type.Fields.map(x => `${x.Name} = ${annotateType(x.Type)}`).join(", ")} }`
+		}
+	})()
+	return `${name} = ${value}`
+}
+const annotateAssignment = (name: string, type: Exclude<Type.Solved, Type.Function<never>>): string => {
+	// Heuristically detect global constants as SNAKE_CASE literals.
+	// Additional sanity checks where it makes sense.
+	if (
+		(type._tag === "literal" || type._tag === "table" && type.Fields.length > 0)
+		&& isAllCaps(name)
+	)
+		return annotateConstant(name, type)
+	else {
+		return [
+			`---@type ${annotateType(type)}`,
+			`${name} = ${assignmentValue(type)}`,
+		].join("\n")
+	}
+}
 
-// TODO - The type should change because zonking strips the metavariables.
-const zonkDecls = (decls: readonly GlobalVariable[], ctx: MetaContext): readonly GlobalVariable[] =>
-	decls.map(d => ({ Name: d.Name, Type: Zonk(d.Type, ctx) }))
+const annotateFunction = (name: string, type: Type.Function<never>): string => {
+	const params = type.Params.map(p => `---@param ${p.Name} ${annotateType(p.Type)}`)
+	const returns = type.Returns.length === 0
+		? "---@return nil"
+		: Pipe(
+			type.Returns.map(r => `---@return ${annotateType(r.Type)}${r.Name !== undefined ? ` ${r.Name}` : ""}`),
+			xs => type.Returns.some(r => r.Type._tag !== "nil")
+				? [...xs, "---@nodiscard"]
+				: xs,
+		)
+	const header = Pipe(
+		type.Params.map(p => p.Name),
+		xs => type.HasVararg ? [...xs, "..."] : xs,
+		xs => `function ${name}(${xs.join(", ")}) end`,
+	)
+	return params.concat(returns, header).join("\n")
+}
+
+const annotateGlobal = (g: GlobalVarSolved): string =>
+	g.Type._tag === "function"
+		? annotateFunction(g.Name, g.Type)
+		: annotateAssignment(g.Name, g.Type)
 
 /** Reads all files, infers types, then writes annotations. */
-export const AnnotateFiles = (files: readonly (readonly N.Node[])[]): readonly Option<string>[] => {
-	const [globalsPerFiles, ctx] = State.Run(InferFiles(files), Empty)
-	return globalsPerFiles.map(decls => annotateGlobals(zonkDecls(decls, ctx)))
+export const AnnotateFiles = (files: Array<Array<N.Node>>): Option<string>[] => {
+	const [globalsPerFile, ctx] = State.Run(InferFiles(files), Empty)
+
+	return Pipe(
+		globalsPerFile,
+		Array.Map(Array.Map((d: GlobalVarUnsolved): GlobalVarSolved =>
+			({ Name: d.Name, Type: Zonk(d.Type, ctx) }),
+		)),
+		Array.Map((globals): Option<string> => globals.length === 0
+			? Option.None()
+			: Option.Some("---@meta\n\n" + globals.map(annotateGlobal).join("\n\n") + "\n"),
+		),
+	)
 }
