@@ -49,15 +49,89 @@ const inferBinary = (node: N.Binary, env: env): State<MetaContext, Type.Unsolved
 		)
 	)
 
+const tableConstructorExpression = (
+	node: N.TableConstructorExpression,
+	env: env,
+): State<MetaContext, Type.Unsolved> => {
+	// TODO - Which fields are valid here? Is it only TableKey and TableKeyString?
+	// Need to refine the AST schema
+	// TODO - Is it an arrayElement if any non-string keys exist?
+	const isArray = node.fields.some(x => x.type === "TableKey")
+	const arrayField = undefined
+	const fields = node.fields.map((x): Type.TableField<Type.MetaVariable> =>
+		({ Name: "unknown", Type: Type.Unknown })
+	)
+	console.log("\n")
+	node.fields.forEach(x => console.log(x))
+	console.log("\n")
+	return State.Pure(Type.Table(fields, arrayField))
+}
+
+// TODO - should all the 'infer' functions be collapsed into one recursive function?
+// This already handles state, which statements should update.
+/** Expressions return a value, so can form the RHS of assignments. */
 const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolved> => {
 	switch (node.type) {
-	case "NumericLiteral": return State.Pure(Type.Literal("number", node.raw))
-	case "StringLiteral": return State.Pure(Type.Literal("string", node.raw))
+	// ************ Function Call ************
+	case "CallExpression":// lhs = f()
+	case "StringCallExpression":// lhs = f"x"
+		throw new Error("TODO call expressions")
+	// ************ Literal ************
+	// lhs1, lhs2 = true, 123, nil, "x", ...
 	case "BooleanLiteral": return State.Pure(Type.Literal("boolean", node.value ? "true" : "false"))
 	case "NilLiteral": return State.Pure(Type.Nil)
-	case "Identifier": return State.Pure(env.get(node.name) ?? Type.Unknown)
-	case "BinaryExpression": return inferBinary(node, env)
-	default: return State.Pure(Type.Unknown)
+	case "NumericLiteral": return State.Pure(Type.Literal("number", node.raw))
+	case "StringLiteral": return State.Pure(Type.Literal("string", node.raw))
+	case "VarargLiteral":
+		throw new Error("TODO VarargLiteral")
+	// ************ Other ************
+	case "BinaryExpression":// lhs = x + y
+		return inferBinary(node, env)
+	case "FunctionDeclaration":// lhs = function() end
+		throw new Error("TODO FunctionDeclaration")
+	case "Identifier":// lhs = b
+		return State.Pure(env.get(node.name) ?? Type.Unknown)
+	case "IndexExpression":// lhs = t[i]
+		throw new Error("TODO IndexExpression")
+	case "LogicalExpression":// lhs = x and y
+		throw new Error("TODO LogicalExpression")
+	case "MemberExpression":// lhs = t.x
+		throw new Error("TODO MemberExpression")
+	case "TableConstructorExpression":// lhs = {}
+		return tableConstructorExpression(node, env)
+	case "UnaryExpression":// lhs = -x
+		throw new Error("TODO UnaryExpression")
+	// These fields should only appear inside tables, not RHS
+	// We still need to handle them somewhere, but they can't contribute
+	// to inferred values, only metavariable type information.
+	case "TableKey":
+		throw new Error("^.^ TableKey")
+	case "TableKeyString":
+		throw new Error("^.^ TableKeyString")
+	case "TableValue":
+		throw new Error("^.^ TableValue")
+	// Statements:
+	case "AssignmentStatement":// lhs = A = 5
+		throw new Error("^.^ AssignmentStatement")
+	case "LocalStatement":// lhs = local a = 5
+		throw new Error("^.^ LocalStatement")
+	case "BreakStatement":
+		throw new Error("^.^ BreakStatement")
+	case "CallStatement":
+		throw new Error("^.^ CallStatement")
+	case "ForGenericStatement":
+		throw new Error("^.^ ForGenericStatement")
+	case "ForNumericStatement":
+		throw new Error("^.^ ForNumericStatement")
+	case "IfStatement":
+		throw new Error("^.^ IfStatement")
+	case "RepeatStatement":
+		throw new Error("^.^ RepeatStatement")
+	case "ReturnStatement":
+		throw new Error("^.^ ReturnStatement")
+	case "WhileStatement":
+		throw new Error("^.^ WhileStatement")
+	// default: return State.Pure(Type.Unknown)
 	}
 }
 
@@ -92,7 +166,10 @@ const inferBody = (
 			// TODO - if a multiple has multiple return statements, Union them.
 			returns = rs
 		}
-		// TODO - Other statements do not yet contribute constraints.
+		console.error("UNHANDLED FUNCTION BODY STATEMENT: " + stmt.type)
+		// TODO - why are no other statements handled? You can declare globals inside
+		// a function body (even if that's horrible), but the above only handles
+		// local assignments. We should probably just handle every expression.
 	}
 
 	return [returns, ctx]
@@ -116,6 +193,16 @@ const inferFunction = (node: N.FunctionDeclaration): State<MetaContext, Type.Uns
 	return [Type.MkFunc(params, returns, hasVararg), next]
 }
 
+// TODO:
+// I suspect there should be one main loop that handles every node.
+// Each case should call a specialized function for that node type,
+// which recursively calls the main loop.
+// Statement nodes only update metavariable context,
+// while expression nodes can also update inferred value.
+//
+// Another option is to have specialized switches for tables, RHS, etc.
+// This will be easier if the Lua AST schema isn't so lenient
+// with allowing illegal node combinations.
 const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVarUnsolved>> => ctx => {
 	const globals: GlobalVarUnsolved[] = []
 
@@ -153,9 +240,9 @@ export const InferFiles = (
 ): State<MetaContext, Array<Array<GlobalVarUnsolved>>> => ctx => {
 	const perFile: Array<GlobalVarUnsolved>[] = []
 	for (const nodes of files) {
-		const [decls, next] = inferFile(nodes)(ctx)
+		const [globals, next] = inferFile(nodes)(ctx)
 		ctx = next
-		perFile.push(decls)
+		perFile.push(globals)
 	}
 	return [perFile, ctx]
 }

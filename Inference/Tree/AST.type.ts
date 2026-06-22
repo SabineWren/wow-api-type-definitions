@@ -58,7 +58,8 @@ const Identifier = S.Struct({
 
 const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 // I suspect a subset of nodes can appear on the right side in assignment, etc.
-// Confirmed: CallExpression, MemberExpression, Identifier, literal, TableConstructorExpression, TableValue
+// Confirmed: CallExpression, MemberExpression, Identifier, literal, TableConstructorExpression, TableValue,
+// SEE Infer.pure.ts `inferExpression`
 const rhs = _node
 type rhs = Node
 type rhsE = NodeE
@@ -117,11 +118,14 @@ const clauses = S.Union(IfClause, ElseifClause, ElseClause)
 // ************ Not clauses ************
 
 const _assignment = S.Struct({
-	init: S.Array(_node),
-	variables: S.NonEmptyArray(rhs),
+	init: S.Array(rhs),// Initializers for the variables
+	variables: S.NonEmptyArray(Identifier),// Is this right? Haven't tested for many programs.
+	// variables: S.NonEmptyArray(_node),// TODO - probably always 'identifier'
 })
-type _assignment = { init: Array.Array<Node>, variables: Array.NonEmpty<rhs> }
-type _assignmentE = { init: Array.Array<NodeE>, variables: Array.NonEmpty<rhsE> }
+type _assignment = { init: Array.Array<rhs>, variables: Array.NonEmpty<typeof Identifier.Type> }
+type _assignmentE = { init: Array.Array<rhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded> }
+// type _assignment = { init: Array.Array<Node>, variables: Array.NonEmpty<rhs> }
+// type _assignmentE = { init: Array.Array<NodeE>, variables: Array.NonEmpty<rhsE> }
 
 export const Assignment_Global = S.Struct({
 	..._assignment.fields,

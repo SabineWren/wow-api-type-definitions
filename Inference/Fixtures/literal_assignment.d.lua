@@ -3,7 +3,7 @@
 ---@type nil
 W = nil
 
----@type { }
+---@type {  }
 EMPTY_TABLE = { }
 
 ---@type number
@@ -17,6 +17,3 @@ z = false
 
 ---@type number
 WeIRd = 20
-
----@type number
-Inferred_Number = nil

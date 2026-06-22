@@ -12,3 +12,21 @@ LuaSourceFiles// string[][]
 |> Array.Filter(HasExports)
 |> Array.Map(AnnotateFile)// string[][]
 ```
+
+| Lua RHS AST Node  | Example |
+| ------------- | ------------- |
+| CallExpression | lhs = f() |
+| StringCallExpression | lhs = f"x" |
+| BooleanLiteral | lhs = true |
+| NumericLiteral | lhs = 123 |
+| NilLiteral  | lhs = nil  |
+| StringLiteral | lhs = "x" |
+| VarargLiteral | lhs = ... |
+| BinaryExpression | lhs = x + y |
+| FunctionDeclaration | lhs = function() end |
+| Identifier | lhs = b |
+| IndexExpression | lhs = t[i] |
+| LogicalExpression | lhs = x and y |
+| MemberExpression | lhs = t.x |
+| TableConstructorExpression | lhs = {} |
+| UnaryExpression | lhs = -x |
