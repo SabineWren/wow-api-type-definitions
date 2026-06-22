@@ -57,23 +57,17 @@ const Identifier = S.Struct({
 // ************ Branches ************
 
 const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
-// I suspect a subset of nodes can appear on the right side in assignment, etc.
-// Confirmed: CallExpression, MemberExpression, Identifier, literal, TableConstructorExpression, TableValue,
-// SEE Infer.pure.ts `inferExpression`
-const rhs = _node
-type rhs = Node
-type rhsE = NodeE
+const _rhs = S.Suspend((): S.Schema<Rhs, RhsE> => Rhs)
+const _tableField = S.Suspend((): S.Schema<TableField, TableFieldE> => TableField)
 
-const tableField = S.Suspend((): S.Schema<TableField, TableFieldE> => TableField)
-
-export const Binary = S.Struct({
+export const BinaryExpression = S.Struct({
 	type: S.Literal("BinaryExpression"),
 	operator: BinaryOperator,
 	left: _node,
 	right: _node,
 })
-export type Binary = { type: "BinaryExpression", operator: BinaryOperator, left: Node, right: Node }
-type BinaryE = { type: "BinaryExpression", operator: BinaryOperator, left: NodeE, right: NodeE }
+export type BinaryExpression = { type: "BinaryExpression", operator: BinaryOperator, left: Node, right: Node }
+type BinaryExpressionE = { type: "BinaryExpression", operator: BinaryOperator, left: NodeE, right: NodeE }
 
 export const ForGenericStatement = S.Struct({
 	type: S.Literal("ForGenericStatement"),
@@ -98,7 +92,7 @@ type ForNumericStatementE = { type: "ForNumericStatement", variable: typeof Iden
 // ************ Clauses ************
 const IfClause = S.Struct({
 	type: S.Literal("IfClause"),
-	condition: rhs,
+	condition: _rhs,
 	body: S.Array(_node),
 })
 // type IfClause = { type: "IfClause", condition: rhs, body: Array<Node> }
@@ -106,7 +100,7 @@ const IfClause = S.Struct({
 
 const ElseifClause = S.Struct({
 	type: S.Literal("ElseifClause"),
-	condition: rhs,
+	condition: _rhs,
 	body: S.Array(_node),
 })
 
@@ -120,36 +114,34 @@ const clauses = S.Union(IfClause, ElseifClause, ElseClause)
 // ************ Not clauses ************
 
 const _assignment = S.Struct({
-	init: S.Array(rhs),// Initializers for the variables
+	init: S.Array(_rhs),// Initializers for the variables
 	variables: S.NonEmptyArray(Identifier),// Is this right? Haven't tested for many programs.
 	// variables: S.NonEmptyArray(_node),// TODO - probably always 'identifier'
 })
-type _assignment = { init: Array.Array<rhs>, variables: Array.NonEmpty<typeof Identifier.Type> }
-type _assignmentE = { init: Array.Array<rhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded> }
-// type _assignment = { init: Array.Array<Node>, variables: Array.NonEmpty<rhs> }
-// type _assignmentE = { init: Array.Array<NodeE>, variables: Array.NonEmpty<rhsE> }
+type _assignment = { init: Array.Array<Rhs>, variables: Array.NonEmpty<typeof Identifier.Type> }
+type _assignmentE = { init: Array.Array<RhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded> }
 
 export const Assignment_Global = S.Struct({
 	..._assignment.fields,
 	type: S.Literal("AssignmentStatement"),
 })
 export type Assignment_Global = { type: "AssignmentStatement" } & _assignment
-type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
+export type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
 
 export const Assignment_Local = S.Struct({
 	..._assignment.fields,
 	type: S.Literal("LocalStatement"),
 })
-type Assignment_Local = { type: "LocalStatement" } & _assignment
-type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
+export type Assignment_Local = { type: "LocalStatement" } & _assignment
+export type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
 
 export const CallExpression = S.Struct({
 	type: S.Literal("CallExpression"),
-	base: rhs,
-	arguments: S.Array(_node),
+	base: _rhs,
+	arguments: S.Array(_rhs),
 })
-type CallExpression = { type: "CallExpression", base: rhs, arguments: Array<Node> }
-type CallExpressionE = { type: "CallExpression", base: rhsE, arguments: Array<NodeE> }
+export type CallExpression = { type: "CallExpression", base: Rhs, arguments: Array<Rhs> }
+export type CallExpressionE = { type: "CallExpression", base: RhsE, arguments: Array<RhsE> }
 
 export const CallStatement = S.Struct({
 	type: S.Literal("CallStatement"),
@@ -160,11 +152,11 @@ export type CallStatementE = { type: "CallStatement", expression: CallExpression
 
 export const StringCallExpression = S.Struct({
 	type: S.Literal("StringCallExpression"),
-	base: _node,
+	base: _rhs,
 	argument: StringLiteral,
 })
-export type StringCallExpression = { type: "StringCallExpression", base: Node, argument: typeof StringLiteral.Type }
-export type StringCallExpressionE = { type: "StringCallExpression", base: NodeE, argument: typeof StringLiteral.Encoded }
+export type StringCallExpression = { type: "StringCallExpression", base: Rhs, argument: typeof StringLiteral.Type }
+export type StringCallExpressionE = { type: "StringCallExpression", base: RhsE, argument: typeof StringLiteral.Encoded }
 
 export const FunctionDeclaration = S.Struct({
 	type: S.Literal("FunctionDeclaration"),
@@ -197,54 +189,54 @@ export type LogicalExpressionE = { type: "LogicalExpression", operator: "and" | 
 export const MemberExpression = S.Struct({
 	type: S.Literal("MemberExpression"),
 	indexer: S.Literal(".", ":"),
-	base: rhs,
+	base: _rhs,
 	identifier: Identifier,
 })
-export type MemberExpression = { type: "MemberExpression", indexer: "."|":", base: rhs, identifier: typeof Identifier.Type }
-export type MemberExpressionE = { type: "MemberExpression", indexer: "."|":", base: rhsE, identifier: typeof Identifier.Encoded }
+export type MemberExpression = { type: "MemberExpression", indexer: "."|":", base: Rhs, identifier: typeof Identifier.Type }
+export type MemberExpressionE = { type: "MemberExpression", indexer: "."|":", base: RhsE, identifier: typeof Identifier.Encoded }
 
 export const IndexExpression = S.Struct({
 	type: S.Literal("IndexExpression"),
-	base: rhs,// Seen: Identifier, IndexExpression, MemberExpression
+	base: _rhs,// Seen: Identifier, IndexExpression, MemberExpression
 	index: _node,
 })
-export type IndexExpression = { type: "IndexExpression", index: Node, base: rhs }
-export type IndexExpressionE = { type: "IndexExpression", index: NodeE, base: rhsE }
+export type IndexExpression = { type: "IndexExpression", index: Node, base: Rhs }
+export type IndexExpressionE = { type: "IndexExpression", index: NodeE, base: RhsE }
 
 const RepeatStatement = S.Struct({
 	type: S.Literal("RepeatStatement"),
-	condition: rhs,
+	condition: _rhs,
 	body: S.Array(_node),
 })
-export type RepeatStatement = { type: "RepeatStatement", condition: rhs, body: Array<Node> }
-export type RepeatStatementE = { type: "RepeatStatement", condition: rhsE, body: Array<NodeE> }
+export type RepeatStatement = { type: "RepeatStatement", condition: Rhs, body: Array<Node> }
+export type RepeatStatementE = { type: "RepeatStatement", condition: RhsE, body: Array<NodeE> }
 
 export const WhileStatement = S.Struct({
 	type: S.Literal("WhileStatement"),
-	condition: rhs,
+	condition: _rhs,
 	body: S.Array(_node),
 })
-export type WhileStatement = { type: "WhileStatement", condition: rhs, body: Array<Node> }
-export type WhileStatementE = { type: "WhileStatement", condition: rhsE, body: Array<NodeE> }
+export type WhileStatement = { type: "WhileStatement", condition: Rhs, body: Array<Node> }
+export type WhileStatementE = { type: "WhileStatement", condition: RhsE, body: Array<NodeE> }
 
 export const UnaryExpression = S.Struct({
 	type: S.Literal("UnaryExpression"),
 	operator: UnaryOperator,
-	argument: rhs,
+	argument: _rhs,
 })
-export type UnaryExpression = { type: "UnaryExpression", operator: typeof UnaryOperator.Type, argument: rhs }
-export type UnaryExpressionE = { type: "UnaryExpression", operator: typeof UnaryOperator.Encoded, argument: rhsE }
+export type UnaryExpression = { type: "UnaryExpression", operator: typeof UnaryOperator.Type, argument: Rhs }
+export type UnaryExpressionE = { type: "UnaryExpression", operator: typeof UnaryOperator.Encoded, argument: RhsE }
 
 export const ReturnStatement = S.Struct({
 	type: S.Literal("ReturnStatement"),
-	arguments: S.Array(_node),
+	arguments: S.Array(_rhs),
 })
-export type ReturnStatement = { type: "ReturnStatement", arguments: Array<Node> }
-export type ReturnStatementE = { type: "ReturnStatement", arguments: Array<NodeE> }
+export type ReturnStatement = { type: "ReturnStatement", arguments: Array<Rhs> }
+export type ReturnStatementE = { type: "ReturnStatement", arguments: Array<RhsE> }
 
 export const TableConstructorExpression = S.Struct({
 	type: S.Literal("TableConstructorExpression"),
-	fields: S.Array(tableField),
+	fields: S.Array(_tableField),
 })
 export type TableConstructorExpression = { type: "TableConstructorExpression", fields: Array<TableField> }
 export type TableConstructorExpressionE = { type: "TableConstructorExpression", fields: Array<TableFieldE> }
@@ -267,25 +259,68 @@ export type TableKeyE = { type: "TableKey", key: LiteralE | UnaryExpressionE, va
 export const TableKeyString = S.Struct({
 	type: S.Literal("TableKeyString"),
 	key: Identifier,
-	value: rhs,
+	value: _rhs,
 })
-export type TableKeyString = { type: "TableKeyString", key: typeof Identifier.Type, value: rhs }
-export type TableKeyStringE = { type: "TableKeyString", key: typeof Identifier.Encoded, value: rhsE }
+export type TableKeyString = { type: "TableKeyString", key: typeof Identifier.Type, value: Rhs }
+export type TableKeyStringE = { type: "TableKeyString", key: typeof Identifier.Encoded, value: RhsE }
+
+export const Rhs = S.Union(
+	// Function Calls
+	CallExpression, StringCallExpression,
+	// Literals
+	BooleanLiteral, NilLiteral, NumericLiteral, StringLiteral, VarargLiteral,
+	// Misc
+	BinaryExpression, FunctionDeclaration, Identifier,
+	IndexExpression, LogicalExpression, MemberExpression,
+	TableConstructorExpression, UnaryExpression,
+)
+export type Rhs =
+	| CallExpression
+	| StringCallExpression
+	| typeof BooleanLiteral.Type
+	| typeof NilLiteral.Type
+	| typeof NumericLiteral.Type
+	| typeof StringLiteral.Type
+	| typeof VarargLiteral.Type
+	| BinaryExpression
+	| FunctionDeclaration
+	| typeof Identifier.Type
+	| IndexExpression
+	| LogicalExpression
+	| MemberExpression
+	| TableConstructorExpression
+	| UnaryExpression
+export type RhsE =
+	| CallExpressionE
+	| StringCallExpressionE
+	| typeof BooleanLiteral.Encoded
+	| typeof NilLiteral.Encoded
+	| typeof NumericLiteral.Encoded
+	| typeof StringLiteral.Encoded
+	| typeof VarargLiteral.Encoded
+	| BinaryExpressionE
+	| FunctionDeclarationE
+	| typeof Identifier.Encoded
+	| IndexExpressionE
+	| LogicalExpressionE
+	| MemberExpressionE
+	| TableConstructorExpressionE
+	| UnaryExpressionE
 
 const TableField = S.Union(TableKey, TableKeyString, TableValue)
 type TableField =
 	| TableKey
-	| typeof TableKeyString.Type
-	| typeof TableValue.Type
+	| TableKeyString
+	| TableValue
 type TableFieldE =
 	| TableKeyE
-	| typeof TableKeyString.Encoded
-	| typeof TableValue.Encoded
+	| TableKeyStringE
+	| TableValueE
 
 // ************ Tree ************
 export const Node = S.Union(
 	// Leaves
-	Binary,
+	BinaryExpression,
 	BooleanLiteral,
 	BreakStatement,
 	ForGenericStatement,
@@ -317,66 +352,35 @@ export const Node = S.Union(
 )
 export const AST = S.Array(Node)
 
+// Leaves use `typeof`, while recursive branches require `S.Suspend`
 export type Node =
-	// Leaves
-	| typeof BooleanLiteral.Type
+	| Rhs
 	| typeof BreakStatement.Type
-	| typeof Identifier.Type
-	| typeof NilLiteral.Type
-	| typeof NumericLiteral.Type
-	| typeof StringLiteral.Type
-	| typeof VarargLiteral.Type
-	// Branches
 	| Assignment_Global
 	| Assignment_Local
-	| Binary
 	| CallStatement
-	| CallExpression
-	| StringCallExpression
 	| ForGenericStatement
 	| ForNumericStatement
-	| FunctionDeclaration
 	| IfStatement
-	| IndexExpression
-	| LogicalExpression
-	| MemberExpression
 	| RepeatStatement
 	| WhileStatement
-	| UnaryExpression
 	| ReturnStatement
-	| TableConstructorExpression
 	| TableKey
 	| TableKeyString
 	| TableValue
 
 type NodeE =
-	// Leaves
-	| typeof BooleanLiteral.Encoded
+	| RhsE
 	| typeof BreakStatement.Encoded
-	| typeof Identifier.Encoded
-	| typeof NilLiteral.Encoded
-	| typeof NumericLiteral.Encoded
-	| typeof StringLiteral.Encoded
-	| typeof VarargLiteral.Encoded
-	// Branches
 	| Assignment_GlobalE
 	| Assignment_LocalE
-	| BinaryE
 	| CallStatement
-	| CallExpressionE
-	| StringCallExpressionE
 	| ForGenericStatementE
 	| ForNumericStatementE
-	| FunctionDeclarationE
 	| IfStatementE
-	| IndexExpressionE
-	| LogicalExpressionE
-	| MemberExpressionE
 	| RepeatStatementE
 	| WhileStatementE
-	| UnaryExpressionE
 	| ReturnStatementE
-	| TableConstructorExpressionE
 	| TableKeyE
 	| TableKeyStringE
 	| TableValueE

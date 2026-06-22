@@ -45,7 +45,7 @@ const arithmeticOps: ReadonlySet<N.BinaryOperator> = new Set(["+", "-", "*", "/"
 const comparisonOps: ReadonlySet<N.BinaryOperator> = new Set(["<", "<=", "==", "~=", ">=", ">"])
 const stringUnionOperand: Type.Unsolved = Type.MkUnion(Type.String, Type.Number)
 
-const inferBinary = (node: N.Binary, env: env): State<MetaContext, Type.Unsolved> =>
+const inferBinary = (node: N.BinaryExpression, env: env): State<MetaContext, Type.Unsolved> =>
 	State.Bind(
 		inferExpression(node.left, env),
 		left => State.Bind(
@@ -142,9 +142,10 @@ const literalToType = (node: N.Literal): Type.Literal | Type.Nil => {
 const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolved> => {
 	switch (node.type) {
 	// ************ Function Call ************
-	case "CallExpression":// lhs = f()
+	case "CallExpression":// lhs1, lhs2 = f(), (function() end)()
+		return inferFunctionCall(node.base, node.arguments)
 	case "StringCallExpression":// lhs = f"x"
-		throw new Error("TODO call expressions")
+		return inferFunctionCall(node.base, [node.argument])
 	// ************ Literal ************
 	// lhs1, lhs2 = true, 123, nil, "x", ...
 	case "BooleanLiteral":
@@ -244,7 +245,50 @@ const inferBody = (
 	return [returns, ctx]
 }
 
-const inferFunction = (node: N.FunctionDeclaration): State<MetaContext, Type.Unsolved> => ctx => {
+// -- Likely any expression can be a function call base.
+// Identifier: f()
+// MemberExpression: obj.method()
+// IndexExpression: obj["method"]()
+// CallExpression: factory()()
+// StringCallExpression: f"hello"()
+// FunctionDeclaration: (function() end)()
+const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>): State<MetaContext, Type.Unsolved> => ctx => {
+	switch (base.type) {
+	case "CallExpression":
+		console.log("base.base", base.base)
+		console.log("base.arguments", base.arguments)
+		throw new Error("TODO CallExpression")
+	case "StringCallExpression":
+		throw new Error("TODO StringCallExpression")
+	case "FunctionDeclaration":
+		// TODO - We can have the arguments, which could
+		// be literals or at least of known type.
+		// We can certainly do better than inferring from only the declaration.
+		// ex. `(function(a) return a end)(1)`
+		// should infer `1` not `unknown`
+		const [fn, next] = inferFunctionDec(base)(ctx)
+		const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
+		return [returnType, next]
+	case "Identifier":
+		throw new Error("TODO Identifier")
+	case "IndexExpression":
+		throw new Error("TODO IndexExpression")
+	case "MemberExpression":
+		throw new Error("TODO MemberExpression")
+	case "BooleanLiteral":
+	case "NilLiteral":
+	case "NumericLiteral":
+	case "StringLiteral":
+	case "VarargLiteral":
+	case "BinaryExpression":
+	case "LogicalExpression":
+	case "TableConstructorExpression":
+	case "UnaryExpression":
+		throw new Error(`Unhandled function call base: ${base.type}`)
+	}
+}
+
+const inferFunctionDec = (node: N.FunctionDeclaration): State<MetaContext, Type.Function<Type.MetaVariable>> => ctx => {
 	const params: Type.FuncParam<Type.MetaVariable>[] = []
 	let scope: env = emptyEnv
 	let hasVararg = false
@@ -293,7 +337,7 @@ const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVarUnso
 			break
 		case "FunctionDeclaration": {
 			if (node.isLocal || node.identifier === null) break
-			const [type, next] = inferFunction(node)(ctx)
+			const [type, next] = inferFunctionDec(node)(ctx)
 			ctx = next
 			globals.push({ Name: node.identifier.name, Type: type })
 			break

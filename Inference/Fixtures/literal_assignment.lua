@@ -11,6 +11,3 @@ WeIRd = 20
 -- Locals
 local x = 1
 local world = "hello!"
-
--- From function
-Inferred_Number = (function(a) return a + 1 end)(1)

@@ -97,7 +97,7 @@ export const MkFunc = <MV extends never | MetaVariable>(
 	params: Array<FuncParam<MV>>,
 	returns: Array<FuncReturn<MV>>,
 	hasVararg: boolean,
-): TypeTerm<MV> =>
+): Function<MV> =>
 	Intern({ _tag: "function", HasVararg: hasVararg, Params: params, Returns: returns })
 
 export const ClassType = (name: string): Unsolved =>
