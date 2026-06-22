@@ -77,7 +77,10 @@ export const Number: Number = Intern({ _tag: "number" })
 export const String: String = Intern({ _tag: "string" })
 export const Unknown: Unknown = Intern({ _tag: "unknown" })
 
-export const Literal = (baseType: "boolean" | "number" | "string", value: string): Unsolved =>
+export const Literal = (
+	baseType: typeof Boolean._tag | typeof Number._tag | typeof String._tag,
+	value: string,
+): Literal =>
 	Intern({ _tag: "literal", BaseType: baseType, Value: value })
 
 export const Table = <MV extends never | MetaVariable>(

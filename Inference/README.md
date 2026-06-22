@@ -13,7 +13,8 @@ LuaSourceFiles// string[][]
 |> Array.Map(AnnotateFile)// string[][]
 ```
 
-| Lua RHS AST Node  | Example |
+Only expressions may appear on the RHS of assignment.
+| Expression  | Example |
 | ------------- | ------------- |
 | CallExpression | lhs = f() |
 | StringCallExpression | lhs = f"x" |
@@ -30,3 +31,10 @@ LuaSourceFiles// string[][]
 | MemberExpression | lhs = t.x |
 | TableConstructorExpression | lhs = {} |
 | UnaryExpression | lhs = -x |
+
+Array tables indicated by one or more TableValue nodes.
+| Table Field | Example |
+| ------------- | ------------- |
+| TableKey | { a = 1, b = 2 } |
+| TableKeyValue | { [a] = 5, [foo()] = 6 } |
+| TableValue | { foo(), x } |

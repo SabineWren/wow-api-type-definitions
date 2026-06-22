@@ -17,3 +17,6 @@ z = false
 
 ---@type number
 WeIRd = 20
+
+---@type number
+Inferred_Number = nil

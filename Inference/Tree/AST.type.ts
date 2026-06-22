@@ -44,9 +44,9 @@ export const VarargLiteral = S.Struct({
 	raw: S.Literal("..."),
 })
 
-const literal = S.Union(BooleanLiteral, NilLiteral, NumericLiteral, StringLiteral, VarargLiteral)
-type literal = typeof literal.Type
-type literalE = typeof literal.Encoded
+export const Literal = S.Union(BooleanLiteral, NilLiteral, NumericLiteral, StringLiteral, VarargLiteral)
+export type Literal = typeof Literal.Type
+export type LiteralE = typeof Literal.Encoded
 
 /** Variable reference */
 const Identifier = S.Struct({
@@ -63,6 +63,8 @@ const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
 const rhs = _node
 type rhs = Node
 type rhsE = NodeE
+
+const tableField = S.Suspend((): S.Schema<TableField, TableFieldE> => TableField)
 
 export const Binary = S.Struct({
 	type: S.Literal("BinaryExpression"),
@@ -242,10 +244,10 @@ export type ReturnStatementE = { type: "ReturnStatement", arguments: Array<NodeE
 
 export const TableConstructorExpression = S.Struct({
 	type: S.Literal("TableConstructorExpression"),
-	fields: S.Array(_node),
+	fields: S.Array(tableField),
 })
-export type TableConstructorExpression = { type: "TableConstructorExpression", fields: Array<Node> }
-export type TableConstructorExpressionE = { type: "TableConstructorExpression", fields: Array<NodeE> }
+export type TableConstructorExpression = { type: "TableConstructorExpression", fields: Array<TableField> }
+export type TableConstructorExpressionE = { type: "TableConstructorExpression", fields: Array<TableFieldE> }
 
 export const TableValue = S.Struct({
 	type: S.Literal("TableValue"),
@@ -256,11 +258,11 @@ export type TableValueE = { type: "TableValue", value: NodeE }
 
 export const TableKey = S.Struct({
 	type: S.Literal("TableKey"),
-	key: S.Union(literal, UnaryExpression),
+	key: S.Union(Literal, UnaryExpression),
 	value: S.Union(TableConstructorExpression, TableValue),
 })
-export type TableKey = { type: "TableKey", key: literal | UnaryExpression, value: TableConstructorExpression | TableValue }
-export type TableKeyE = { type: "TableKey", key: literalE | UnaryExpressionE, value: TableConstructorExpressionE | TableValueE }
+export type TableKey = { type: "TableKey", key: Literal | UnaryExpression, value: TableConstructorExpression | TableValue }
+export type TableKeyE = { type: "TableKey", key: LiteralE | UnaryExpressionE, value: TableConstructorExpressionE | TableValueE }
 
 export const TableKeyString = S.Struct({
 	type: S.Literal("TableKeyString"),
@@ -269,6 +271,16 @@ export const TableKeyString = S.Struct({
 })
 export type TableKeyString = { type: "TableKeyString", key: typeof Identifier.Type, value: rhs }
 export type TableKeyStringE = { type: "TableKeyString", key: typeof Identifier.Encoded, value: rhsE }
+
+const TableField = S.Union(TableKey, TableKeyString, TableValue)
+type TableField =
+	| TableKey
+	| typeof TableKeyString.Type
+	| typeof TableValue.Type
+type TableFieldE =
+	| TableKeyE
+	| typeof TableKeyString.Encoded
+	| typeof TableValue.Encoded
 
 // ************ Tree ************
 export const Node = S.Union(

@@ -1,6 +1,6 @@
-import { type Array, Pipe } from "purity-seal"
+import { Array, Option, Pipe } from "purity-seal"
 
-import type * as N from "./Tree/AST.type.ts"
+import * as N from "./Tree/AST.type.ts"
 import * as Type from "./Tree/Type.type.ts"
 import { FreshMeta, type MetaContext } from "./MetaContext.pure.ts"
 import { Unify } from "./Unify.pure.ts"
@@ -15,6 +15,26 @@ type globalVar<MV> = Readonly<{
 }>
 export type GlobalVarUnsolved = globalVar<Type.MetaVariable>
 export type GlobalVarSolved = globalVar<never>
+
+const inferUnary = (node: N.UnaryExpression, env: env): State<MetaContext, Type.Boolean | Type.Number> =>
+	State.Bind(
+		inferExpression(node.argument, env),
+		(arg): State<MetaContext, Type.Boolean | Type.Number> => {
+			switch (node.operator) {
+			// Any expression is "not-able" in Lua, so we can't refine the argument.
+			// However, we know the output is a boolean.
+			case "not":
+				return State.Pure(Type.Boolean)
+			case "-":
+			case "+":
+			case "++":
+			case "--":
+				const a = Unify(Type.Number, arg)
+				return State.Map(a, () => Type.Number)
+			}
+		}
+	)
+
 
 // TODO DRY violation - AST types file BinaryOperator should depend on this.
 // Arithmetic: operands must be numeric
@@ -52,19 +72,68 @@ const inferBinary = (node: N.Binary, env: env): State<MetaContext, Type.Unsolved
 const tableConstructorExpression = (
 	node: N.TableConstructorExpression,
 	env: env,
-): State<MetaContext, Type.Unsolved> => {
-	// TODO - Which fields are valid here? Is it only TableKey and TableKeyString?
-	// Need to refine the AST schema
-	// TODO - Is it an arrayElement if any non-string keys exist?
-	const isArray = node.fields.some(x => x.type === "TableKey")
-	const arrayField = undefined
-	const fields = node.fields.map((x): Type.TableField<Type.MetaVariable> =>
-		({ Name: "unknown", Type: Type.Unknown })
-	)
-	console.log("\n")
-	node.fields.forEach(x => console.log(x))
-	console.log("\n")
-	return State.Pure(Type.Table(fields, arrayField))
+): State<MetaContext, Type.Unsolved> => (ctx): [Type.Unsolved, MetaContext] => {
+	// LuaLS infers `{ [foo()] = 5 }` as `Table` which is `{  }`
+	// There's probably a better way, but it means skipping TableKey fields is ok.
+	// LuaLS keeps literals like `{ [true] = 5 }`
+	const fields = Array.Choose(node.fields, (x): Option<Type.TableField<Type.MetaVariable>> => {
+		switch (x.type) {
+			case "TableKey": {
+				if (x.key.type === "UnaryExpression") {
+					const [type, next] = inferUnary(x.key, env)(ctx)
+					ctx = next
+					// We don't know the field name, only the type of name.
+					return Option.None()
+				} else {
+					const name = ((): string => {
+						switch (x.key.type) {
+						case "BooleanLiteral": return x.key.value ? "true" : "false"
+						case "NilLiteral": return "nil"
+						case "NumericLiteral": return x.key.raw
+						case "StringLiteral": return x.key.raw
+						// {  [...] = 123 } is not valid Lua
+						case "VarargLiteral": throw new Error("Unexpected VarArg in table key")
+						}
+					})()
+					const [type, next] = inferExpression(x.value, env)(ctx)
+					ctx = next
+					return Option.Some({ Name: name, Type: type })
+				}
+			}
+			case "TableKeyString": {
+				const [type, next] = inferExpression(x.value, env)(ctx)
+				ctx = next
+				return Option.Some({ Name: x.key.name, Type: type })
+			}
+			case "TableValue":// Array field
+				return Option.None()
+		}
+	})
+
+	const arrayFields = node.fields
+		.filter(x => x.type === "TableValue")
+		// MkUnion
+		.map(x => {
+			const [type, next] = inferExpression(x.value, env)(ctx)
+			ctx = next
+			return type
+		})
+	const arrayField = arrayFields.length === 0
+		? undefined
+		: Type.MkUnion(...arrayFields)
+
+	return [Type.Table(fields, arrayField), ctx]
+}
+
+const literalToType = (node: N.Literal): Type.Literal | Type.Nil => {
+	switch (node.type) {
+	case "BooleanLiteral": return Type.Literal("boolean", node.value ? "true" : "false")
+	case "NilLiteral": return Type.Nil
+	case "NumericLiteral": return Type.Literal("number", node.raw)
+	case "StringLiteral": return Type.Literal("string", node.raw)
+	// TODO should we handle varargs somehow?
+	case "VarargLiteral": return Type.Literal("string", "...")
+	}
 }
 
 // TODO - should all the 'infer' functions be collapsed into one recursive function?
@@ -78,12 +147,12 @@ const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolv
 		throw new Error("TODO call expressions")
 	// ************ Literal ************
 	// lhs1, lhs2 = true, 123, nil, "x", ...
-	case "BooleanLiteral": return State.Pure(Type.Literal("boolean", node.value ? "true" : "false"))
-	case "NilLiteral": return State.Pure(Type.Nil)
-	case "NumericLiteral": return State.Pure(Type.Literal("number", node.raw))
-	case "StringLiteral": return State.Pure(Type.Literal("string", node.raw))
+	case "BooleanLiteral":
+	case "NilLiteral":
+	case "NumericLiteral":
+	case "StringLiteral":
 	case "VarargLiteral":
-		throw new Error("TODO VarargLiteral")
+		return State.Pure(literalToType(node))
 	// ************ Other ************
 	case "BinaryExpression":// lhs = x + y
 		return inferBinary(node, env)
@@ -100,7 +169,7 @@ const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolv
 	case "TableConstructorExpression":// lhs = {}
 		return tableConstructorExpression(node, env)
 	case "UnaryExpression":// lhs = -x
-		throw new Error("TODO UnaryExpression")
+		return inferUnary(node, env)
 	// These fields should only appear inside tables, not RHS
 	// We still need to handle them somewhere, but they can't contribute
 	// to inferred values, only metavariable type information.

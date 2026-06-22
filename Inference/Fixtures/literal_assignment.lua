@@ -13,7 +13,4 @@ local x = 1
 local world = "hello!"
 
 -- From function
--- Inferred_Number = (function(a) return a + 1 end)(1)
--- TODO debug
--- ---@type number
--- Inferred_Number = nil
+Inferred_Number = (function(a) return a + 1 end)(1)

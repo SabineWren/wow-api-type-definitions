@@ -32,10 +32,9 @@ const annotateType = (t: Type.Solved): string => {
 	case "nil": return "nil"
 	case "number": return "number"
 	case "string": return "string"
-	case "table": return Pipe(
-		t.Fields.map(f => `${f.Name}: ${annotateType(f.Type)}`),
-		fields => `{ ${fields.join(", ")} }`
-	)
+	case "table":
+		// TODO - This is probably wrong for non-literal tables.
+		return annotateTableFields(t)
 	case "unknown": return "unknown"
 	}
 }
@@ -51,11 +50,23 @@ const assignmentValue = (type: Type.Solved): string => {
 	}
 }
 
+// TODO - this assumes literal and non-literal tables get the
+// same annotation, which is certainly wrong.
+const annotateTableFields = (t: Type.Table<never>): string => Pipe(
+	t.Fields.map(f => {
+		const value = f.Type._tag === "literal"
+			? assignmentValue(f.Type)
+			: annotateType(f.Type)
+		return `${f.Name} = ${value}`
+	}),
+	fields => `{ ${fields.join(", ")} }`
+)
+
 const annotateConstant = (name: string, type: Type.Literal | Type.Table<never>): string => {
 	const value = (() => {
 		switch (type._tag) {
 		case "literal": return type.Value
-		case "table": return `{ ${type.Fields.map(x => `${x.Name} = ${annotateType(x.Type)}`).join(", ")} }`
+		case "table": return annotateTableFields(type)
 		}
 	})()
 	return `${name} = ${value}`

@@ -64,7 +64,7 @@ export const Unify = (a: Type.Unsolved, b: Type.Unsolved): State<MetaContext, vo
 		return constrain(a.Id, b)(ctx)
 	else if (b._tag === "meta")
 		return constrain(b.Id, a)(ctx)
-	// TODO - what to do if both concrete?
+	// No change to context if we don't have a metavariable to update.
 	else
 		return [undefined, ctx]
 }
