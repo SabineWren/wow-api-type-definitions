@@ -1,3 +1,4 @@
+import { Option } from "purity-seal"
 import * as Type from "./Tree/Type.type.ts"
 import { Lookup, Refine, Solve, type MetaContext } from "./MetaContext.pure.ts"
 import { type State } from "./Lib/State/pure.ts"
@@ -59,12 +60,38 @@ const constrain = (id: number, other: Type.Unsolved): State<MetaContext, void> =
 	}
 }
 
+// ex. Unify(5, Number) is okay, but
+// Unify(String, Number) is clearly a type error.
+const typecheck = (a: Exclude<Type.Unsolved, Type.MetaVariable>, b: Exclude<Type.Unsolved, Type.MetaVariable>): Option<string> => {
+	if (a._tag === "literal" && b._tag === "literal")
+		return a.Value === b.Value ? Option.None() : Option.Some(`${a.Value} <> ${b.Value}`)
+	else if (a._tag !== "literal" && b._tag !== "literal")
+		// Probably lots more we could check here, ex. union intersection.
+		return Option.None()
+	else {
+		const [lit, other] = a._tag === "literal" ? [a, b] : [b as Type.Literal, a]
+		if (other._tag === "union") {
+			const okay = other.Members.values()
+				// I don't know what edge case would result in Unify(literal, Union(...metavars))
+				.filter(x => x._tag !== "meta")
+				.map(other => typecheck(lit, other))
+				.find(Option.IsNone)
+			return okay ?? Option.Some(`${lit.Value}: ${lit.BaseType} Not in [${[...other.Members.values().map(x => x._tag)].join(", ")}]`)
+		}
+		else
+			return lit.BaseType === other._tag ? Option.None() : Option.Some(`${lit.Value}: ${lit.BaseType} <> ${other._tag}`)
+	}
+}
+
 export const Unify = (a: Type.Unsolved, b: Type.Unsolved): State<MetaContext, void> => ctx => {
 	if (a._tag === "meta")
 		return constrain(a.Id, b)(ctx)
 	else if (b._tag === "meta")
 		return constrain(b.Id, a)(ctx)
 	// No change to context if we don't have a metavariable to update.
-	else
+	else {
+		const error = typecheck(a, b)
+		if (Option.IsSome(error)) console.error("Type error", error.value)
 		return [undefined, ctx]
+	}
 }
