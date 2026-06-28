@@ -1,4 +1,16 @@
 ---@meta
 
+---@type string
+Fn_Call_Str_From_Num = nil
+
+---@type string
+Fn_Call_Str_From_Str = nil
+
 ---@type number
-Fn_Call_IIFE = nil
+Fn_Call_Num_From_Id = 1
+
+-- ---@type string
+-- Fn_Call_Str_From_Id = "1"
+--
+---@type number
+Fn_Call_Num_IIFE_Id = 1

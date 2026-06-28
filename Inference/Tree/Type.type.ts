@@ -9,7 +9,7 @@ export type MetaVariable = Readonly<{ _tag: "meta", Id: number }>
 export type TableField<MV> = Readonly<{ Name: string, Type: TypeTerm<MV> }>
 
 export type FuncParam<MV> = Readonly<{ Name: string, Type: TypeTerm<MV> }>
-export type FuncReturn<MV> = Readonly<{ Name?: string, Type: TypeTerm<MV> }>
+export type FuncReturn<MV> = Readonly<{ Name?: string | undefined, Type: TypeTerm<MV> }>
 
 export type Nil = Readonly<{ _tag: "nil" }>
 export type Unknown = Readonly<{ _tag: "unknown" }>

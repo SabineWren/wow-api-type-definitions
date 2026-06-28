@@ -1,7 +1,7 @@
 import { describe, it } from "node:test"
 import { expect } from "expect"
 import { existsSync, readdirSync, readFileSync } from "node:fs"
-import { Flow, Option, Pipe, Result } from "purity-seal"
+import { Array, Flow, Option, Pipe, Result } from "purity-seal"
 
 import { AnnotateFiles } from "./Annotate.pure.ts"
 import * as AST from "./Tree/AST.nodejs.ts"
@@ -10,10 +10,15 @@ const fixturesDir = new URL("./Fixtures/", import.meta.url)
 const toFilepath = (filename: string) => new URL(filename, fixturesDir)
 const read = (filename: string) => readFileSync(toFilepath(filename), "utf-8")
 
-const zip2 = <A, B>(as: readonly A[], bs: readonly B[]): [A, B][] =>
+const stripComments = (source: string): string => source
+	.split("\n")
+	.filter(line => !(line.startsWith("-- ") || line === "--"))
+	.join("\n")
+
+const zip2 = <A, B>(as: Array<A>, bs: Array<B>): [A, B][] =>
 	as.map((a, i) => [a, bs[i]!])
 
-void describe("v2 Fixtures", async () => {
+void describe("Fixture file pairs", async () => {
 	const inpNames = readdirSync(fixturesDir)
 		.filter(x => x.endsWith(".lua") && !x.endsWith(".d.lua"))
 		.sort()
@@ -30,7 +35,7 @@ void describe("v2 Fixtures", async () => {
 	const exps = Pipe(
 		zip2(keys, expNames),
 		xs => xs.filter(([k, n]) => existsSync(toFilepath(n))),
-		xs => xs.map(([k, n]) => [k, read(n)] as const),
+		xs => xs.map(([k, n]) => [k, stripComments(read(n))] as const),
 		xs => new Map(xs),
 	)
 

@@ -13,31 +13,36 @@ const resolve_rec = (t: Type.Unsolved, ctx: MetaContext): Type.Unsolved => {
 	}
 }
 
+// This shouldn't fail in a well-typed program.
 const narrowUnion = (u: Type.UnsolvedUnion, x: Exclude<Type.Unsolved, Type.UnsolvedUnion>): Type.UnsolvedSingle => {
-	// This shouldn't fail in a well-typed program.
 	if (u.Members.has(x)) return x
+	else if (x._tag === "literal" && u.Members.values().some(m => m._tag === x.BaseType)) return x
 	else throw new Error("TODO narrow (Node) - implement a 'never' type")
 }
+
+export const MergeParamOrReturnNames = (a: string | undefined, b: string | undefined) =>
+	a === b
+		? a
+	: a === undefined
+		? b
+	: b === undefined
+		? a
+		// ¯\_(ツ)_/¯
+		: `${a}_or_${b}`
 
 const intersectParamOrReturn = <
 	T extends Type.FuncParam<Type.MetaVariable> | Type.FuncReturn<Type.MetaVariable>
 >(a: T | null, b: T | null): T | null => {
+	// TODO - Ignoring the nil arg is wrong. Lua has optional arguments.
 	if (a === null)
 		return b
 	else if (b === null)
 		return a
-	else {
-		const n =
-			a.Name === b.Name
-				? a.Name
-			: a.Name === undefined
-				? b.Name
-			: b.Name === undefined
-				? a.Name
-				// ¯\_(ツ)_/¯
-				: `${a.Name}_or_${b.Name}`
-		return { Name: n, Type: intersectTypes(a.Type, b.Type) } as T
-	}
+	else
+		return {
+			Name: MergeParamOrReturnNames(a.Name, b.Name),
+			Type: intersectTypes(a.Type, b.Type),
+		} as T
 }
 // TODO - array lib zip this-that-these
 const intersectParamsOrReturns = <

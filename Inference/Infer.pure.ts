@@ -1,9 +1,9 @@
-import { Array, Option, Pipe } from "purity-seal"
-
+import { Option, Pipe } from "purity-seal"
+import { Array } from "./Lib/pure.ts"
 import * as N from "./Tree/AST.type.ts"
 import * as Type from "./Tree/Type.type.ts"
 import { FreshMeta, type MetaContext } from "./MetaContext.pure.ts"
-import { Constrain } from "./Unify.pure.ts"
+import { Constrain, MergeParamOrReturnNames } from "./Unify.pure.ts"
 import { State } from "./Lib/State/pure.ts"
 
 type env = ReadonlyMap<string, Type.Unsolved>
@@ -143,9 +143,9 @@ const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolv
 	switch (node.type) {
 	// ************ Function Call ************
 	case "CallExpression":// lhs1, lhs2 = f(), (function() end)()
-		return inferFunctionCall(node.base, node.arguments)
+		return inferFunctionCall(node.base, node.arguments, env)
 	case "StringCallExpression":// lhs = f"x"
-		return inferFunctionCall(node.base, [node.argument])
+		return inferFunctionCall(node.base, [node.argument], env)
 	// ************ Literal ************
 	// lhs1, lhs2 = true, 123, nil, "x", ...
 	case "BooleanLiteral":
@@ -158,7 +158,7 @@ const inferExpression = (node: N.Node, env: env): State<MetaContext, Type.Unsolv
 	case "BinaryExpression":// lhs = x + y
 		return inferBinary(node, env)
 	case "FunctionDeclaration":// lhs = function() end
-		throw new Error("TODO FunctionDeclaration")
+		return inferFunctionDec(node)
 	case "Identifier":// lhs = b
 		return State.Pure(env.get(node.name) ?? Type.Unknown)
 	case "IndexExpression":// lhs = t[i]
@@ -210,7 +210,7 @@ const inferBody = (
 	env: env,
 ): State<MetaContext, Array<Type.FuncReturn<Type.MetaVariable>>> => ctx => {
 	let scope = env
-	let returns: Array<Type.FuncReturn<Type.MetaVariable>> = []
+	let returns = Option.None<Array<Type.FuncReturn<Type.MetaVariable>>>()
 
 	for (const stmt of body) {
 		if (stmt.type === "LocalStatement") {
@@ -233,16 +233,37 @@ const inferBody = (
 				ctx = next
 				rs.push(arg.type === "Identifier" ? { Type: type, Name: arg.name } : { Type: type })
 			}
-			// TODO - if a multiple has multiple return statements, Union them.
-			returns = rs
+			Option.Match(returns, {
+				onNone: () => {
+					returns = Option.Some(rs)
+				},
+				onSome: as => {
+					const len = Math.max(as.length, rs.length)
+					const merged: Type.FuncReturn<Type.MetaVariable>[] = []
+					for (let i=0; i < len; i++) {
+						const a: Type.FuncReturn<Type.MetaVariable> =
+							i >= as.length ? { Type: Type.Nil } : as[i]!
+						const b: Type.FuncReturn<Type.MetaVariable> =
+							i >= rs.length ? { Type: Type.Nil } : rs[i]!
+						const ct = Type.MkUnion(a.Type, b.Type)
+						const cn = MergeParamOrReturnNames(a.Name, b.Name)
+						const c: Type.FuncReturn<Type.MetaVariable> = { Name: cn, Type: ct }
+						void merged.push(c)
+					}
+					returns = Option.Some(merged)
+				}
+			})
+		} else {
+			console.error("UNHANDLED FUNCTION BODY STATEMENT: " + stmt.type)
 		}
-		console.error("UNHANDLED FUNCTION BODY STATEMENT: " + stmt.type)
 		// TODO - why are no other statements handled? You can declare globals inside
 		// a function body (even if that's horrible), but the above only handles
 		// local assignments. We should probably just handle every expression.
 	}
 
-	return [returns, ctx]
+	// A no-return function implicitly returns Unit.
+	const retn = Option.DefaultLazy(returns, (): Array<Type.FuncReturn<Type.MetaVariable>> => [{ Type: Type.Nil }])
+	return [retn, ctx]
 }
 
 // -- Likely any expression can be a function call base.
@@ -252,31 +273,26 @@ const inferBody = (
 // CallExpression: factory()()
 // StringCallExpression: f"hello"()
 // FunctionDeclaration: (function() end)()
-const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>): State<MetaContext, Type.Unsolved> => ctx => {
+/** There are multiple syntaxes for calling a function. We project from each one. */
+const resolveCallee = (base: N.Rhs, env: env): State<MetaContext, Type.Unsolved> => ctx => {
 	switch (base.type) {
-	case "CallExpression":
-		console.log("base.base", base.base)
-		console.log("base.arguments", base.arguments)
-		throw new Error("TODO CallExpression")
-	case "StringCallExpression":
-		throw new Error("TODO StringCallExpression")
-	case "FunctionDeclaration":
-		const [fn, next] = inferFunctionDec(base)(ctx)
-		// TODO - The function type we now have may contain metavariables.
-		//        We want to intersect its type signature with the args.
-		// See inferBinary
-		// fn.Params.map(x => x.Type)
-		// fn.Params
-		// args
-
-		const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
-		return [returnType, next]
-	case "Identifier":
-		throw new Error("TODO Identifier")
-	case "IndexExpression":
+	case "FunctionDeclaration":// (function() end)()
+		return inferFunctionDec(base)(ctx)
+	case "Identifier":// f()
+		const identifier = env.get(base.name)
+		// TODO - what if a function is defined later in the file, but called from a function body?
+		// If this fails, we need a "collect identifiers" pass for each scope before running inference.
+		if (identifier === undefined) throw new Error("Call to missing function " + base.name)
+		return [identifier, ctx]
+	case "CallExpression":// factory()()
+		return inferFunctionCall(base.base, base.arguments, env)(ctx)
+	case "StringCallExpression":// f"hello"()
+		return inferFunctionCall(base.base, [base.argument], env)(ctx)
+	case "IndexExpression":// obj["method"]()
 		throw new Error("TODO IndexExpression")
-	case "MemberExpression":
+	case "MemberExpression":// obj.method()
 		throw new Error("TODO MemberExpression")
+	// TODO - Need to constrain the AST schema to remove these.
 	case "BooleanLiteral":
 	case "NilLiteral":
 	case "NumericLiteral":
@@ -288,6 +304,30 @@ const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>): State<MetaContext, 
 	case "UnaryExpression":
 		throw new Error(`Unhandled function call base: ${base.type}`)
 	}
+}
+
+/** Bind call-site arguments to function parameters, apply constraints, and infer return. */
+const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>, env: env): State<MetaContext, Type.Unsolved> => ctx => {
+	let [fn, next] = resolveCallee(base, env)(ctx)
+	// TODO - Constrain the AST schema to not allow other nodes here
+	if (fn._tag !== "function") throw new Error(`Callee is not a function: ${base.type} -> ${fn._tag}`)
+
+	const argTypes: Type.Unsolved[] = []
+	for (const arg of args) {
+		const [t, cNext] = inferExpression(arg, env)(next)
+		next = cNext
+		// This may be a literal. Infer as narrowly as possible, and let the annotator widen.
+		argTypes.push(t)
+	}
+	// Arguments may be optional, in which case Lua defaults them to 'nil'.
+	fn.Params.forEach((p, pi) => {
+		const argType = pi < argTypes.length ? argTypes[pi]! : Type.Nil
+		const [_, cNext] = Constrain(p.Type, argType)(next)
+		next = cNext
+	})
+
+	const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
+	return [returnType, next]
 }
 
 const inferFunctionDec = (node: N.FunctionDeclaration): State<MetaContext, Type.Function<Type.MetaVariable>> => ctx => {
@@ -308,21 +348,27 @@ const inferFunctionDec = (node: N.FunctionDeclaration): State<MetaContext, Type.
 	return [Type.MkFunc(params, returns, hasVararg), next]
 }
 
-// TODO:
-// I suspect there should be one main loop that handles every node.
-// Each case should call a specialized function for that node type,
-// which recursively calls the main loop.
-// Statement nodes only update metavariable context,
-// while expression nodes can also update inferred value.
-//
-// Another option is to have specialized switches for tables, RHS, etc.
-// This will be easier if the Lua AST schema isn't so lenient
-// with allowing illegal node combinations.
 const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVarUnsolved>> => ctx => {
 	const globals: GlobalVarUnsolved[] = []
+	// Local scope needed for type constraints involving local functions/values
+	let scope: env = emptyEnv
 
 	for (const node of nodes) {
 		switch (node.type) {
+		case "LocalStatement":
+			for (let i = 0; i < node.variables.length; i++) {
+				const variable = node.variables[i]!
+				const init = node.init[i]
+				if (variable.type !== "Identifier") continue
+
+				const [type, next] = Pipe(
+					init !== undefined ? inferExpression(init, scope) : State.Pure<MetaContext, Type.Unsolved>(Type.Nil),
+					f => f(ctx),
+				)
+				ctx = next
+				scope = new Map([...scope, [variable.name, type]])
+			}
+			break
 		case "AssignmentStatement":
 			for (let i = 0; i < node.variables.length; i++) {
 				const variable = node.variables[i]!
@@ -330,7 +376,7 @@ const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVarUnso
 				if (variable.type !== "Identifier") continue
 
 				const [type, next] = Pipe(
-					init !== undefined ? inferExpression(init, emptyEnv) : State.Pure<MetaContext, Type.Unsolved>(Type.Nil),
+					init !== undefined ? inferExpression(init, scope) : State.Pure<MetaContext, Type.Unsolved>(Type.Nil),
 					f => f(ctx),
 				)
 				ctx = next
@@ -341,6 +387,7 @@ const inferFile = (nodes: Array<N.Node>): State<MetaContext, Array<GlobalVarUnso
 			if (node.isLocal || node.identifier === null) break
 			const [type, next] = inferFunctionDec(node)(ctx)
 			ctx = next
+			scope = new Map([...scope, [node.identifier.name, type]])
 			globals.push({ Name: node.identifier.name, Type: type })
 			break
 		}

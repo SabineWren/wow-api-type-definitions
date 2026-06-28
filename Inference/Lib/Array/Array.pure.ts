@@ -118,7 +118,8 @@ export const Map2PadRight_ = <
 	const out: Z[] = []
 	const len = as.length
 	for (let i=0; i < len; i++) {
-		const b = bs[i] ?? fallback
+		const b = i >= bs.length ? fallback : bs[i]!
+		if (i >= as.length) throw new Error(Map2PadRight_.name + ": as.length must be >= bs.length")
 		out.push(f(as[i]!, b, i))
 	}
 	return out as AndEmpty1<As, Z>
