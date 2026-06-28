@@ -3,7 +3,7 @@ import { Array, Option, Pipe } from "purity-seal"
 import * as N from "./Tree/AST.type.ts"
 import * as Type from "./Tree/Type.type.ts"
 import { FreshMeta, type MetaContext } from "./MetaContext.pure.ts"
-import { Unify } from "./Unify.pure.ts"
+import { Constrain } from "./Unify.pure.ts"
 import { State } from "./Lib/State/pure.ts"
 
 type env = ReadonlyMap<string, Type.Unsolved>
@@ -29,7 +29,7 @@ const inferUnary = (node: N.UnaryExpression, env: env): State<MetaContext, Type.
 			case "+":
 			case "++":
 			case "--":
-				const a = Unify(Type.Number, arg)
+				const a = Constrain(Type.Number, arg)
 				return State.Map(a, () => Type.Number)
 			}
 		}
@@ -54,13 +54,13 @@ const inferBinary = (node: N.BinaryExpression, env: env): State<MetaContext, Typ
 				if (comparisonOps.has(node.operator))
 					return State.Pure(Type.Boolean)
 				else if (node.operator === "..") {
-					const l = Unify(stringUnionOperand, left)
-					const r = Unify(stringUnionOperand, right)
+					const l = Constrain(stringUnionOperand, left)
+					const r = Constrain(stringUnionOperand, right)
 					return State.Bind(l, () => State.Map(r, () => Type.String))
 				}
 				else if (arithmeticOps.has(node.operator)) {
-					const l = Unify(left, Type.Number)
-					const r = Unify(right, Type.Number)
+					const l = Constrain(left, Type.Number)
+					const r = Constrain(right, Type.Number)
 					return State.Bind(l, () => State.Map(r, () => Type.Number))
 				}
 				else
@@ -261,12 +261,14 @@ const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>): State<MetaContext, 
 	case "StringCallExpression":
 		throw new Error("TODO StringCallExpression")
 	case "FunctionDeclaration":
-		// TODO - We can have the arguments, which could
-		// be literals or at least of known type.
-		// We can certainly do better than inferring from only the declaration.
-		// ex. `(function(a) return a end)(1)`
-		// should infer `1` not `unknown`
 		const [fn, next] = inferFunctionDec(base)(ctx)
+		// TODO - The function type we now have may contain metavariables.
+		//        We want to intersect its type signature with the args.
+		// See inferBinary
+		// fn.Params.map(x => x.Type)
+		// fn.Params
+		// args
+
 		const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
 		return [returnType, next]
 	case "Identifier":

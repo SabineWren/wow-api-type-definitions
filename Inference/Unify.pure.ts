@@ -1,4 +1,4 @@
-import { Option } from "purity-seal"
+import { Array, Option } from "purity-seal"
 import * as Type from "./Tree/Type.type.ts"
 import { Lookup, Refine, Solve, type MetaContext } from "./MetaContext.pure.ts"
 import { type State } from "./Lib/State/pure.ts"
@@ -19,28 +19,71 @@ const narrowUnion = (u: Type.UnsolvedUnion, x: Exclude<Type.Unsolved, Type.Unsol
 	else throw new Error("TODO narrow (Node) - implement a 'never' type")
 }
 
-// Narrow two concrete types to their intersection. A parameter must satisfy
-// every use, so accumulated constraints combine by meet, not union.
-const Meet = (a: Type.Unsolved, b: Type.Unsolved): Type.Unsolved => {
+const intersectParamOrReturn = <
+	T extends Type.FuncParam<Type.MetaVariable> | Type.FuncReturn<Type.MetaVariable>
+>(a: T | null, b: T | null): T | null => {
+	if (a === null)
+		return b
+	else if (b === null)
+		return a
+	else {
+		const n =
+			a.Name === b.Name
+				? a.Name
+			: a.Name === undefined
+				? b.Name
+			: b.Name === undefined
+				? a.Name
+				// ¯\_(ツ)_/¯
+				: `${a.Name}_or_${b.Name}`
+		return { Name: n, Type: intersectTypes(a.Type, b.Type) } as T
+	}
+}
+// TODO - array lib zip this-that-these
+const intersectParamsOrReturns = <
+	T extends Type.FuncParam<Type.MetaVariable> | Type.FuncReturn<Type.MetaVariable>
+>(as: Array<T>, bs: Array<T>): T[] => {
+	const out: T[] = []
+	for (let i=0; true; i++) {
+		const pa = i >= as.length ? null : as[i]!
+		const pb = i >= bs.length ? null : bs[i]!
+		const p = intersectParamOrReturn(pa, pb)
+		if (p === null) break
+		else void out.push(p)
+	}
+	return out
+}
+
+/** Narrows 2 overlapping type definitions into a single definition. */
+const intersectTypes = (a: Type.Unsolved, b: Type.Unsolved): Type.Unsolved => {
 	// Reference equality here assumes types are interned.
 	if (a === b)
 		return a
+	// At least one is a union
 	else if (a._tag === "union" && b._tag !== "union")
 		return narrowUnion(a, b)
-	else if (b._tag === "union" && a._tag !== "union")
+	else if (a._tag !== "union" && b._tag === "union")
 		return narrowUnion(b, a)
 	else if (a._tag === "union" && b._tag === "union") {
 		const inter = a.Members.intersection(b.Members)
 		if (inter.size === 0) throw new Error("TODO narrow (intersection) - implement a 'never' type")
 		else return Type.MkUnion(...inter)
 	}
+	// TODO - if only one is a function, return 'never'
+	else if (a._tag === "function" && b._tag === "function") {
+		const params = intersectParamsOrReturns(a.Params, b.Params)
+		const returns = intersectParamsOrReturns(a.Returns, b.Returns)
+		return Type.MkFunc(params, returns, a.HasVararg || b.HasVararg)
+	}
+	// TODO tables - intersect fields.
+	// What about field order?
 	else
 		// TODO - what to do if both concrete? Newest wins for now.
 		// Disjoint concrete types have no common value.
 		return b
 }
 
-const constrain = (id: number, other: Type.Unsolved): State<MetaContext, void> => ctx => {
+const constrainMetavariable = (id: number, other: Type.Unsolved): State<MetaContext, void> => ctx => {
 	const [entry] = Lookup(id)(ctx)
 	if (!entry.Solved)
 		return Solve(id, other)(ctx)
@@ -56,10 +99,14 @@ const constrain = (id: number, other: Type.Unsolved): State<MetaContext, void> =
 		else if (current._tag === "meta")
 			return Solve(current.Id, o)(ctx)
 		else
-			return Refine(id, Meet(current, o))(ctx)
+			return Refine(id, intersectTypes(current, o))(ctx)
 	}
 }
 
+// TODO - DELETE THIS FUNCTION.
+// A superior approach is to introduce a never/void type.
+// for all A: never = Union(A, never)
+//
 // ex. Unify(5, Number) is okay, but
 // Unify(String, Number) is clearly a type error.
 const typecheck = (a: Exclude<Type.Unsolved, Type.MetaVariable>, b: Exclude<Type.Unsolved, Type.MetaVariable>): Option<string> => {
@@ -83,11 +130,11 @@ const typecheck = (a: Exclude<Type.Unsolved, Type.MetaVariable>, b: Exclude<Type
 	}
 }
 
-export const Unify = (a: Type.Unsolved, b: Type.Unsolved): State<MetaContext, void> => ctx => {
+export const Constrain = (a: Type.Unsolved, b: Type.Unsolved): State<MetaContext, void> => ctx => {
 	if (a._tag === "meta")
-		return constrain(a.Id, b)(ctx)
+		return constrainMetavariable(a.Id, b)(ctx)
 	else if (b._tag === "meta")
-		return constrain(b.Id, a)(ctx)
+		return constrainMetavariable(b.Id, a)(ctx)
 	// No change to context if we don't have a metavariable to update.
 	else {
 		const error = typecheck(a, b)

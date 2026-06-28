@@ -24,18 +24,17 @@ export type Literal = Readonly<{
 	Value: string
 }>
 
+/** LuaLS resolves all function unions to `function` (of any type).
+  * We can do better, although it's not clear how to intersect conflicting param names.
+  * Functions are contravariant in their params, so an 'any' function is just `(...never) => any`
+  * varargs in Lua already accept whatever, so we don't even need the 'never' part.
+*/
 export type Function<MV> = Readonly<{
 	_tag: "function"
 	HasVararg: boolean
 	Params: Array<FuncParam<MV>>
 	Returns: Array<FuncReturn<MV>>
 }>
-/** LuaLS requires parameter names on functions. This makes
- * it impossible to union functions, as param names may change.
- * ex. `(a: int) => int | (b: string) => int` = (?: int | string) -> int
- * Therefore, LuaLS resolves all function unions to "function" of any type.
-*/
-export type FunctionAny = { _tag: "function-any" }
 
 // This allows tables that mix key-value pairs and auto-indexed array elements.
 export type Table<MV> = Readonly<{
@@ -49,7 +48,7 @@ type single<MV> =
 	| Boolean
 	| ClassType
 	| Function<MV>
-	| FunctionAny
+	// | FunctionAny
 	| Literal
 	| MV
 	| Nil

@@ -10,7 +10,6 @@ export const Zonk = (t: Type.Unsolved, ctx: MetaContext): Type.Solved => {
 	case "number":
 	case "string":
 	case "unknown":
-	case "function-any":
 		return t
 	case "meta": {
 		const [entry, _s] = Lookup(t.Id)(ctx)

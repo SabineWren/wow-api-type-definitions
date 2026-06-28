@@ -27,7 +27,6 @@ const annotateType = (t: Type.Solved): string => {
 		)
 		return `fun(${params.join(", ")})${returns}`
 	}
-	case "function-any": return "function"
 	case "literal": return t.BaseType
 	case "nil": return "nil"
 	case "number": return "number"
