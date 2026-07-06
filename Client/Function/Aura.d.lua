@@ -57,7 +57,6 @@ function UnitBuff(unit, buffIndex, showCastable) end
 
 --- Retrieves info about a debuff of a certain unit.
 --- As IDs are unique, they are more reliable than texture matching.
----@alias DebuffDispelType "Magic"|"Curse"|"Poison"|"Disease"
 ---@param unitID UnitId The unit ID you want debuff information for - "player", "target", "pet" etc
 ---@param debuffIndex integer The index of the debuff to retrieve info for. Starts at 1. The maximum index is 16 for party/pet/target debuffs.
 ---@param showDispellable? nil|1 Can be 0, 1, or nil. If present and 1, then only debuffs will be returned which are dispellable by the player. Index is still starting with 1 and counting up.
