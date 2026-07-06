@@ -50,7 +50,7 @@ function GetPlayerBuffTimeLeft(buffIndex) end
 ---@param buffIndex integer Index of the buff to retrieve, starting at 1. Max is 32 for party/pet; target's cap is unconfirmed (observed around 8).
 ---@param showCastable? nil|1 If present and 1, only buffs castable by the player are returned.
 ---@return nil|string buffTexture The icon texture path of the indicated buff, or nil if no buff.
----@return nil|number buffApplications The number of times the buff has been applied to the target. Returns 0 for any buff which doesn't stack.
+---@return nil|number buffApplications The number of times the buff has been applied to the target. Returns 1 for any buff which doesn't stack.
 ---@return nil|number buffID The unique identifier for the buff. (if supported by core).
 ---@nodiscard
 function UnitBuff(unit, buffIndex, showCastable) end
@@ -61,7 +61,7 @@ function UnitBuff(unit, buffIndex, showCastable) end
 ---@param debuffIndex integer The index of the debuff to retrieve info for. Starts at 1. The maximum index is 16 for party/pet/target debuffs.
 ---@param showDispellable? nil|1 Can be 0, 1, or nil. If present and 1, then only debuffs will be returned which are dispellable by the player. Index is still starting with 1 and counting up.
 ---@return nil|string debuffTexture The icon texture path of the indicated debuff, or nil if no debuff.
----@return nil|number  debuffApplications The number of times the debuff has been applied to the target. Returns 0 for any debuff which doesn't stack.
+---@return nil|number debuffApplications The number of times the debuff has been applied to the target. Returns 1 for any debuff which doesn't stack.
 ---@return nil|DebuffDispelType debuffDispelType The debuff dispel type. Can be "Magic", "Curse", "Poison", "Disease" or nil if not dispellable.
 ---@return nil|number debuffID The unique identifier for the debuff. (if supported by core).
 ---@nodiscard
