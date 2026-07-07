@@ -533,3 +533,9 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "contested"
 --- | "hostile" Zone controlled by opposing faction.
 --- | "sanctuary" (TBC onward?) Zone does not allow pvp combat.
+
+---@alias DebuffDispelType
+--- | "Magic"
+--- | "Curse"
+--- | "Poison"
+--- | "Disease"

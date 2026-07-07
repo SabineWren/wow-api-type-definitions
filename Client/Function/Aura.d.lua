@@ -45,29 +45,22 @@ function GetPlayerBuffTexture(buffIndex) end
 function GetPlayerBuffTimeLeft(buffIndex) end
 
 --- Retrieves info about a buff of a certain unit.
---- - TODO return values taken from 2008 wiki. Might be inaccurate.
----@param unit UnitId
----@param index integer The index of the debuff to retrieve info for. Starts at 1, maximum 40.
----@param showCastable? nil|1
----@return string name The name of the spell or effect of the debuff. This is the name shown in yellow when you mouse over the icon.
----@return string rank The rank of the spell or effect that caused the debuff. Returns "" if there is no rank.
----@return string icon Probably a texture path??
----@return integer count The number of times the debuff has been applied to the target. Returns 0 for any debuff which doesn't stack.
----@return nil|string debuffType The type of the debuff: Magic, Disease, Poison, Curse, or nothing for those with out a type.
----@return nil|number duration The full duration of the debuff in seconds; nil if the debuff was not cast by the player.
+--- As IDs are unique, they are more reliable than texture matching.
+---@param unitID UnitId The unit ID you want buff information for - "player", "target", "pet" etc
+---@param buffIndex integer Index of the buff to retrieve, starting at 1. Max is 32 for party/pet; target's cap is unconfirmed (observed around 8).
+---@param showCastable? nil|1 If present and 1, only buffs castable by the player are returned.
+---@return nil|string buffTexture The icon texture path of the indicated buff, or nil if no buff.
+---@return nil|number buffApplications The number of times the buff has been applied to the target. Returns 1 for any buff which doesn't stack.
 ---@nodiscard
-function UnitBuff(unit, index, showCastable) end
+function UnitBuff(unit, buffIndex, showCastable) end
 
 --- Retrieves info about a debuff of a certain unit.
---- - TODO return values taken from 2008 wiki. Might be inaccurate.
----@param unit UnitId
----@param index integer The index of the debuff to retrieve info for. Starts at 1, maximum 40.
----@param showDispellable? nil|1
----@return string name The name of the spell or effect of the debuff. This is the name shown in yellow when you mouse over the icon.
----@return string rank The rank of the spell or effect that caused the debuff. Returns "" if there is no rank.
----@return string icon Probably a texture path??
----@return integer count The number of times the debuff has been applied to the target. Returns 0 for any debuff which doesn't stack.
----@return nil|string debuffType The type of the debuff: Magic, Disease, Poison, Curse, or nothing for those with out a type.
----@return nil|number duration The full duration of the debuff in seconds; nil if the debuff was not cast by the player.
+--- As IDs are unique, they are more reliable than texture matching.
+---@param unitID UnitId The unit ID you want debuff information for - "player", "target", "pet" etc
+---@param debuffIndex integer The index of the debuff to retrieve info for. Starts at 1. The maximum index is 16 for party/pet/target debuffs.
+---@param showDispellable? nil|1 Can be 0, 1, or nil. If present and 1, then only debuffs will be returned which are dispellable by the player. Index is still starting with 1 and counting up.
+---@return nil|string debuffTexture The icon texture path of the indicated debuff, or nil if no debuff.
+---@return nil|number debuffApplications The number of times the debuff has been applied to the target. Returns 1 for any debuff which doesn't stack.
+---@return nil|DebuffDispelType debuffDispelType The debuff dispel type. Can be "Magic", "Curse", "Poison", "Disease" or nil if not dispellable.
 ---@nodiscard
-function UnitDebuff(unit, index, showDispellable) end
+function UnitDebuff(unit, debuffIndex, showDispellable) end
