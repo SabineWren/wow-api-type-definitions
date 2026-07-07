@@ -564,6 +564,7 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "raidpet39"
 --- | "raidpet40"
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
+--- | "targettarget" The target of the currently targeted unit.
 
 ---@alias VerticalJustify
 --- | "TOP"
@@ -576,3 +577,9 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "contested"
 --- | "hostile" Zone controlled by opposing faction.
 --- | "sanctuary" (TBC onward?) Zone does not allow pvp combat.
+
+---@alias DebuffDispelType
+--- | "Magic"
+--- | "Curse"
+--- | "Poison"
+--- | "Disease"
