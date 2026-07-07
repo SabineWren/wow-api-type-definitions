@@ -15,8 +15,9 @@ function CastSpell(spellIndex, bookType) end
 --- - ex. CastSpellByName("Flash Heal(Rank 2)") Casts on target at rank 2
 --- - ex. CastSpellByName("Flash Heal") Casts on target
 --- - ex. CastSpellByName("Flash Heal", 1) Casts on self
+--- - ex. CastSpellByName("Flash Heal", true) Casts on self
 ---@param name string
----@param isSelf? nil|1
+---@param isSelf? nil|boolean|1
 ---@return nil
 function CastSpellByName(name, isSelf) end
 
