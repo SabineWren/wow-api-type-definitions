@@ -51,7 +51,6 @@ function GetPlayerBuffTimeLeft(buffIndex) end
 ---@param showCastable? nil|1 If present and 1, only buffs castable by the player are returned.
 ---@return nil|string buffTexture The icon texture path of the indicated buff, or nil if no buff.
 ---@return nil|number buffApplications The number of times the buff has been applied to the target. Returns 1 for any buff which doesn't stack.
----@return nil|number buffID The unique identifier for the buff. (if supported by core).
 ---@nodiscard
 function UnitBuff(unit, buffIndex, showCastable) end
 
@@ -63,6 +62,5 @@ function UnitBuff(unit, buffIndex, showCastable) end
 ---@return nil|string debuffTexture The icon texture path of the indicated debuff, or nil if no debuff.
 ---@return nil|number debuffApplications The number of times the debuff has been applied to the target. Returns 1 for any debuff which doesn't stack.
 ---@return nil|DebuffDispelType debuffDispelType The debuff dispel type. Can be "Magic", "Curse", "Poison", "Disease" or nil if not dispellable.
----@return nil|number debuffID The unique identifier for the debuff. (if supported by core).
 ---@nodiscard
 function UnitDebuff(unit, debuffIndex, showDispellable) end
