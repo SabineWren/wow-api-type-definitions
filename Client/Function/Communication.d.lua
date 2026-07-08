@@ -48,7 +48,7 @@ function SendAddonMessage(prefix, message, type) end
 --- if (i ~= nil) then SendChatMessage(s , "CHANNEL", nil, index) end
 --- ```
 ---@param message string At most 255 1-byte characters.
----@param type "BATTLEGROUND" | "GUILD" | "PARTY" | "RAID" | "SAY"
+---@param type "BATTLEGROUND" | "GUILD" | "PARTY" | "RAID" | "RAID_WARNING" | "SAY"
 ---@param language? string
 function SendChatMessage(message, type, language) end
 ---
