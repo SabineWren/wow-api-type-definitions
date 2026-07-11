@@ -266,15 +266,8 @@ const inferBody = (
 	return [retn, ctx]
 }
 
-// -- Likely any expression can be a function call base.
-// Identifier: f()
-// MemberExpression: obj.method()
-// IndexExpression: obj["method"]()
-// CallExpression: factory()()
-// StringCallExpression: f"hello"()
-// FunctionDeclaration: (function() end)()
 /** There are multiple syntaxes for calling a function. We project from each one. */
-const resolveCallee = (base: N.Rhs, env: env): State<MetaContext, Type.Unsolved> => ctx => {
+const resolveCallee = (base: N.FunctionCallBase, env: env): State<MetaContext, Type.Function<Type.MetaVariable>> => ctx => {
 	switch (base.type) {
 	case "FunctionDeclaration":// (function() end)()
 		return inferFunctionDec(base)(ctx)
@@ -282,35 +275,25 @@ const resolveCallee = (base: N.Rhs, env: env): State<MetaContext, Type.Unsolved>
 		const identifier = env.get(base.name)
 		// TODO - what if a function is defined later in the file, but called from a function body?
 		// If this fails, we need a "collect identifiers" pass for each scope before running inference.
-		if (identifier === undefined) throw new Error("Call to missing function " + base.name)
+		if (identifier === undefined)
+			throw new Error("Call to missing function " + base.name + " it's probably defined later.")
+		else if (identifier._tag !== "function")
+			throw new Error("Identifier isn't a function. We might need to resolve recursively.")
 		return [identifier, ctx]
 	case "CallExpression":// factory()()
-		return inferFunctionCall(base.base, base.arguments, env)(ctx)
+		return resolveCallee(base.base, env)(ctx)
 	case "StringCallExpression":// f"hello"()
-		return inferFunctionCall(base.base, [base.argument], env)(ctx)
+		return resolveCallee(base.base, env)(ctx)
 	case "IndexExpression":// obj["method"]()
 		throw new Error("TODO IndexExpression")
 	case "MemberExpression":// obj.method()
 		throw new Error("TODO MemberExpression")
-	// TODO - Need to constrain the AST schema to remove these.
-	case "BooleanLiteral":
-	case "NilLiteral":
-	case "NumericLiteral":
-	case "StringLiteral":
-	case "VarargLiteral":
-	case "BinaryExpression":
-	case "LogicalExpression":
-	case "TableConstructorExpression":
-	case "UnaryExpression":
-		throw new Error(`Unhandled function call base: ${base.type}`)
 	}
 }
 
 /** Bind call-site arguments to function parameters, apply constraints, and infer return. */
-const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>, env: env): State<MetaContext, Type.Unsolved> => ctx => {
+const inferFunctionCall = (base: N.FunctionCallBase, args: Array<N.Rhs>, env: env): State<MetaContext, Type.Unsolved> => ctx => {
 	let [fn, next] = resolveCallee(base, env)(ctx)
-	// TODO - Constrain the AST schema to not allow other nodes here
-	if (fn._tag !== "function") throw new Error(`Callee is not a function: ${base.type} -> ${fn._tag}`)
 
 	const argTypes: Type.Unsolved[] = []
 	for (const arg of args) {
