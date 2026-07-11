@@ -28,6 +28,8 @@ export const MergeParamOrReturnNames = (a: string | undefined, b: string | undef
 	: b === undefined
 		? a
 		// ¯\_(ツ)_/¯
+		// Params require a name in Lua.
+		// LuaLS solves this by inferring all function unions as type 'Function'.
 		: `${a}_or_${b}`
 
 const intersectParamOrReturn = <

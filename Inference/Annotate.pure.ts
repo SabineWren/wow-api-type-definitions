@@ -15,6 +15,7 @@ const annotateType = (t: Type.Solved): string => {
 	case "union": return [...t.Members.values().map(annotateType)].join(" | ")
 	// ************ Leaf ************
 	case "boolean": return "boolean"
+	case "bound": return "unknown"// TODO - should be a generic like `'A`
 	case "class": return t.Name
 	case "function": {
 		const params = Pipe(

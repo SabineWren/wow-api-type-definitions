@@ -4,6 +4,7 @@ import { Lookup, type MetaContext } from "./MetaContext.pure.ts"
 export const Zonk = (t: Type.Unsolved, ctx: MetaContext): Type.Solved => {
 	switch (t._tag) {
 	case "boolean":
+	case "bound":
 	case "class":
 	case "literal":
 	case "nil":

@@ -1,8 +1,18 @@
 import type { Array } from "purity-seal"
 import { Intern } from "./Intern.pure.ts"
 
+/** This represents a parametric generic, aka universal quantifier over a type.
+ * The index represents how many times the type signature is instantiated.
+ * @example
+ * for all 'A. 'A -> 'A
+ * let Id = fn a => a
+*/
+export type BoundVariable = Readonly<{ _tag: "bound", Index: number }>
+
 // We may encounter variables without knowing all relevant constraints, so
 // create placeholder meta-variable types, and zonk them after unification.
+// This represents an existential "there exists a type" that we can solve for.
+// If we cannot solve it, then it must be 'unknown'.
 // https://youtu.be/-TJGhGa04F8
 export type MetaVariable = Readonly<{ _tag: "meta", Id: number }>
 
@@ -46,9 +56,9 @@ export type Table<MV> = Readonly<{
 
 type single<MV> =
 	| Boolean
+	| BoundVariable
 	| ClassType
 	| Function<MV>
-	// | FunctionAny
 	| Literal
 	| MV
 	| Nil
