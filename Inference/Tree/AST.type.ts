@@ -113,28 +113,6 @@ const clauses = S.Union(IfClause, ElseifClause, ElseClause)
 
 // ************ Not clauses ************
 
-const _assignment = S.Struct({
-	init: S.Array(_rhs),// Initializers for the variables
-	variables: S.NonEmptyArray(Identifier),// Is this right? Haven't tested for many programs.
-	// variables: S.NonEmptyArray(_node),// TODO - probably always 'identifier'
-})
-type _assignment = { init: Array.Array<Rhs>, variables: Array.NonEmpty<typeof Identifier.Type> }
-type _assignmentE = { init: Array.Array<RhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded> }
-
-export const Assignment_Global = S.Struct({
-	..._assignment.fields,
-	type: S.Literal("AssignmentStatement"),
-})
-export type Assignment_Global = { type: "AssignmentStatement" } & _assignment
-export type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
-
-export const Assignment_Local = S.Struct({
-	..._assignment.fields,
-	type: S.Literal("LocalStatement"),
-})
-export type Assignment_Local = { type: "LocalStatement" } & _assignment
-export type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
-
 export const CallExpression = S.Struct({
 	type: S.Literal("CallExpression"),
 	base: _rhs,
@@ -202,6 +180,30 @@ export const IndexExpression = S.Struct({
 })
 export type IndexExpression = { type: "IndexExpression", index: Node, base: Rhs }
 export type IndexExpressionE = { type: "IndexExpression", index: NodeE, base: RhsE }
+
+const _assignment = S.Struct({
+	init: S.Array(_rhs),// Initializers for the variables
+	// Identifier: a = 1
+	// MemberExpression: this.a = 1
+	// IndexExpression: Foo["Bar"] = 1
+	variables: S.NonEmptyArray(S.Union(Identifier, IndexExpression, MemberExpression)),
+})
+type _assignment = { init: Array.Array<Rhs>, variables: Array.NonEmpty<typeof Identifier.Type | IndexExpression | MemberExpression> }
+type _assignmentE = { init: Array.Array<RhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded | IndexExpressionE | MemberExpressionE> }
+
+export const Assignment_Global = S.Struct({
+	..._assignment.fields,
+	type: S.Literal("AssignmentStatement"),
+})
+export type Assignment_Global = { type: "AssignmentStatement" } & _assignment
+export type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
+
+export const Assignment_Local = S.Struct({
+	..._assignment.fields,
+	type: S.Literal("LocalStatement"),
+})
+export type Assignment_Local = { type: "LocalStatement" } & _assignment
+export type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
 
 const RepeatStatement = S.Struct({
 	type: S.Literal("RepeatStatement"),

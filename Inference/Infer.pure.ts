@@ -255,10 +255,10 @@ const inferBody = (
 			})
 		} else {
 			console.error("UNHANDLED FUNCTION BODY STATEMENT: " + stmt.type)
+			// TODO - why are no other statements handled? You can declare globals inside
+			// a function body (even if that's horrible), but the above only handles
+			// local assignments. We should probably just handle every expression.
 		}
-		// TODO - why are no other statements handled? You can declare globals inside
-		// a function body (even if that's horrible), but the above only handles
-		// local assignments. We should probably just handle every expression.
 	}
 
 	// A no-return function implicitly returns Unit.
