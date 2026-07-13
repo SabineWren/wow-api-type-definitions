@@ -122,17 +122,17 @@ const tableConstructorExpression = (
 		? undefined
 		: Type.MkUnion(...arrayFields)
 
-	return [Type.Table(fields, arrayField), ctx]
+	return [Type.MkTable(fields, arrayField), ctx]
 }
 
 const literalToType = (node: N.Literal): Type.Literal | Type.Nil => {
 	switch (node.type) {
-	case "BooleanLiteral": return Type.Literal("boolean", node.value ? "true" : "false")
+	case "BooleanLiteral": return Type.MkLiteral("boolean", node.value ? "true" : "false")
 	case "NilLiteral": return Type.Nil
-	case "NumericLiteral": return Type.Literal("number", node.raw)
-	case "StringLiteral": return Type.Literal("string", node.raw)
+	case "NumericLiteral": return Type.MkLiteral("number", node.raw)
+	case "StringLiteral": return Type.MkLiteral("string", node.raw)
 	// TODO should we handle varargs somehow?
-	case "VarargLiteral": return Type.Literal("string", "...")
+	case "VarargLiteral": return Type.MkLiteral("string", "...")
 	}
 }
 
@@ -302,12 +302,16 @@ const inferFunctionCall = (base: N.FunctionCallBase, args: Array<N.Rhs>, env: en
 		// This may be a literal. Infer as narrowly as possible, and let the annotator widen.
 		argTypes.push(t)
 	}
+	// TODO - Commented this out because it's wrong. We want BoundVariables
+	// instead of over-constraining a meta-variable from function calls.
+	// i.e. `unknown -> unknown` is a better failure mode than overly constraining.
+	//
 	// Arguments may be optional, in which case Lua defaults them to 'nil'.
-	fn.Params.forEach((p, pi) => {
-		const argType = pi < argTypes.length ? argTypes[pi]! : Type.Nil
-		const [_, cNext] = Constrain(p.Type, argType)(next)
-		next = cNext
-	})
+	// fn.Params.forEach((p, pi) => {
+	// 	const argType = pi < argTypes.length ? argTypes[pi]! : Type.Nil
+	// 	const [_, cNext] = Constrain(p.Type, argType)(next)
+	// 	next = cNext
+	// })
 
 	const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
 	return [returnType, next]

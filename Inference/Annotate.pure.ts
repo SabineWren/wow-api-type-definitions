@@ -1,7 +1,8 @@
 import type * as N from "./Tree/AST.type.ts"
 import type * as Type from "./Tree/Type.type.ts"
+import { Generalize } from "./Generalize.pure.ts"
 import { InferFiles, type GlobalVarSolved, type GlobalVarUnsolved } from "./Infer.pure.ts"
-import { Empty } from "./MetaContext.pure.ts"
+import { Empty, type MetaContext } from "./MetaContext.pure.ts"
 import { Zonk } from "./Zonk.pure.ts"
 import { State } from "./Lib/State/pure.ts"
 import { Array, Option, Pipe } from "purity-seal"
@@ -116,9 +117,12 @@ export const AnnotateFiles = (files: Array<Array<N.Node>>): Option<string>[] => 
 
 	return Pipe(
 		globalsPerFile,
-		Array.Map(Array.Map((d: GlobalVarUnsolved): GlobalVarSolved =>
-			({ Name: d.Name, Type: Zonk(d.Type, ctx) }),
-		)),
+		Array.Map(gs => {
+			const mapToBoundVars = Generalize(gs, ctx)
+			return Array.Map(gs, (g: GlobalVarUnsolved): GlobalVarSolved =>
+				({ Name: g.Name, Type: Zonk(g.Type, ctx, mapToBoundVars) })
+			)
+		}),
 		Array.Map((globals): Option<string> => globals.length === 0
 			? Option.None()
 			: Option.Some("---@meta\n\n" + globals.map(annotateGlobal).join("\n\n") + "\n"),

@@ -1,20 +1,26 @@
 import type { Array } from "purity-seal"
 import { Intern } from "./Intern.pure.ts"
 
+declare const boundVariableSymbol: unique symbol
+export type BvIndex = number & { readonly [boundVariableSymbol]: true }
+
+declare const metaVariableSymbol: unique symbol
+export type MvId = number & { readonly [metaVariableSymbol]: true }
+
 /** This represents a parametric generic, aka universal quantifier over a type.
  * The index represents how many times the type signature is instantiated.
  * @example
  * for all 'A. 'A -> 'A
  * let Id = fn a => a
 */
-export type BoundVariable = Readonly<{ _tag: "bound", Index: number }>
+export type BoundVariable = Readonly<{ _tag: "bound", Index: BvIndex }>
 
 // We may encounter variables without knowing all relevant constraints, so
 // create placeholder meta-variable types, and zonk them after unification.
 // This represents an existential "there exists a type" that we can solve for.
 // If we cannot solve it, then it must be 'unknown'.
 // https://youtu.be/-TJGhGa04F8
-export type MetaVariable = Readonly<{ _tag: "meta", Id: number }>
+export type MetaVariable = Readonly<{ _tag: "meta", Id: MvId }>
 
 export type TableField<MV> = Readonly<{ Name: string, Type: TypeTerm<MV> }>
 
@@ -80,19 +86,25 @@ export type Unsolved = TypeTerm<MetaVariable>
 export type Solved = TypeTerm<never>
 
 // ************ Constructors ************
+export const MkBound = (index: number): BoundVariable =>
+	Intern({ _tag: "bound", Index: index as BvIndex })
+
+export const MkMeta = (id: number): MetaVariable =>
+	Intern({ _tag: "meta", Id: id as MvId })
+
 export const Nil: Nil = Intern({ _tag: "nil" })
 export const Boolean: Boolean = Intern({ _tag: "boolean" })
 export const Number: Number = Intern({ _tag: "number" })
 export const String: String = Intern({ _tag: "string" })
 export const Unknown: Unknown = Intern({ _tag: "unknown" })
 
-export const Literal = (
+export const MkLiteral = (
 	baseType: typeof Boolean._tag | typeof Number._tag | typeof String._tag,
 	value: string,
 ): Literal =>
 	Intern({ _tag: "literal", BaseType: baseType, Value: value })
 
-export const Table = <MV extends never | MetaVariable>(
+export const MkTable = <MV extends never | MetaVariable>(
 	fields: Array<TableField<MV>>,
 	arrayElement?: TypeTerm<MV>,
 ): TypeTerm<MV> =>
@@ -109,11 +121,8 @@ export const MkFunc = <MV extends never | MetaVariable>(
 ): Function<MV> =>
 	Intern({ _tag: "function", HasVararg: hasVararg, Params: params, Returns: returns })
 
-export const ClassType = (name: string): Unsolved =>
+export const MkClass = (name: string): Unsolved =>
 	Intern({ _tag: "class", Name: name })
-
-export const MkMeta = (id: number): Unsolved =>
-	Intern({ _tag: "meta", Id: id })
 
 export const MkUnion = <MV extends never | MetaVariable>(...types: Array<TypeTerm<MV>>): TypeTerm<MV> => {
 	// Reference equality is okay because members are interned
