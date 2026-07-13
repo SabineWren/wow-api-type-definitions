@@ -4,12 +4,12 @@ import { Lookup, Refine, Solve, type MetaContext } from "./MetaContext.pure.ts"
 import { type State } from "./Lib/State/pure.ts"
 
 // Follow metavariable chain until unsolved or concrete type
-const resolve_rec = (t: Type.Unsolved, ctx: MetaContext): Type.Unsolved => {
+export const ResolveMetaVariable = (t: Type.Unsolved, ctx: MetaContext): Type.Unsolved => {
 	if (t._tag !== "meta")
 		return t
 	else {
 		const [entry] = Lookup(t.Id)(ctx)
-		return entry.Solved ? resolve_rec(entry.Type, ctx) : t
+		return entry.Solved ? ResolveMetaVariable(entry.Type, ctx) : t
 	}
 }
 
@@ -28,6 +28,8 @@ export const MergeParamOrReturnNames = (a: string | undefined, b: string | undef
 	: b === undefined
 		? a
 		// ¯\_(ツ)_/¯
+		// Params require a name in Lua.
+		// LuaLS solves this by inferring all function unions as type 'Function'.
 		: `${a}_or_${b}`
 
 const intersectParamOrReturn = <
@@ -93,8 +95,8 @@ const constrainMetavariable = (id: number, other: Type.Unsolved): State<MetaCont
 	if (!entry.Solved)
 		return Solve(id, other)(ctx)
 	else {
-		const current = resolve_rec(Type.MkMeta(id), ctx)
-		const o = resolve_rec(other, ctx)
+		const current = ResolveMetaVariable(Type.MkMeta(id), ctx)
+		const o = ResolveMetaVariable(other, ctx)
 		// TODO - clean this up
 		// These next 2 cases are the same:
 		// The solution chain ended at an unsolved metavariable.

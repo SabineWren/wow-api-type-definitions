@@ -401,14 +401,24 @@ Note: The fourth number does not always stand for who made an item; it usually a
 --- | "Button5Up"
 --- | "Button5Down"
 
----@alias MessageType
+---@alias AddonMessageTypeId
 --- | "BATTLEGROUND"
---- | "CHANNEL"
+-- For addon messages, "CHANNEL" only works on some servers and for some channels.
+--- | "CHANNEL" Paired with a channel number. See [GetChannelName](lua://GetChannelName)
 --- | "GUILD"
 --- | "PARTY"
 --- | "RAID"
+
+---@alias ChatTypeId
+--- | AddonMessageTypeId
+--- | "EMOTE"
+--- | "OFFICER"
+--- | "RAID_WARNING"
 --- | "SAY"
---- | "WHISPER"
+--- | "WHISPER" Paired with a player name.
+--- | "YELL"
+--- | "AFK" For setting AFK message. Send empty message to clear.
+--- | "DND" For setting DND message. Send empty message to clear.
 
 ---@alias PetHappiness
 --- | 1 Unhappy
@@ -428,6 +438,7 @@ Note: The fourth number does not always stand for who made an item; it usually a
 ---@alias RaidIndex 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40
 
 ---@alias RaidMark
+--- | 0 None
 --- | 1 Star
 --- | 2 Circle
 --- | 3 Diamond
