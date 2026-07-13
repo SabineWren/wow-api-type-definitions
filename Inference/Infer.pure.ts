@@ -122,17 +122,17 @@ const tableConstructorExpression = (
 		? undefined
 		: Type.MkUnion(...arrayFields)
 
-	return [Type.Table(fields, arrayField), ctx]
+	return [Type.MkTable(fields, arrayField), ctx]
 }
 
 const literalToType = (node: N.Literal): Type.Literal | Type.Nil => {
 	switch (node.type) {
-	case "BooleanLiteral": return Type.Literal("boolean", node.value ? "true" : "false")
+	case "BooleanLiteral": return Type.MkLiteral("boolean", node.value ? "true" : "false")
 	case "NilLiteral": return Type.Nil
-	case "NumericLiteral": return Type.Literal("number", node.raw)
-	case "StringLiteral": return Type.Literal("string", node.raw)
+	case "NumericLiteral": return Type.MkLiteral("number", node.raw)
+	case "StringLiteral": return Type.MkLiteral("string", node.raw)
 	// TODO should we handle varargs somehow?
-	case "VarargLiteral": return Type.Literal("string", "...")
+	case "VarargLiteral": return Type.MkLiteral("string", "...")
 	}
 }
 
@@ -255,10 +255,10 @@ const inferBody = (
 			})
 		} else {
 			console.error("UNHANDLED FUNCTION BODY STATEMENT: " + stmt.type)
+			// TODO - why are no other statements handled? You can declare globals inside
+			// a function body (even if that's horrible), but the above only handles
+			// local assignments. We should probably just handle every expression.
 		}
-		// TODO - why are no other statements handled? You can declare globals inside
-		// a function body (even if that's horrible), but the above only handles
-		// local assignments. We should probably just handle every expression.
 	}
 
 	// A no-return function implicitly returns Unit.
@@ -266,15 +266,8 @@ const inferBody = (
 	return [retn, ctx]
 }
 
-// -- Likely any expression can be a function call base.
-// Identifier: f()
-// MemberExpression: obj.method()
-// IndexExpression: obj["method"]()
-// CallExpression: factory()()
-// StringCallExpression: f"hello"()
-// FunctionDeclaration: (function() end)()
 /** There are multiple syntaxes for calling a function. We project from each one. */
-const resolveCallee = (base: N.Rhs, env: env): State<MetaContext, Type.Unsolved> => ctx => {
+const resolveCallee = (base: N.FunctionCallBase, env: env): State<MetaContext, Type.Function<Type.MetaVariable>> => ctx => {
 	switch (base.type) {
 	case "FunctionDeclaration":// (function() end)()
 		return inferFunctionDec(base)(ctx)
@@ -282,35 +275,25 @@ const resolveCallee = (base: N.Rhs, env: env): State<MetaContext, Type.Unsolved>
 		const identifier = env.get(base.name)
 		// TODO - what if a function is defined later in the file, but called from a function body?
 		// If this fails, we need a "collect identifiers" pass for each scope before running inference.
-		if (identifier === undefined) throw new Error("Call to missing function " + base.name)
+		if (identifier === undefined)
+			throw new Error("Call to missing function " + base.name + " it's probably defined later.")
+		else if (identifier._tag !== "function")
+			throw new Error("Identifier isn't a function. We might need to resolve recursively.")
 		return [identifier, ctx]
 	case "CallExpression":// factory()()
-		return inferFunctionCall(base.base, base.arguments, env)(ctx)
+		return resolveCallee(base.base, env)(ctx)
 	case "StringCallExpression":// f"hello"()
-		return inferFunctionCall(base.base, [base.argument], env)(ctx)
+		return resolveCallee(base.base, env)(ctx)
 	case "IndexExpression":// obj["method"]()
 		throw new Error("TODO IndexExpression")
 	case "MemberExpression":// obj.method()
 		throw new Error("TODO MemberExpression")
-	// TODO - Need to constrain the AST schema to remove these.
-	case "BooleanLiteral":
-	case "NilLiteral":
-	case "NumericLiteral":
-	case "StringLiteral":
-	case "VarargLiteral":
-	case "BinaryExpression":
-	case "LogicalExpression":
-	case "TableConstructorExpression":
-	case "UnaryExpression":
-		throw new Error(`Unhandled function call base: ${base.type}`)
 	}
 }
 
 /** Bind call-site arguments to function parameters, apply constraints, and infer return. */
-const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>, env: env): State<MetaContext, Type.Unsolved> => ctx => {
+const inferFunctionCall = (base: N.FunctionCallBase, args: Array<N.Rhs>, env: env): State<MetaContext, Type.Unsolved> => ctx => {
 	let [fn, next] = resolveCallee(base, env)(ctx)
-	// TODO - Constrain the AST schema to not allow other nodes here
-	if (fn._tag !== "function") throw new Error(`Callee is not a function: ${base.type} -> ${fn._tag}`)
 
 	const argTypes: Type.Unsolved[] = []
 	for (const arg of args) {
@@ -319,12 +302,16 @@ const inferFunctionCall = (base: N.Rhs, args: Array<N.Rhs>, env: env): State<Met
 		// This may be a literal. Infer as narrowly as possible, and let the annotator widen.
 		argTypes.push(t)
 	}
+	// TODO - Commented this out because it's wrong. We want BoundVariables
+	// instead of over-constraining a meta-variable from function calls.
+	// i.e. `unknown -> unknown` is a better failure mode than overly constraining.
+	//
 	// Arguments may be optional, in which case Lua defaults them to 'nil'.
-	fn.Params.forEach((p, pi) => {
-		const argType = pi < argTypes.length ? argTypes[pi]! : Type.Nil
-		const [_, cNext] = Constrain(p.Type, argType)(next)
-		next = cNext
-	})
+	// fn.Params.forEach((p, pi) => {
+	// 	const argType = pi < argTypes.length ? argTypes[pi]! : Type.Nil
+	// 	const [_, cNext] = Constrain(p.Type, argType)(next)
+	// 	next = cNext
+	// })
 
 	const returnType = Type.MkUnion(...fn.Returns.map(x => x.Type))
 	return [returnType, next]

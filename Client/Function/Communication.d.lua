@@ -34,7 +34,7 @@ function RandomRoll(low, high) end
 --- Sends a message to hidden AddOn channels.
 ---@param prefix string At most 16 characters.
 ---@param message string At most 255 1-byte characters.
----@param type MessageType
+---@param type AddonMessageTypeId
 ---@return nil
 function SendAddonMessage(prefix, message, type) end
 
@@ -48,7 +48,7 @@ function SendAddonMessage(prefix, message, type) end
 --- if (i ~= nil) then SendChatMessage(s , "CHANNEL", nil, index) end
 --- ```
 ---@param message string At most 255 1-byte characters.
----@param type "BATTLEGROUND" | "GUILD" | "PARTY" | "RAID" | "RAID_WARNING" | "SAY"
+---@param type ChatTypeId
 ---@param language? string
 function SendChatMessage(message, type, language) end
 ---

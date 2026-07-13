@@ -57,6 +57,7 @@ const Identifier = S.Struct({
 // ************ Branches ************
 
 const _node = S.Suspend((): S.Schema<Node, NodeE> => Node)
+const _fcb = S.Suspend((): S.Schema<FunctionCallBase, FunctionCallBaseE> => FunctionCallBase)
 const _rhs = S.Suspend((): S.Schema<Rhs, RhsE> => Rhs)
 const _tableField = S.Suspend((): S.Schema<TableField, TableFieldE> => TableField)
 
@@ -113,35 +114,13 @@ const clauses = S.Union(IfClause, ElseifClause, ElseClause)
 
 // ************ Not clauses ************
 
-const _assignment = S.Struct({
-	init: S.Array(_rhs),// Initializers for the variables
-	variables: S.NonEmptyArray(Identifier),// Is this right? Haven't tested for many programs.
-	// variables: S.NonEmptyArray(_node),// TODO - probably always 'identifier'
-})
-type _assignment = { init: Array.Array<Rhs>, variables: Array.NonEmpty<typeof Identifier.Type> }
-type _assignmentE = { init: Array.Array<RhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded> }
-
-export const Assignment_Global = S.Struct({
-	..._assignment.fields,
-	type: S.Literal("AssignmentStatement"),
-})
-export type Assignment_Global = { type: "AssignmentStatement" } & _assignment
-export type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
-
-export const Assignment_Local = S.Struct({
-	..._assignment.fields,
-	type: S.Literal("LocalStatement"),
-})
-export type Assignment_Local = { type: "LocalStatement" } & _assignment
-export type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
-
 export const CallExpression = S.Struct({
 	type: S.Literal("CallExpression"),
-	base: _rhs,
+	base: _fcb,
 	arguments: S.Array(_rhs),
 })
-export type CallExpression = { type: "CallExpression", base: Rhs, arguments: Array<Rhs> }
-export type CallExpressionE = { type: "CallExpression", base: RhsE, arguments: Array<RhsE> }
+export type CallExpression = { type: "CallExpression", base: FunctionCallBase, arguments: Array<Rhs> }
+export type CallExpressionE = { type: "CallExpression", base: FunctionCallBaseE, arguments: Array<RhsE> }
 
 export const CallStatement = S.Struct({
 	type: S.Literal("CallStatement"),
@@ -152,11 +131,11 @@ export type CallStatementE = { type: "CallStatement", expression: CallExpression
 
 export const StringCallExpression = S.Struct({
 	type: S.Literal("StringCallExpression"),
-	base: _rhs,
+	base: _fcb,
 	argument: StringLiteral,
 })
-export type StringCallExpression = { type: "StringCallExpression", base: Rhs, argument: typeof StringLiteral.Type }
-export type StringCallExpressionE = { type: "StringCallExpression", base: RhsE, argument: typeof StringLiteral.Encoded }
+export type StringCallExpression = { type: "StringCallExpression", base: FunctionCallBase, argument: typeof StringLiteral.Type }
+export type StringCallExpressionE = { type: "StringCallExpression", base: FunctionCallBaseE, argument: typeof StringLiteral.Encoded }
 
 export const FunctionDeclaration = S.Struct({
 	type: S.Literal("FunctionDeclaration"),
@@ -202,6 +181,30 @@ export const IndexExpression = S.Struct({
 })
 export type IndexExpression = { type: "IndexExpression", index: Node, base: Rhs }
 export type IndexExpressionE = { type: "IndexExpression", index: NodeE, base: RhsE }
+
+const _assignment = S.Struct({
+	init: S.Array(_rhs),// Initializers for the variables
+	// Identifier: a = 1
+	// MemberExpression: this.a = 1
+	// IndexExpression: Foo["Bar"] = 1
+	variables: S.NonEmptyArray(S.Union(Identifier, IndexExpression, MemberExpression)),
+})
+type _assignment = { init: Array.Array<Rhs>, variables: Array.NonEmpty<typeof Identifier.Type | IndexExpression | MemberExpression> }
+type _assignmentE = { init: Array.Array<RhsE>, variables: Array.NonEmpty<typeof Identifier.Encoded | IndexExpressionE | MemberExpressionE> }
+
+export const Assignment_Global = S.Struct({
+	..._assignment.fields,
+	type: S.Literal("AssignmentStatement"),
+})
+export type Assignment_Global = { type: "AssignmentStatement" } & _assignment
+export type Assignment_GlobalE = { type: "AssignmentStatement" } & _assignmentE
+
+export const Assignment_Local = S.Struct({
+	..._assignment.fields,
+	type: S.Literal("LocalStatement"),
+})
+export type Assignment_Local = { type: "LocalStatement" } & _assignment
+export type Assignment_LocalE = { type: "LocalStatement" } & _assignmentE
 
 const RepeatStatement = S.Struct({
 	type: S.Literal("RepeatStatement"),
@@ -264,46 +267,60 @@ export const TableKeyString = S.Struct({
 export type TableKeyString = { type: "TableKeyString", key: typeof Identifier.Type, value: Rhs }
 export type TableKeyStringE = { type: "TableKeyString", key: typeof Identifier.Encoded, value: RhsE }
 
+export const FunctionCallBase = S.Union(
+	CallExpression,// factory()()
+	FunctionDeclaration,// (function() end)()
+	Identifier,// f()
+	IndexExpression,// obj["method"]()
+	MemberExpression,// obj.method()
+	StringCallExpression,// f"hello"()
+)
+export type FunctionCallBase =
+	| CallExpression
+	| FunctionDeclaration
+	| typeof Identifier.Type
+	| IndexExpression
+	| MemberExpression
+	| StringCallExpression
+export type FunctionCallBaseE =
+	| CallExpressionE
+	| FunctionDeclarationE
+	| typeof Identifier.Encoded
+	| IndexExpressionE
+	| MemberExpressionE
+	| StringCallExpressionE
+
 export const Rhs = S.Union(
 	// Function Calls
-	CallExpression, StringCallExpression,
+	...FunctionCallBase.members,
 	// Literals
 	BooleanLiteral, NilLiteral, NumericLiteral, StringLiteral, VarargLiteral,
 	// Misc
-	BinaryExpression, FunctionDeclaration, Identifier,
-	IndexExpression, LogicalExpression, MemberExpression,
-	TableConstructorExpression, UnaryExpression,
+	BinaryExpression,
+	LogicalExpression,
+	TableConstructorExpression,
+	UnaryExpression,
 )
 export type Rhs =
-	| CallExpression
-	| StringCallExpression
+	| FunctionCallBase
 	| typeof BooleanLiteral.Type
 	| typeof NilLiteral.Type
 	| typeof NumericLiteral.Type
 	| typeof StringLiteral.Type
 	| typeof VarargLiteral.Type
 	| BinaryExpression
-	| FunctionDeclaration
-	| typeof Identifier.Type
-	| IndexExpression
 	| LogicalExpression
-	| MemberExpression
 	| TableConstructorExpression
 	| UnaryExpression
 export type RhsE =
-	| CallExpressionE
-	| StringCallExpressionE
+	| FunctionCallBaseE
 	| typeof BooleanLiteral.Encoded
 	| typeof NilLiteral.Encoded
 	| typeof NumericLiteral.Encoded
 	| typeof StringLiteral.Encoded
 	| typeof VarargLiteral.Encoded
 	| BinaryExpressionE
-	| FunctionDeclarationE
-	| typeof Identifier.Encoded
-	| IndexExpressionE
 	| LogicalExpressionE
-	| MemberExpressionE
 	| TableConstructorExpressionE
 	| UnaryExpressionE
 
