@@ -91,6 +91,13 @@ function UnitCanCooperate(unit, otherUnit) end
 function UnitCharacterPoints(unit) end
 
 --- Defaults to WARRIOR if unit has no class
+---@param unit "player"
+---@return string classLocalized
+---@return CharacterClass classEnglish
+---@nodiscard
+function UnitClass(unit) end
+
+--- Defaults to WARRIOR if unit has no class
 ---@param unit UnitId
 ---@return string classLocalized ex. "Mage", "Warrior", "Guerrier"
 ---@return CharacterClass classEnglish
@@ -296,6 +303,13 @@ function UnitMana(unit) end
 function UnitManaMax(unit) end
 
 --- Returns the name (and realm name) of a unit.
+---@param unit "player"
+---@return string name
+---@return nil|string realm
+---@nodiscard
+function UnitName(unit) end
+
+--- Returns the name (and realm name) of a unit.
 ---@param unit UnitId
 ---@return nil|string name
 ---@return nil|string realm
@@ -346,6 +360,14 @@ function UnitPVPRank(unit) end
 ---@return PowerType
 ---@nodiscard
 function UnitPowerType(unit) end
+
+--- Returns the race name of the specified unit (ex. "Human" or "Troll").
+--- - "Undead" localized returns "Scourge" English
+---@param unit "player"
+---@return string raceLocalized
+---@return string raceEnglish
+---@nodiscard
+function UnitRace(unit) end
 
 --- Returns the race name of the specified unit (ex. "Human" or "Troll").
 --- - TODO can this return nil?
