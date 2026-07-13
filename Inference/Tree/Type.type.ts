@@ -57,7 +57,7 @@ export type Table<MV> = Readonly<{
 	_tag: "table"
 	/** Keep these sorted for deterministic serialization. */
 	Fields: Array<TableField<MV>>
-	ArrayElement?: Unsolved
+	ArrayElement?: TypeTerm<MV>
 }>
 
 type single<MV> =

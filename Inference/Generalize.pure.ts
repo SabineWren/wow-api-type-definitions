@@ -7,11 +7,11 @@ import { Array, Pipe } from "purity-seal"
 export const Generalize = (
 	globals: Array<GlobalVarUnsolved>,
 	ctx: MetaContext,
-): globalThis.ReadonlyMap<Type.MvId, Type.Solved> => {
+): globalThis.ReadonlyMap<Type.MvId, Type.BoundVariable> => {
 	// A meta id is generalizable iff it is free in exactly one global (didn't escape).
 	// ex. the param 'a' in `local id = function(a) return a end`
 	const ok = seqBind_KeepUnique(globals, g => collectFree(g.Type, ctx))
-	const out = new globalThis.Map<Type.MvId, Type.Solved>()
+	const out = new globalThis.Map<Type.MvId, Type.BoundVariable>()
 	for (const g of globals) {
 		// The implementation here is pretty rough... everything mutates.
 		const seen = new globalThis.Map<Type.MvId, Type.BvIndex>()
@@ -26,7 +26,7 @@ const assignBoundVars = (
 	ok: globalThis.Set<Type.MvId>,
 	seen: globalThis.Map<Type.MvId, Type.BvIndex>,
 	counter: { next: number },
-	out: globalThis.Map<Type.MvId, Type.Solved>,
+	out: globalThis.Map<Type.MvId, Type.BoundVariable>,
 ): void => {
 	switch (t._tag) {
 	case "meta": {
