@@ -476,106 +476,62 @@ Note: The fourth number does not always stand for who made an item; it usually a
 
 --- [Open Documentation](https://wowpedia.fandom.com/wiki/UnitId?type=revision&diff=6512501&oldid=364069)
 ---@alias UnitId
---- | "mouseover" The unit which the mouse is currently (or was most recently) hovering over.
--- | "none" TODO: wiki doesn't make it clear if 1.12.1 supports "none"
---- | "npc" The NPC with which the player is currently interacting.
---- Nth member of party, excluding current player
---- | "party1"
---- | "party2"
---- | "party3"
---- | "party4"
---- Pet of Nth member of party, excluding current player
---- | "partypet1"
---- | "partypet2"
---- | "partypet3"
---- | "partypet4"
---- | "pet" Current player's pet.
---- | "pettarget" Confirmed this works, but not on wiki.
---- | "player" Current Player
---- Raid member (1-40)
---- | "raid1"
---- | "raid2"
---- | "raid3"
---- | "raid4"
---- | "raid5"
---- | "raid6"
---- | "raid7"
---- | "raid8"
---- | "raid9"
---- | "raid10"
---- | "raid11"
---- | "raid12"
---- | "raid13"
---- | "raid14"
---- | "raid15"
---- | "raid16"
---- | "raid17"
---- | "raid18"
---- | "raid19"
---- | "raid20"
---- | "raid21"
---- | "raid22"
---- | "raid23"
---- | "raid24"
---- | "raid25"
---- | "raid26"
---- | "raid27"
---- | "raid28"
---- | "raid29"
---- | "raid30"
---- | "raid31"
---- | "raid32"
---- | "raid33"
---- | "raid34"
---- | "raid35"
---- | "raid36"
---- | "raid37"
---- | "raid38"
---- | "raid39"
---- | "raid40"
---- Pet of raid member (1-40)
---- | "raidpet1"
---- | "raidpet2"
---- | "raidpet3"
---- | "raidpet4"
---- | "raidpet5"
---- | "raidpet6"
---- | "raidpet7"
---- | "raidpet8"
---- | "raidpet9"
---- | "raidpet10"
---- | "raidpet11"
---- | "raidpet12"
---- | "raidpet13"
---- | "raidpet14"
---- | "raidpet15"
---- | "raidpet16"
---- | "raidpet17"
---- | "raidpet18"
---- | "raidpet19"
---- | "raidpet20"
---- | "raidpet21"
---- | "raidpet22"
---- | "raidpet23"
---- | "raidpet24"
---- | "raidpet25"
---- | "raidpet26"
---- | "raidpet27"
---- | "raidpet28"
---- | "raidpet29"
---- | "raidpet30"
---- | "raidpet31"
---- | "raidpet32"
---- | "raidpet33"
---- | "raidpet34"
---- | "raidpet35"
---- | "raidpet36"
---- | "raidpet37"
---- | "raidpet38"
---- | "raidpet39"
---- | "raidpet40"
+--- Player
+--- | "player" Current Player.
+--- | "playertarget" Current Player's target.
+--- | "playertargettarget" Current Player's target target.
+--- Target
 --- | "target" The currently targeted unit. Not clear from wiki if macros can change this value.
 --- | "targettarget" The target of the currently targeted unit.
+--- | "targettargettarget" The target of the target of the currently targeted unit.
+--- Pet
+--- | "pet" Current player's pet.
+--- | "pettarget" Current player's pet's target.
+--- | "playertargettarget" Current player's pet's target target.
+--- Mouseover
+--- | "mouseover" The unit which the mouse is currently (or was most recently) hovering over.
+--- | "mouseovertarget" The target of the unit which the mouse is currently (or was most recently) hovering over.
+--- Special
+-- | "none" TODO: wiki doesn't make it clear if 1.12.1 supports "none".
+--- | "npc" The NPC with which the player is currently interacting.
+--- Nth member of party, excluding current player
+--- | "party1" | "party2" | "party3" | "party4"
+--- | "party1target" | "party2target" | "party3target" | "party4target"
+--- | "party1targettarget" | "party2targettarget" | "party3targettarget" | "party4targettarget"
+--- Pet of Nth member of party, excluding current player
+--- | "partypet1" | "partypet2" | "partypet3" | "partypet4"
+--- | "partypet1target" | "partypet2target" | "partypet3target" | "partypet4target"
+--- | "partypet1targettarget" | "partypet2targettarget" | "partypet3targettarget" | "partypet4targettarget"
+--- Raid member (1-40)
+--- | "raid1" | "raid2" | "raid3" | "raid4" | "raid5" | "raid6" | "raid7" | "raid8" | "raid9" | "raid10"
+--- | "raid11" | "raid12" | "raid13" | "raid14" | "raid15" | "raid16" | "raid17" | "raid18" | "raid19" | "raid20"
+--- | "raid21" | "raid22" | "raid23" | "raid24" | "raid25" | "raid26" | "raid27" | "raid28" | "raid29" | "raid30"
+--- | "raid31" | "raid32" | "raid33" | "raid34" | "raid35" | "raid36" | "raid37" | "raid38" | "raid39" | "raid40"
+--- Raid member target (1-40)
+--- | "raid1target" | "raid2target" | "raid3target" | "raid4target" | "raid5target" | "raid6target" | "raid7target" | "raid8target" | "raid9target" | "raid10target"
+--- | "raid11target" | "raid12target" | "raid13target" | "raid14target" | "raid15target" | "raid16target" | "raid17target" | "raid18target" | "raid19target" | "raid20target"
+--- | "raid21target" | "raid22target" | "raid23target" | "raid24target" | "raid25target" | "raid26target" | "raid27target" | "raid28target" | "raid29target" | "raid30target"
+--- | "raid31target" | "raid32target" | "raid33target" | "raid34target" | "raid35target" | "raid36target" | "raid37target" | "raid38target" | "raid39target" | "raid40target"
+--- Raid member targettarget (1-40)
+--- | "raid1targettarget" | "raid2targettarget" | "raid3targettarget" | "raid4targettarget" | "raid5targettarget" | "raid6targettarget" | "raid7targettarget" | "raid8targettarget" | "raid9targettarget" | "raid10targettarget"
+--- | "raid11targettarget" | "raid12targettarget" | "raid13targettarget" | "raid14targettarget" | "raid15targettarget" | "raid16targettarget" | "raid17targettarget" | "raid18targettarget" | "raid19targettarget" | "raid20targettarget"
+--- | "raid21targettarget" | "raid22targettarget" | "raid23targettarget" | "raid24targettarget" | "raid25targettarget" | "raid26targettarget" | "raid27targettarget" | "raid28targettarget" | "raid29targettarget" | "raid30targettarget"
+--- | "raid31targettarget" | "raid32targettarget" | "raid33targettarget" | "raid34targettarget" | "raid35targettarget" | "raid36targettarget" | "raid37targettarget" | "raid38targettarget" | "raid39targettarget" | "raid40targettarget"
+--- Pet of raid member (1-40)
+--- | "raidpet1" | "raidpet2" | "raidpet3" | "raidpet4" | "raidpet5" | "raidpet6" | "raidpet7" | "raidpet8" | "raidpet9" | "raidpet10"
+--- | "raidpet11" | "raidpet12" | "raidpet13" | "raidpet14" | "raidpet15" | "raidpet16" | "raidpet17" | "raidpet18" | "raidpet19" | "raidpet20"
+--- | "raidpet21" | "raidpet22" | "raidpet23" | "raidpet24" | "raidpet25" | "raidpet26" | "raidpet27" | "raidpet28" | "raidpet29" | "raidpet30"
+--- | "raidpet31" | "raidpet32" | "raidpet33" | "raidpet34" | "raidpet35" | "raidpet36" | "raidpet37" | "raidpet38" | "raidpet39" | "raidpet40"
+--- Pet of raid member target (1-40)
+--- | "raidpet1target" | "raidpet2target" | "raidpet3target" | "raidpet4target" | "raidpet5target" | "raidpet6target" | "raidpet7target" | "raidpet8target" | "raidpet9target" | "raidpet10target"
+--- | "raidpet11target" | "raidpet12target" | "raidpet13target" | "raidpet14target" | "raidpet15target" | "raidpet16target" | "raidpet17target" | "raidpet18target" | "raidpet19target" | "raidpet20target"
+--- | "raidpet21target" | "raidpet22target" | "raidpet23target" | "raidpet24target" | "raidpet25target" | "raidpet26target" | "raidpet27target" | "raidpet28target" | "raidpet29target" | "raidpet30target"
+--- | "raidpet31target" | "raidpet32target" | "raidpet33target" | "raidpet34target" | "raidpet35target" | "raidpet36target" | "raidpet37target" | "raidpet38target" | "raidpet39target" | "raidpet40target"
+--- Raid member pet targettarget (1-40)
+--- | "raidpet1targettarget" | "raidpet2targettarget" | "raidpet3targettarget" | "raidpet4targettarget" | "raidpet5targettarget" | "raidpet6targettarget" | "raidpet7targettarget" | "raidpet8targettarget" | "raidpet9targettarget" | "raidpet10targettarget"
+--- | "raidpet11targettarget" | "raidpet12targettarget" | "raidpet13targettarget" | "raidpet14targettarget" | "raidpet15targettarget" | "raidpet16targettarget" | "raidpet17targettarget" | "raidpet18targettarget" | "raidpet19targettarget" | "raidpet20targettarget"
+--- | "raidpet21targettarget" | "raidpet22targettarget" | "raidpet23targettarget" | "raidpet24targettarget" | "raidpet25targettarget" | "raidpet26targettarget" | "raidpet27targettarget" | "raidpet28targettarget" | "raidpet29targettarget" | "raidpet30targettarget"
+--- | "raidpet31targettarget" | "raidpet32targettarget" | "raidpet33targettarget" | "raidpet34targettarget" | "raidpet35targettarget" | "raidpet36targettarget" | "raidpet37targettarget" | "raidpet38targettarget" | "raidpet39targettarget" | "raidpet40targettarget"
 
 ---@alias VerticalJustify
 --- | "TOP"
