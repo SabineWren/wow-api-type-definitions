@@ -7,11 +7,12 @@ function F() end
 ---@nodiscard
 function G() end
 
----@param x unknown
----@param y unknown
----@return unknown x
+---@generic A, B
+---@param a A
+---@param b B
+---@return A x
 ---@nodiscard
-function H(x, y) end
+function H(a, b) end
 
 ---@param x number
 ---@return number y

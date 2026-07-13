@@ -109,7 +109,7 @@ const annotateType = (t: Type.Solved): string => {
 	case "union": return [...t.Members.values().map(annotateType)].join(" | ")
 	// ************ Leaf ************
 	case "boolean": return "boolean"
-	case "bound": return nameGeneric(t.Index, "lower")
+	case "bound": return nameGeneric(t.Index)
 	case "class": return t.Name
 	case "function": {
 		const params = Pipe(
@@ -161,11 +161,12 @@ const collectGenerics = (type: Type.Function<never>): string[] => {
 	}
 	type.Params.forEach(p => walk(p.Type))
 	type.Returns.forEach(r => walk(r.Type))
-	return order.map(i => nameGeneric(i, "upper"))
+	return order.map(nameGeneric)
 }
 
 // Hack to map int to lower case ascii.
 // This will break if index > 25.
 // A better solution would be to make the alphabetic a numeric base 26.
-const nameGeneric = (index: number, mode: "lower" | "upper"): string =>
-	String.fromCharCode((mode === "lower" ? 97 : 65) + index)
+const nameGeneric = (index: number): string =>
+	// (mode === "lower" ? 97 : 65)
+	String.fromCharCode(65 + index)
